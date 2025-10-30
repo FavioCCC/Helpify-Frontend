@@ -11,4 +11,5 @@ import { RouterLink } from '@angular/router';
 })
 export class Home {
 
+  protected readonly scrollTo = scrollTo;
 }
