@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+  --card:#5B2C0C;
+  --cream:#FFEAAA;
+  --chip-border:#A36226;
+  --panel:#A36226;
+  --marron:#A36226;
+  --amarillo:#FFEAAA;
+  --rosado:#FFC2BD;
+  --blanco:#FFFFFF;
+  --marron-titulos:#6D4118;
+  --fondo-anaranjado:#FAC99B;
+}
+html { scroll-behavior:smooth; }
