@@ -217,79 +217,7 @@
 }
 .btn-ver:hover { filter: brightness(.95); }
 
-/* =========================
-   FOOTER (dentro del Home)
-   ========================= */
-.custom-footer {
-  background-color: #9B5D24;
-  color: white;
-  font-family: 'NATS', sans-serif;
-  padding: 30px 20px;
-  font-size: 16px;
-  margin-top: auto;
-  width: 100%;
-}
-.footer-content { max-width: 1200px; margin: 0 auto; }
 
-/* Usamos GRID para mantener las dos zonas en la misma fila */
-.footer-top {
-  display: grid;
-  grid-template-columns: 1fr auto;   /* izq flexible / der ajustado */
-  align-items: center;
-  column-gap: 40px;
-}
-
-/* Izquierda: enlaces con wrap y separación por gap */
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 35px;
-}
-.footer-links a,
-.footer-links span {
-  white-space: nowrap;
-  cursor: pointer;
-  margin-right: 0 !important;        /* quitamos márgenes manuales */
-}
-
-/* Derecha: bloque de redes fijo a la derecha */
-.footer-social {
-  display: flex;
-  align-items: center;
-  justify-self: end;                  /* clave para “pegarlo” a la derecha */
-  gap: 12px;
-  white-space: nowrap;
-}
-.footer-social img { width: 20px; height: 20px; margin-left: 4px; }
-
-/* Línea inferior */
-.footer-bottom { margin-top: 18px; }
-
-/* Enlaces del footer: mismo color que el texto, sin subrayado */
-.custom-footer a {
-  color: inherit;                     /* usa el blanco del footer */
-  text-decoration: none;              /* sin subrayado */
-  font-family: 'NATS', sans-serif;
-  font-weight: 700;
-  letter-spacing: .02em;
-}
-.custom-footer a:visited { color: inherit; }
-.custom-footer a:hover,
-.custom-footer a:focus {
-  text-decoration: none;
-  border-bottom: 2px solid var(--amarillo);  /* hover consistente */
-  padding-bottom: 2px;
-}
-
-/* Íconos sociales como enlaces “planos” */
-.footer-social a {
-  display: inline-flex;
-  align-items: center;
-}
-.footer-social a:hover {
-  filter: brightness(0.95);
-  border-bottom: none;
-}
 
 /* =========================
    RESPONSIVE (Home)
@@ -301,15 +229,6 @@
   .hero-illustration{ margin-top: 20px; }
 }
 
-/* En móvil: apilar y centrar el footer */
-@media (max-width: 768px){
-  .footer-top {
-    grid-template-columns: 1fr;   /* una sola columna */
-    row-gap: 18px;
-    text-align: center;
-  }
-  .footer-social { justify-self: center; }
-}
 
 @media (max-width: 560px){
   .info-box{ grid-template-columns: 48px 1fr; padding: 14px; }
