@@ -1,0 +1,325 @@
+/* El componente Home pinta el contenido principal */
+:host {
+  display: block;
+  background: var(--fondo-anaranjado);
+  color: var(--marron-titulos);
+  font-family: 'Play', sans-serif;
+  line-height: 1.6;
+}
+
+/* Línea decorativa bajo navbar (si la usas dentro del Home) */
+.barra-delgada { height: 12px; background: var(--amarillo); width: 100%; }
+
+/* =========================
+   HERO (PORTADA)
+   ========================= */
+.hero {
+  max-width:1180px;
+  margin:28px auto;
+  display:grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap:28px;
+  align-items:center;
+  padding:0 12px;
+}
+
+.title {
+  font-family: 'Rubik Mono One', sans-serif;
+  color: var(--marron-titulos);
+  font-size: clamp(40px, 7vw, 100px);
+  line-height:1.03;
+  letter-spacing:.12em;
+  text-transform: uppercase;
+  margin:6px 0 10px;
+}
+
+.lead {
+  color:#5a3a19;
+  max-width:60ch;
+  font-weight:500;
+}
+
+.desc {
+  color:#5a3a19;
+  max-width:62ch;
+}
+
+/* Barra decorativa (sin input) */
+.search-bar {
+  width: 100%;
+  height: 16px;
+  margin: 20px 0;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #FFEAAA, #FFC2BD);
+  border: 2px solid var(--chip-border);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.hero-illustration {
+  width:100%;
+  aspect-ratio: 4/3;
+  background:#FFFFFF;
+  border:3px solid var(--chip-border);
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+}
+
+.hero-illustration img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.stripe {
+  height:12px;
+  background:var(--panel);
+  border-top:2px solid #f0cd7e;
+  border-bottom:2px solid #f0cd7e;
+  margin: 12px 0 6px;
+}
+
+/* =========================
+   SECCIÓN: SOBRE NOSOTROS
+   ========================= */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 42px 24px 56px;
+}
+
+.hero-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--marron-titulos);
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Rubik Mono One', sans-serif;
+}
+
+.edit-btn {
+  background-color: var(--rosado);
+  color: var(--marron-titulos);
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 10px #6D4118;
+  font-family: 'NATS', sans-serif;
+}
+.edit-btn:hover { filter: brightness(.95); }
+
+.about-list { display: grid; gap: 18px; }
+
+.info-box {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  align-items: start;
+  gap: 14px;
+  background: var(--amarillo);
+  border: 3px solid var(--marron-titulos);
+  padding: 18px;
+  box-shadow: 0 2px 10px #6D4118;
+  border-radius: 10px;
+}
+
+.icon {
+  width: 54px; height: 54px;
+  display: grid; place-items: center;
+  border: 4px solid var(--marron-titulos);
+  color: var(--marron-titulos);
+  background: var(--amarillo);
+  border-radius: 8px;
+}
+.icon svg { width: 34px; height: 34px; }
+
+.info-content h3 {
+  margin: 2px 0 10px;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--marron-titulos);
+  font-family: 'NATS', sans-serif;
+}
+.info-content p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  text-align: justify;
+  color: #4a3a25;
+}
+
+/* =========================
+   SECCIÓN: FAQ
+   ========================= */
+.faq-section {
+  text-align: center;
+  padding: 32px 24px 56px;
+}
+.faq-section h1 {
+  font-family: 'Rubik Mono One', sans-serif;
+  font-size: clamp(24px, 3.2vw, 36px);
+  margin-bottom: 22px;
+  color: var(--marron-titulos);
+}
+.faq-card {
+  background-color: var(--amarillo);
+  border-left: 5px solid var(--marron);
+  margin: 16px auto;
+  padding: 18px 18px 20px;
+  max-width: 860px;
+  border-radius: 10px;
+  text-align: left;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0,0,0,.12);
+}
+.faq-card h3 {
+  margin-bottom: 8px;
+  color: var(--marron-titulos);
+  font-size: 18px;
+  font-family: 'NATS', sans-serif;
+}
+.faq-card p {
+  margin-bottom: 14px;
+  color: #4a2c12;
+  font-size: 15px;
+}
+.btn-ver {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: var(--rosado);
+  border: none;
+  border-radius: 12px;
+  padding: 8px 12px;
+  cursor: pointer;
+  color: var(--marron-titulos);
+  font-family: 'Play', sans-serif;
+}
+.btn-ver:hover { filter: brightness(.95); }
+
+/* =========================
+   FOOTER (dentro del Home)
+   ========================= */
+.custom-footer {
+  background-color: #9B5D24;
+  color: white;
+  font-family: 'NATS', sans-serif;
+  padding: 30px 20px;
+  font-size: 16px;
+  margin-top: auto;
+  width: 100%;
+}
+.footer-content { max-width: 1200px; margin: 0 auto; }
+
+/* Usamos GRID para mantener las dos zonas en la misma fila */
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr auto;   /* izq flexible / der ajustado */
+  align-items: center;
+  column-gap: 40px;
+}
+
+/* Izquierda: enlaces con wrap y separación por gap */
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 35px;
+}
+.footer-links a,
+.footer-links span {
+  white-space: nowrap;
+  cursor: pointer;
+  margin-right: 0 !important;        /* quitamos márgenes manuales */
+}
+
+/* Derecha: bloque de redes fijo a la derecha */
+.footer-social {
+  display: flex;
+  align-items: center;
+  justify-self: end;                  /* clave para “pegarlo” a la derecha */
+  gap: 12px;
+  white-space: nowrap;
+}
+.footer-social img { width: 20px; height: 20px; margin-left: 4px; }
+
+/* Línea inferior */
+.footer-bottom { margin-top: 18px; }
+
+/* Enlaces del footer: mismo color que el texto, sin subrayado */
+.custom-footer a {
+  color: inherit;                     /* usa el blanco del footer */
+  text-decoration: none;              /* sin subrayado */
+  font-family: 'NATS', sans-serif;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.custom-footer a:visited { color: inherit; }
+.custom-footer a:hover,
+.custom-footer a:focus {
+  text-decoration: none;
+  border-bottom: 2px solid var(--amarillo);  /* hover consistente */
+  padding-bottom: 2px;
+}
+
+/* Íconos sociales como enlaces “planos” */
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+}
+.footer-social a:hover {
+  filter: brightness(0.95);
+  border-bottom: none;
+}
+
+/* =========================
+   RESPONSIVE (Home)
+   ========================= */
+@media (max-width: 980px){
+  .hero{ grid-template-columns:1fr; }
+  .title{ letter-spacing:.12em; text-align:center; }
+  .lead, .desc{ text-align:center; }
+  .hero-illustration{ margin-top: 20px; }
+}
+
+/* En móvil: apilar y centrar el footer */
+@media (max-width: 768px){
+  .footer-top {
+    grid-template-columns: 1fr;   /* una sola columna */
+    row-gap: 18px;
+    text-align: center;
+  }
+  .footer-social { justify-self: center; }
+}
+
+@media (max-width: 560px){
+  .info-box{ grid-template-columns: 48px 1fr; padding: 14px; }
+  .icon{ width: 44px; height: 44px; }
+  .icon svg{ width: 28px; height: 28px; }
+}
+
+@media (max-width: 480px){
+  .faq-section h1 { font-size: 1.4rem; }
+  .faq-card h3 { font-size: 1rem; }
+  .btn-ver { font-size: .85rem; padding: .4rem .7rem; }
+}
+
