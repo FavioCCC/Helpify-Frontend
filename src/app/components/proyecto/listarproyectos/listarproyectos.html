@@ -1,0 +1,45 @@
+<!-- Cabecera filtros + Nuevo proyecto -->
+<section class="filters-container">
+
+  <!-- Filtros centrados -->
+  <section class="filter-bar">
+    <div class="filter-field">
+      <label>Nombre</label>
+      <input type="text" placeholder="Buscar por nombre" />
+    </div>
+
+    <div class="filter-field">
+      <label>Monto Objetivo</label>
+      <input type="text" placeholder="Ej. 15000" />
+    </div>
+
+    <div class="filter-field">
+      <label>Año</label>
+      <input type="text" placeholder="Ej. 2025" />
+    </div>
+
+    <div class="filter-field">
+      <label>Mes</label>
+      <input type="text" placeholder="Ej. 03" />
+    </div>
+  </section>
+
+  <!-- Botón Buscar al centro -->
+  <div class="filter-actions">
+    <button class="btn-buscar">Buscar</button>
+  </div>
+</section>
+
+<!-- Listado centrado -->
+<section class="projects-wrapper">
+  <article class="project-card" *ngFor="let p of proyectos">
+    <img class="project-thumb" [src]="p.imagen" [alt]="p.nombreproyecto" />
+    <div class="project-body">
+      <h3 class="project-title">{{ p.nombreproyecto }}</h3>
+      <p class="project-desc">“{{ p.descripcion }}”</p>
+    </div>
+    <a class="btn-ver" [routerLink]="['/proyectos', p.idproyecto]">
+      Ver más
+    </a>
+  </article>
+</section>
