@@ -1,0 +1,131 @@
+/* fondo durazno de la página */
+.foro-pagina {
+  background: #FAC99B;   /* tu naranja claro */
+  min-height: calc(100vh - 110px);
+}
+
+/* contenedor marrón principal */
+.foro-box {
+  background: #6D4118;   /* marrón */
+  width: 92%;
+  max-width: 1200px;
+  margin: 0 auto 2.5rem;
+  padding: 1.3rem 0 2.5rem;
+}
+
+/* "Comentarios:" arriba a la izquierda */
+.foro-label {
+  color: #fff;
+  margin-left: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  display: flex;
+  gap: .4rem;
+  align-items: center;
+}
+
+/* tarjeta amarilla (tanto la de escribir como las demás) */
+.comentario-card {
+  background: #FFEAAA;
+  width: 68%;              /* 👈 esto hace que NO ocupe todo el ancho */
+  margin: 0 auto 1.4rem;   /* centrado dentro del marrón */
+  border-radius: 4px;
+  padding: 1.1rem 1.25rem 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,.04);
+}
+
+/* textarea */
+.nuevo-comentario textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #e4d5aa;
+  border-radius: 3px;
+  background: #fff;
+  padding: .6rem .7rem;
+  resize: none;
+  min-height: 110px;
+}
+
+/* parte de abajo (estrellas + botón) */
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: .6rem;
+}
+
+/* estrellas */
+.estrellas {
+  font-size: 1.3rem;
+  color: #d7d7d7;
+}
+
+.estrellas span {
+  cursor: pointer;
+  margin-right: .2rem;
+}
+
+.estrellas .selected {
+  color: #F6A51B;
+}
+
+/* botón rosado */
+button {
+  background: #F6A5A5;
+  border: none;
+  padding: .4rem 1.2rem;
+  border-radius: 999px;
+  color: #5a2b1b;
+  font-weight: 600;
+  cursor: pointer;
+}
+button:hover {
+  filter: brightness(.97);
+}
+
+/* cabecera del comentario de la lista */
+.comentario-header {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin-bottom: .4rem;
+  color: #3c240f;
+  font-weight: 600;
+}
+
+.icono-usuario {
+  font-size: 1.05rem;
+}
+
+.fecha {
+  font-weight: 400;
+  font-size: .83rem;
+  color: #6a5b46;
+}
+
+/* texto del comentario */
+.comentario-texto {
+  margin: 0 .1rem .4rem .1rem;
+  font-style: italic;
+  color: #3c240f;
+}
+
+/* línea marrón entre la tarjeta de escribir y la lista */
+.separador {
+  background: #6D4118;
+  height: 12px;
+  width: 100%;
+  margin: 0 0 1.3rem 0;
+}
+
+/* responsive */
+@media (max-width: 950px) {
+  .comentario-card {
+    width: 90%;
+  }
+  .card-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5rem;
+  }
+}

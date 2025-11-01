@@ -1,0 +1,71 @@
+<div class="foro-pagina">
+  <div class="foro-box">
+    <p class="foro-label">💬 Comentarios:</p>
+
+    <!-- ========== NUEVO COMENTARIO ========== -->
+    <div class="comentario-card nuevo-comentario">
+      <textarea
+        [(ngModel)]="nuevoComentario"
+        placeholder="Ingresa tu comentario (mínimo 50 caracteres)*"
+        rows="4">
+      </textarea>
+
+      <div class="card-bottom">
+        <div class="estrellas">
+          <span
+            *ngFor="let e of [1,2,3,4,5]"
+            (click)="seleccionarEstrella(e)"
+            [class.selected]="e <= nuevaEstrella">
+            ★
+          </span>
+        </div>
+        <button (click)="publicarComentario()">Publicar</button>
+      </div>
+    </div>
+
+    <!-- línea marrón entre comentario nuevo y lista -->
+    <div class="separador"></div>
+
+    <!-- ========== LISTA DE COMENTARIOS ========== -->
+    <div
+      class="comentario-card"
+      *ngFor="let c of comentarios">
+
+      <div class="comentario-header">
+        <span class="icono-usuario">🧍‍♂️</span>
+
+        <!-- si viene el usuario del backend -->
+        <ng-container *ngIf="c.usuario; else sinUsuario">
+          <span class="nombre-usuario">
+            {{ c.usuario.nombre }} {{ c.usuario.apellidopaterno }} {{ c.usuario.apellidomaterno }}
+          </span>
+        </ng-container>
+
+        <!-- si no viene el usuario -->
+        <ng-template #sinUsuario>
+          <span class="nombre-usuario">Usuario no identificado</span>
+        </ng-template>
+
+        <!-- fecha opcional -->
+        <span class="fecha">
+          - {{ c.fecha || (fechaActual | date:'yyyy-MM-dd') }}
+        </span>
+      </div>
+
+      <p class="comentario-texto">
+        "{{ c.comentario }}"
+      </p>
+
+      <div class="card-bottom">
+        <div class="estrellas">
+          <span
+            *ngFor="let e of [1,2,3,4,5]"
+            [class.selected]="e <= (c.estrella || 0)">
+            ★
+          </span>
+        </div>
+        <button (click)="eliminarComentario(c.idcomentario)">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
