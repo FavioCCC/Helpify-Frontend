@@ -1,0 +1,27 @@
+<section class="login-page">
+  <div class="login-card">
+    <h1 class="login-title">¡BIENVENIDO<br> A  HELPIFY!</h1>
+    <p class="login-subtitle">Ingrese la información de manera correcta</p>
+
+    <form class="login-form" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <label for="usuario">Usuario 🧑‍💼:</label>
+        <input id="usuario" name="nombre" type="text" [(ngModel)]="usuario" required>
+      </div>
+
+      <div class="form-row">
+        <label for="password">Contraseña 👁️:</label>
+        <input id="password" name="password" type="password" [(ngModel)]="password" required>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">ENVIAR</button>
+      </div>
+    </form>
+
+    <p class="signup-text">¿Aún no tienes una cuenta?</p>
+    <div class="signup-actions">
+      <a class="btn btn-secondary" [routerLink]="['/registro']">CREAR CUENTA</a>
+    </div>
+  </div>
+</section>
