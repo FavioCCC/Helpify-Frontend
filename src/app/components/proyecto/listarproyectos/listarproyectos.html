@@ -1,32 +1,28 @@
-<!-- Cabecera filtros + Nuevo proyecto -->
 <section class="filters-container">
-
-  <!-- Filtros centrados -->
   <section class="filter-bar">
     <div class="filter-field">
       <label>Nombre</label>
-      <input type="text" placeholder="Buscar por nombre" />
+      <input type="text" placeholder="Buscar por nombre" [(ngModel)]="filtros.nombre" name="nombre"/>
     </div>
 
     <div class="filter-field">
       <label>Monto Objetivo</label>
-      <input type="text" placeholder="Ej. 15000" />
+      <input type="number" placeholder="Ej. 15000" [(ngModel)]="filtros.monto" name="monto"/>
     </div>
 
     <div class="filter-field">
       <label>Año</label>
-      <input type="text" placeholder="Ej. 2025" />
+      <input type="number" placeholder="Ej. 2025" [(ngModel)]="filtros.anio" name="anio"/>
     </div>
 
     <div class="filter-field">
       <label>Mes</label>
-      <input type="text" placeholder="Ej. 03" />
+      <input type="number" placeholder="Ej. 03" [(ngModel)]="filtros.mes" name="mes" min="1" max="12"/>
     </div>
   </section>
 
-  <!-- Botón Buscar + Ver donaciones al centro -->
   <div class="filter-actions">
-    <button class="btn btn-buscar" type="button">Buscar</button>
+    <button class="btn btn-buscar" type="button" (click)="buscar()" [disabled]="loading">Buscar</button>
 
     <a class="btn btn-donaciones" [routerLink]="['/donaciones']">
       Ver donaciones
@@ -34,19 +30,21 @@
         <path d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7C21.27 8.11 17 5 12 5zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
       </svg>
     </a>
+
+    <button class="btn btn-limpiar" type="button" (click)="limpiar()" [disabled]="loading">Limpiar</button>
   </div>
 
-<!-- Listado centrado -->
-<section class="projects-wrapper">
-  <article class="project-card" *ngFor="let p of proyectos">
-    <img class="project-thumb" [src]="p.imagen" [alt]="p.nombreproyecto" />
-    <div class="project-body">
-      <h3 class="project-title">{{ p.nombreproyecto }}</h3>
-      <p class="project-desc">“{{ p.descripcion }}”</p>
-    </div>
-    <a class="btn-ver" [routerLink]="['/proyectos', p.idproyecto]">
-      Ver más
-    </a>
-  </article>
-</section>
+  <div class="estado" *ngIf="loading">Buscando…</div>
+  <div class="estado error" *ngIf="error">{{ error }}</div>
+
+  <section class="projects-wrapper">
+    <article class="project-card" *ngFor="let p of proyectos">
+      <img class="project-thumb" [src]="p.imagen" [alt]="p.nombreproyecto" />
+      <div class="project-body">
+        <h3 class="project-title">{{ p.nombreproyecto }}</h3>
+        <p class="project-desc">“{{ p.descripcion }}”</p>
+      </div>
+      <a class="btn-ver" [routerLink]="['/proyectos', p.idproyecto]">Ver más</a>
+    </article>
+  </section>
 </section>
