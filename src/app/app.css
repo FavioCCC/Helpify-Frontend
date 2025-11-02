@@ -36,7 +36,7 @@
 .logo img {
   height: clamp(70px, 8vw, 110px);        /* antes 60px */
   width: auto;         /* mantiene proporción */
-  border-radius: 10px;
+  display: block;
   transition: transform 0.2s ease-in-out;
 }
 
