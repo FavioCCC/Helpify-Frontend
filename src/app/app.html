@@ -31,7 +31,7 @@
 
   <!-- CORREGIR CSS SI LO BORRAMOS -->
   <!-- Botón INICIAR SESIÓN -->
-  <button class="login-btn" (click)="onLogin()">INICIAR SESIÓN</button>
+  <button *ngIf="false" class="btn btn-login">Inicia sesión</button>
 </nav>
 
 <!-- CONTENIDO PRINCIPAL -->
@@ -42,22 +42,35 @@
 <!-- FOOTER -->
 <footer class="custom-footer">
   <div class="footer-content">
-    <div class="footer-top">
-      <div class="footer-links">
-        <a routerLink="/" fragment="contacto">CONTÁCTANOS</a>
-        <a href="#faq">PREGUNTAS FRECUENTES</a>
-        <span>LIBRO DE RECLAMACIONES</span>
-        <span>TÉRMINOS Y CONDICIONES</span>
+    <div class="footer-row">
+      <!-- Columna Izquierda -->
+      <div class="col-left">
+        <h4 class="footer-title">CONTÁCTANOS</h4>
+        <a class="footer-mail" href="mailto:helpify@gmail.com">Helpify@gmail.com</a>
       </div>
-      <div class="footer-social">
-        <span>ENCUÉNTRANOS EN</span>
-        <a href="#"><img src="assets/imagenes/TikTok.png" alt="TikTok" /></a>
-        <a href="#"><img src="assets/imagenes/Facebook.png" alt="Facebook" /></a>
-        <a href="#"><img src="assets/imagenes/Instagram.png" alt="Instagram" /></a>
+
+      <!-- Columna Centro -->
+      <nav class="col-center" aria-label="Enlaces legales">
+        <a routerLink="/faq" class="footer-link">PREGUNTAS FRECUENTES</a>
+        <a routerLink="/reclamaciones" class="footer-link">LIBRO DE RECLAMACIONES</a>
+        <a routerLink="/terminos" class="footer-link">TÉRMINOS Y CONDICIONES</a>
+      </nav>
+
+      <!-- Columna Derecha -->
+      <div class="col-right">
+        <span class="social-title">ENCUÉNTRANOS EN</span>
+        <div class="social-icons">
+          <a href="#" aria-label="TikTok">
+            <img src="assets/imagenes/TikTok.png" alt="" />
+          </a>
+          <a href="#" aria-label="Facebook">
+            <img src="assets/imagenes/Facebook.png" alt="" />
+          </a>
+          <a href="#" aria-label="Instagram">
+            <img src="assets/imagenes/Instagram.png" alt="" />
+          </a>
+        </div>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <span>helpify&#64;gmail.com</span>
     </div>
   </div>
 </footer>
