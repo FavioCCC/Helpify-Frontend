@@ -1,0 +1,298 @@
+:host{
+  display:block;
+  position:relative;
+  --_padTop: 38px;
+}
+
+/* Título principal */
+.title{
+  font-family:'Rowdies', system-ui;
+  color:var(--marron-titulos);
+  font-size:clamp(28px,5vw,48px);
+  text-align:center;
+  margin:16px 0 6px;
+  letter-spacing:.12em;
+}
+
+/* Contenedor principal */
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:var(--_padTop) 12px 18px;
+}
+
+/* Panel de donación */
+.panel{
+  background:var(--amarillo);
+  border:2px solid var(--marron);
+  border-radius:8px;
+  padding:22px;
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
+}
+
+/* Estructura de dos columnas */
+.grid{
+  display:grid;
+  grid-template-columns: 1fr 360px;
+  gap:22px;
+  align-items:start;
+}
+
+/* Subtítulos */
+.section-title{
+  font-weight:700;
+  color:var(--marron-titulos);
+  margin:0 0 8px;
+}
+
+/* Chips de monto */
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:8px 0 10px;
+}
+.chip{
+  background:var(--blanco);
+  border:2px solid var(--chip-border);
+  padding:8px 16px;
+  border-radius:999px;
+  font-weight:600;
+  cursor:pointer;
+  user-select:none;
+}
+.chip.active{
+  outline:3px solid rgba(105,60,27,.25);
+}
+
+/* Campos de texto */
+.field{ margin:10px 0; }
+
+label{
+  display:block;
+  font-size:14px;
+  color:var(--marron-titulos);
+  margin-bottom:6px;
+  font-weight:600;
+}
+
+input{
+  width:100%;
+  box-sizing:border-box;
+  padding:12px 14px;
+  border-radius:10px;
+  border:2px solid var(--chip-border);
+  background:var(--blanco);
+  font-size:15px;
+  color:var(--marron-titulos);
+  outline:none;
+}
+input:focus{
+  box-shadow:0 0 0 3px rgba(105,60,27,.15);
+}
+
+/* Tabs del método de pago */
+.pay-tabs{
+  display:flex;
+  gap:8px;
+  margin:8px 0 6px;
+}
+.tab{
+  background:var(--blanco);
+  border:2px solid var(--chip-border);
+  padding:8px 16px;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:600;
+}
+.tab.active{
+  background:var(--rosado);
+}
+
+/* Campos en fila (tarjeta, venc, cvv) */
+.row-3{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:14px;
+}
+
+/* Resumen lateral */
+.summary{
+  background:var(--fondo-anaranjado);
+  border:2px solid var(--chip-border);
+  border-radius:8px;
+  padding:18px;
+  min-height:160px;
+  position:sticky;
+  top:16px;
+}
+.summary h3{
+  margin:0 0 6px;
+  color:var(--marron-titulos);
+}
+.amount{
+  font-size:36px;
+  font-weight:700;
+  color:var(--marron);
+}
+
+/* Botón de acción */
+.actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:16px;
+}
+.btn{
+  background:var(--marron);
+  color:var(--blanco);
+  border:none;
+  padding:10px 20px;
+  border-radius:999px;
+  box-shadow:0 4px 0 rgba(0,0,0,.2);
+  cursor:pointer;
+  font-weight:700;
+  transition:all .15s ease;
+}
+.btn:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 0 rgba(0,0,0,.25);
+}
+
+/* Botón volver */
+.back-btn{
+  position:absolute;
+  top:8px;
+  left:12px;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:rgba(0,0,0,.06);
+  border:1px solid rgba(0,0,0,.08);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+}
+.back-btn svg{ width:18px; height:18px; }
+
+/* Responsive */
+@media (max-width:900px){
+  .grid{ grid-template-columns:1fr; }
+  .summary{ position:static; }
+  .back-btn{ left:8px; }
+}
+/* === BACKDROP === */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 90;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* === CAJA DEL MODAL === */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: min(500px, 90vw);
+  background: var(--blanco);
+  border: 3px solid var(--rosado);
+  border-radius: 12px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  z-index: 99;
+  padding: 22px 26px;
+  opacity: 0;
+  animation: modalIn 0.35s ease forwards;
+  font-family: 'Poppins', system-ui;
+}
+
+/* === ENCABEZADO DEL MODAL === */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border-bottom: 2px solid var(--rosado);
+  padding-bottom: 8px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: var(--marron-titulos);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* === BOTÓN CERRAR === */
+.btn-close {
+  background: var(--rosado);
+  color: #422b1a;
+  border: 2px solid #f3b3ae;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-close:hover {
+  background: #ffc7c2;
+  transform: translateY(-1px);
+}
+.btn-close:active {
+  transform: translateY(1px);
+}
+
+/* === CUERPO DEL MODAL === */
+.modal-body {
+  margin-top: 10px;
+}
+
+.modal-body p {
+  margin: 8px 0;
+  color: #563a24;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.modal-body strong {
+  color: var(--marron-titulos);
+  font-weight: 700;
+}
+
+/* === ANIMACIONES === */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalIn {
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  .modal {
+    width: 92vw;
+    padding: 18px;
+  }
+
+  .modal-header h3 {
+    font-size: 20px;
+  }
+
+  .btn-close {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  .modal-body p {
+    font-size: 14px;
+  }
+}
