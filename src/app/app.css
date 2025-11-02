@@ -34,9 +34,14 @@
 }
 
 .logo img {
-  height: 60px;
-  width: 60px;
+  height: 90px;        /* antes 60px */
+  width: auto;         /* mantiene proporción */
   border-radius: 10px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.logo img:hover {
+  transform: scale(1.05); /* leve animación al pasar el mouse */
 }
 
 .open-menu, .close-menu {
