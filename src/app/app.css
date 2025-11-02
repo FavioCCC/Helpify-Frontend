@@ -245,4 +245,33 @@
     text-align: center;
   }
   .footer-social { justify-self: center; }
+  .footer-row {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 16px !important;
+  }
+
+  /* enlaces del centro uno debajo del otro */
+  .col-center {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  /* centramos redes sociales */
+  .col-right {
+    justify-content: center !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .social-title {
+    font-size: 18px !important;
+  }
+
+  .social-icons img {
+    height: 30px !important;
+  }
 }
