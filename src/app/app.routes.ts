@@ -3,6 +3,7 @@ import {Home} from './components/home/home';
 import {ListarProyectos} from './components/proyecto/listarproyectos/listarproyectos';
 import { ComentarioComponent } from './components/comentario/foro/comentario';
 import {Iniciarsesion} from './components/usuario/iniciarsesion/iniciarsesion';
+import { DonarComponent } from './components/donar/donar';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },

@@ -1,0 +1,97 @@
+<main class="wrap">
+  <div class="back-btn" (click)="volver()" title="Volver" aria-label="Volver">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6"></path>
+    </svg>
+  </div>
+
+  <h1 class="title">DONAR</h1>
+
+  <section class="panel">
+    <div class="grid">
+      <div>
+        <h3 class="section-title">Monto</h3>
+
+        <div class="chips" id="chips">
+          <div class="chip" data-value="10">S/ 10</div>
+          <div class="chip" data-value="20">S/ 20</div>
+          <div class="chip" data-value="50">S/ 50</div>
+          <div class="chip" data-value="100">S/ 100</div>
+        </div>
+
+        <div class="field">
+          <label for="otro">Otro monto:</label>
+          <input id="otro" type="text" inputmode="decimal" placeholder="S/ 0" />
+          <small *ngIf="errors.monto" style="color:#a12626;font-weight:700">{{ errors.monto }}</small>
+        </div>
+
+        <h3 class="section-title">Método de pago</h3>
+        <div class="pay-tabs">
+          <div class="tab active" id="tabTarjeta">Tarjeta</div>
+        </div>
+
+        <div class="field">
+          <label for="titular">Nombre de la tarjeta:</label>
+          <input id="titular" type="text" placeholder="Como aparece en la tarjeta" />
+          <small *ngIf="errors.titular" style="color:#a12626;font-weight:700">{{ errors.titular }}</small>
+        </div>
+
+        <div class="row-3">
+          <div class="field">
+            <label for="numero">Número de tarjeta:</label>
+            <input id="numero" type="text" inputmode="numeric" placeholder="0000 0000 0000 0000" maxlength="19" />
+            <small *ngIf="errors.numero" style="color:#a12626;font-weight:700">{{ errors.numero }}</small>
+          </div>
+          <div class="field">
+            <label for="venc">Vencimiento:</label>
+            <input id="venc" type="text" inputmode="numeric" placeholder="MM/AA" maxlength="5" />
+            <small *ngIf="errors.venc" style="color:#a12626;font-weight:700">{{ errors.venc }}</small>
+          </div>
+          <div class="field">
+            <label for="cvv">CVV:</label>
+            <input id="cvv" type="password" inputmode="numeric" placeholder="***" maxlength="4" />
+            <small *ngIf="errors.cvv" style="color:#a12626;font-weight:700">{{ errors.cvv }}</small>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn" id="enviar" type="button" >Donar</button>
+        </div>
+
+        <p *ngIf="mensajeError" style="color:#a12626;font-weight:700">{{ mensajeError }}</p>
+        <p *ngIf="mensajeExito" style="color:#206d2f;font-weight:700">{{ mensajeExito }}</p>
+      </div>
+
+      <aside>
+        <div class="summary">
+          <h3>Resumen:</h3>
+          <div class="amount" id="amountText">S/ 0</div>
+          <div id="breakdown" style="margin-top:8px;color:#8a6a46;font-size:14px;"></div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Backdrop del modal -->
+    <div class="modal-backdrop" *ngIf="receiptVisible" (click)="closeReceipt()" aria-hidden="true"></div>
+
+    <!-- Modal del comprobante -->
+    <div class="modal" *ngIf="receiptVisible" role="dialog" aria-modal="true" aria-labelledby="reciboTitle" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 id="reciboTitle">Comprobante de donación:</h3>
+        <button class="btn-close" type="button" (click)="closeReceipt()">Cerrar</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Donante:</strong> {{ receipt.donante }}</p>
+        <p><strong>Proyecto:</strong> {{ receipt.proyecto }}</p>
+        <p><strong>Monto:</strong> S/ {{ receipt.monto | number:'1.2-2' }}</p>
+        <p><strong>Método de pago:</strong> {{ receipt.metodo }}</p>
+        <p><strong>Últimos 4 dígitos:</strong> ************{{ receipt.last4 }}</p>
+        <p><strong>Fecha:</strong> {{ receipt.fecha }}</p>
+        <p><strong>Estado:</strong> {{ receipt.estado }}</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+
