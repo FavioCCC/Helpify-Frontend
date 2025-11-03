@@ -1,0 +1,41 @@
+<button class="back-btn" [routerLink]="['/proyectos']" aria-label="Volver">←</button>
+
+<h1 class="titulo">INFORMACIÓN DEL PROYECTO</h1>
+
+<section class="proyecto-card" *ngIf="proyecto">
+  <button class="add-btn" (click)="marcarWishlist()">Añadir ❤️</button>
+
+  <div class="contenido">
+    <div class="izquierda">
+      <img class="imagen" [src]="proyecto.imagen" [alt]="proyecto.nombreproyecto" />
+      <div class="acciones">
+        <button class="btn editar">Modificar ✏️</button>
+        <button class="btn eliminar">Eliminar ✖</button>
+      </div>
+    </div>
+
+    <div class="derecha">
+      <h2 class="nombre">{{ proyecto.nombreproyecto }}</h2>
+
+      <p class="descripcion">“{{ proyecto.descripcion }}”</p>
+
+      <ul class="detalles">
+        <li>• <b>Monto objetivo:</b> S/. {{ proyecto.montoobjetivo }}</li>
+        <li>• <b>Monto recaudado:</b> S/. {{ proyecto.montorecaudado ?? 0 }}</li>
+        <li>• <b>Fecha inicio:</b> {{ proyecto.fechainicio | date:'dd \'de\' MMMM \'de\' yyyy' }}</li>
+        <li>• <b>Fecha fin:</b> {{ proyecto.fechafin   | date:'dd \'de\' MMMM \'de\' yyyy' }}</li>
+        <li>• <b>Nombre de la Organización:</b> {{ proyecto.nombreorganizacion || '—' }}</li>
+        <li>• <b>Escuela beneficiada:</b> {{ proyecto.escuelabeneficiada || '—' }}</li>
+        <li>• <b>Cupo máximo:</b> {{ proyecto.cupoMaximo ?? '—' }}</li>
+      </ul>
+
+      <div class="acciones-derecha">
+        <button class="btn inscribirme" (click)="inscribirme()">Deseo inscribirme ✏️</button>
+        <button class="btn contribuir" (click)="inscribirme()">Deseo contribuir $</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="estado" *ngIf="loading">Cargando...</div>
+<div class="estado error" *ngIf="error">{{ error }}</div>

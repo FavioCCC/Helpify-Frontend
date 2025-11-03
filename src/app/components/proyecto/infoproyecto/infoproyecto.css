@@ -1,0 +1,171 @@
+/* ===== PALETA ===== */
+:root {
+  --marron: #6D4118;
+  --rosado: #FFC2BD;
+  --anaranjado: #FAC99B;
+  --amarillo: #FFEAAA;
+  --blanco: #FFFFFF;
+}
+
+/* ===== GENERAL ===== */
+:host {
+  display: block;
+  background: var(--anaranjado);
+  font-family: 'Play', sans-serif;
+  color: var(--marron);
+  padding-bottom: 40px;
+}
+
+/* ===== BOTÓN VOLVER ===== */
+.back-btn {
+  margin: 20px;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--marron);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--marron);
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.back-btn:hover {
+  background: var(--marron);
+  color: var(--amarillo);
+}
+
+/* ===== TÍTULO ===== */
+.titulo {
+  text-align: center;
+  font-family: 'Rubik Mono One', monospace;
+  color: var(--marron);
+  letter-spacing: 3px;
+  margin: 0 0 20px 0;
+}
+
+/* ===== TARJETA DEL PROYECTO ===== */
+.proyecto-card {
+  background: var(--amarillo);
+  border: 2px solid var(--marron);
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 20px 30px;
+  max-width: 1000px;
+  position: relative;
+}
+
+/* Botón Añadir arriba */
+.add-btn {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  background: var(--rosado);
+  border: none;
+  border-radius: 20px;
+  padding: 6px 18px;
+  font-family: 'NATS', sans-serif;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.add-btn:hover {
+  background: #ffb6b0;
+}
+
+/* ===== ESTRUCTURA ===== */
+.contenido {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* ===== IZQUIERDA ===== */
+.izquierda {
+  flex: 1;
+  text-align: center;
+}
+.imagen {
+  width: 250px;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+/* ===== DERECHA ===== */
+.derecha {
+  flex: 2;
+  min-width: 300px;
+}
+.nombre {
+  text-align: center;
+  font-size: 32px;
+  font-family: 'Play', sans-serif;
+  font-weight: bold;
+  color: var(--marron);
+  margin-bottom: 10px;
+}
+.descripcion {
+  font-style: italic;
+  text-align: justify;
+  margin-bottom: 15px;
+}
+.detalles {
+  list-style: none;
+  padding: 0;
+  line-height: 1.8;
+  color: var(--marron);
+}
+.detalles b {
+  color: var(--marron);
+  font-weight: bold;
+}
+
+/* ===== BOTONES ===== */
+.btn {
+  background: var(--rosado);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-family: 'NATS', sans-serif;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn:hover {
+  transform: scale(1.05);
+}
+.btn.eliminar {
+  background: #f8a9a7;
+}
+.btn.editar {
+  background: var(--rosado);
+}
+.btn.inscribirme, .btn.contribuir {
+  background: var(--rosado);
+}
+.acciones-derecha {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 900px) {
+  .contenido {
+    flex-direction: column;
+    align-items: center;
+  }
+  .acciones-derecha {
+    justify-content: center;
+  }
+  .nombre {
+    font-size: 26px;
+  }
+}
