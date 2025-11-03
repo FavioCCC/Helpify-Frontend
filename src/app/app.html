@@ -1,6 +1,6 @@
 <!-- NAVBAR -->
 <nav class="topheader">
-  <a routerLink="/" class="logo">
+  <a routerLink="/" class="logo" aria-label="Inicio">
     <img height="60" width="60" src="assets/imagenes/HelpifyPNG.png" alt="Helpify" />
   </a>
 
@@ -13,10 +13,22 @@
   </button>
 
   <ul class="menu-horizontal" [class.menu_opened]="menuOpened" (click)="closeMenu()">
-    <a routerLink="/home" routerLinkActive="active">HOME</a>
-    <li><a routerLink="/comunidad">COMUNIDAD</a></li>
-    <li>
-      <a href="javascript:void(0)">PROYECTO</a>
+    <!-- HOME + PERFIL -->
+    <li class="has-sub" routerLinkActive="active">
+      <a [routerLink]="['/home']">HOME</a>
+      <ul class="menu-vertical">
+        <li>
+          <a href="/perfil" class="submenu-link perfil-item" (click)="irAPerfil($event)">PERFIL</a>
+        </li>
+      </ul>
+    </li>
+
+    <li routerLinkActive="active">
+      <a routerLink="/comunidad">COMUNIDAD</a>
+    </li>
+
+    <li class="has-sub">
+      <a href="javascript:void(0)">PROYECTOS</a>
       <ul class="menu-vertical">
         <li><a routerLink="/proyectos">Listado de proyectos</a></li>
         <li><a routerLink="/proyectos/nuevo">Agregar un proyecto</a></li>
@@ -24,51 +36,37 @@
         <li><a routerLink="/reportes/estadisticos">Reportes estadísticos</a></li>
       </ul>
     </li>
+
     <li><a routerLink="/wishlist">WISHLIST</a></li>
     <li><a routerLink="/notificaciones">NOTIFICACIONES</a></li>
     <li><a routerLink="/foros">FOROS</a></li>
   </ul>
-
-  <!-- CORREGIR CSS SI LO BORRAMOS -->
-  <!-- Botón INICIAR SESIÓN -->
-  <button *ngIf="false" class="btn btn-login">Inicia sesión</button>
 </nav>
 
-<!-- CONTENIDO PRINCIPAL -->
+<!-- CONTENIDO -->
 <main class="main-content">
   <router-outlet></router-outlet>
 </main>
 
-<!-- FOOTER -->
+<!-- FOOTER (como lo tenías) -->
 <footer class="custom-footer">
   <div class="footer-content">
     <div class="footer-row">
-      <!-- Columna Izquierda -->
       <div class="col-left">
         <h4 class="footer-title">CONTÁCTANOS</h4>
         <a class="footer-mail" href="mailto:helpify@gmail.com">Helpify@gmail.com</a>
       </div>
-
-      <!-- Columna Centro -->
       <nav class="col-center" aria-label="Enlaces legales">
         <a routerLink="/faq" class="footer-link">PREGUNTAS FRECUENTES</a>
         <a routerLink="/reclamaciones" class="footer-link">LIBRO DE RECLAMACIONES</a>
         <a routerLink="/terminos" class="footer-link">TÉRMINOS Y CONDICIONES</a>
       </nav>
-
-      <!-- Columna Derecha -->
       <div class="col-right">
         <span class="social-title">ENCUÉNTRANOS EN</span>
         <div class="social-icons">
-          <a href="#" aria-label="TikTok">
-            <img src="assets/imagenes/TikTok.png" alt="" />
-          </a>
-          <a href="#" aria-label="Facebook">
-            <img src="assets/imagenes/Facebook.png" alt="" />
-          </a>
-          <a href="#" aria-label="Instagram">
-            <img src="assets/imagenes/Instagram.png" alt="" />
-          </a>
+          <a href="#" aria-label="TikTok"><img src="assets/imagenes/TikTok.png" alt="" /></a>
+          <a href="#" aria-label="Facebook"><img src="assets/imagenes/Facebook.png" alt="" /></a>
+          <a href="#" aria-label="Instagram"><img src="assets/imagenes/Instagram.png" alt="" /></a>
         </div>
       </div>
     </div>
