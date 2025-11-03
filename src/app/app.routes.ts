@@ -14,5 +14,6 @@ export const routes: Routes = [
   { path: 'perfil', component: PerfilComponent },
   //Corregir porque puse eso para poder ver mi pantalla de login
   { path: 'login', component: Iniciarsesion },
+  { path: 'donar', component: DonarComponent },
   {path: '**', redirectTo: ''}
 ];
