@@ -19,21 +19,16 @@ export class IniciarsesionService {
       withCredentials: true
     }).pipe(
       tap((res: HttpResponse<any>) => {
-        // Leer token del header o del cuerpo
         let token = res.headers.get('Authorization');
-        if (!token && res.body?.jwt) {
-          token = 'Bearer ' + res.body.jwt;
-        }
+        if (!token && res.body?.jwt) token = res.body.jwt;
 
-        // Guardar token y datos del usuario
+        if (token && !token.startsWith('Bearer ')) token = 'Bearer ' + token;
+
         if (token) localStorage.setItem('auth_token', token);
         if (res.body) localStorage.setItem('auth_user', JSON.stringify(res.body));
       }),
-      map(res => res.body)
     );
   }
-
-  //Son métodos de utilidad para otros componentes del sistema
 
   logout(): void {
     localStorage.removeItem('auth_token');
@@ -47,5 +42,10 @@ export class IniciarsesionService {
   getUsuario(): any {
     const user = localStorage.getItem('auth_user');
     return user ? JSON.parse(user) : null;
+  }
+
+  // iniciarsesion.service.ts
+  isLoggedIn(): boolean {
+    return !!this.getToken();
   }
 }
