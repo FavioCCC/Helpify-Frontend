@@ -1,22 +1,21 @@
-/* ===== Layout base del shell: FLEX columna para sticky footer ===== */
+/* ===== Layout base  ===== */
 :host {
-  display: flex;                 /* <-- clave */
-  flex-direction: column;        /* <-- clave */
-  min-height: 100dvh;            /* ocupa alto de la ventana */
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
   background: var(--fondo-anaranjado);
   color: var(--marron-titulos);
   font-family: 'Play', sans-serif;
   line-height: 1.6;
 }
 
-/* El área central crece y empuja el footer hacia abajo */
 .main-content {
-  flex: 1;                       /* <-- clave */
-  min-height: 0;                 /* evita overflow innecesario */
+  flex: 1;
+  min-height: 0;
 }
 
 /* =========================
-   NAVBAR (solo barra sup.)
+   NAVBAR
    ========================= */
 .topheader {
   background-color: var(--marron);
@@ -30,19 +29,18 @@
   top: 0;
   z-index: 1000;
   font-family: 'NATS', sans-serif;
-  flex-shrink: 0;                /* no se encoge */
+  flex-shrink: 0;
+  overflow-x: clip;
 }
 
 .logo img {
-  height: clamp(70px, 8vw, 110px);        /* antes 60px */
-  width: auto;         /* mantiene proporción */
+  height: clamp(70px, 8vw, 110px);
+  width: auto;
   display: block;
   transition: transform 0.2s ease-in-out;
 }
 
-.logo img:hover {
-  transform: scale(1.05); /* leve animación al pasar el mouse */
-}
+.logo img:hover { transform: scale(1.05); }
 
 .open-menu, .close-menu {
   display: none;
@@ -59,19 +57,20 @@
 }
 
 .menu-horizontal {
-  position: absolute;            /* se centra respecto al nav */
+  position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(28px, 6vw, 84px);   /* separación amplia */
+  gap: clamp(28px, 6vw, 84px);
   list-style: none;
   margin: 0;
   padding: 0;
+  max-width: 100%;
 }
+
 .menu-horizontal li { position: relative; }
 
 .menu-horizontal a {
@@ -113,59 +112,54 @@
   font-size: 14px;
 }
 
-.menu-vertical li:hover {
-  border-left: 3px solid var(--marron-titulos);
-}
+.menu-vertical li:hover { border-left: 3px solid var(--marron-titulos); }
 
-.menu-horizontal li:hover .menu-vertical {
-  display: block;
-}
-
-/* Botón Login */
-.login-btn {
-  background: var(--rosado);
-  color: var(--marron-titulos);
-  border: 0;
-  border-radius: 12px;
-  padding: 10px 16px;
-  font-weight: 800;
-  cursor: pointer;
-  font-family: 'NATS', sans-serif;
-}
-.login-btn:hover { filter: brightness(.95); }
+.menu-horizontal li:hover .menu-vertical { display: block; }
 
 /* =========================
-   FOOTER (siempre al fondo)
+   FOOTER
    ========================= */
 .custom-footer {
-  background: #a2652d; /* marrón del mock */
+  background: #a2652d;
   color: #fff;
   width: 100%;
   font-family: 'NATS', sans-serif;
+  overflow: visible;
 }
 
 .footer-content {
-  max-width: 1200px;
+  max-width: 1200px;                 /* centrado con ancho máximo */
   margin: 0 auto;
-  padding: 18px 16px;
+  padding: 30px 20px;
+  overflow: visible;
 }
 
-/* Fila principal: 3 columnas */
+/* Fila principal: tres columnas iguales centradas */
 .footer-row {
   display: grid;
-  grid-template-columns: 1fr 1fr auto; /* Izq | Centro | Der */
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
-  gap: 24px;
-  min-height: 86px; /* altura similar a la imagen */
+  justify-items: center;
+  gap: 40px 60px;                    /* espacio entre columnas y filas */
+  text-align: center;
 }
 
-/* Columna Izquierda */
-.col-left .footer-title {
-  margin: 0 0 6px 0;
+/* Columna izquierda */
+.col-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.footer-title {
+  margin: 0;
   font-size: 16px;
   font-weight: 800;
   letter-spacing: .02em;
 }
+
 .footer-mail {
   color: #fff;
   text-decoration: none;
@@ -173,60 +167,75 @@
   font-size: 14px;
   opacity: .95;
 }
+
 .footer-mail:hover { text-decoration: underline; }
 
-/* Columna Centro: enlaces distribuidos horizontalmente */
+/* Columna central */
 .col-center {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: clamp(18px, 5vw, 56px);
-  text-align: center;
+  justify-content: center;
+  gap: 10px;                         /* más espacio entre enlaces */
 }
+
 .footer-link {
   color: #fff;
   text-decoration: none;
   font-weight: 800;
   font-size: 16px;
   letter-spacing: .02em;
-  white-space: nowrap;
 }
+
 .footer-link:hover { text-decoration: underline; }
 
-/* Columna Derecha: título + íconos */
+/* Columna derecha */
 .col-right {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 14px;
+  justify-content: center;
+  gap: 18px;                         /* más separación entre texto e íconos */
+  white-space: nowrap;
 }
+
 .social-title {
   font-weight: 800;
   font-size: 20px;
   letter-spacing: .02em;
+  margin: 0;
+  line-height: 1;
   white-space: nowrap;
 }
+
 .social-icons {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: center;
+  gap: 16px;
 }
+
+.social-icons a {
+  display: inline-flex;
+}
+
 .social-icons img {
-  height: 36px;            /* íconos grandes como en el mock */
+  height: 36px;
   width: auto;
+  display: inline-block;
   filter: brightness(1) contrast(1.05);
   transition: transform .15s ease;
 }
-.social-icons a:hover img { transform: scale(1.08); }
 
+.social-icons a:hover img {
+  transform: scale(1.08);
+}
 
 /* =========================
    RESPONSIVE
    ========================= */
-@media (max-width: 768px){
-  /* Navbar móvil */
+@media (max-width: 768px) {
   .open-menu, .close-menu { display: block; position: absolute; right: 18px; }
-  .menu-horizontal{
+  .menu-horizontal {
     flex-direction: column;
     align-items: center;
     position: fixed;
@@ -244,39 +253,27 @@
   .menu-vertical li a { color: #fff; font-size: 18px; }
 
   /* Footer móvil */
-  .footer-top {
-    grid-template-columns: 1fr;
-    row-gap: 18px;
-    text-align: center;
-  }
-  .footer-social { justify-self: center; }
   .footer-row {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
-    gap: 16px !important;
+    gap: 22px !important;            /* más espacio vertical en móvil */
   }
 
-  /* enlaces del centro uno debajo del otro */
   .col-center {
     flex-direction: column !important;
-    gap: 10px !important;
+    gap: 12px !important;
   }
 
-  /* centramos redes sociales */
   .col-right {
     justify-content: center !important;
-    flex-direction: column !important;
-    gap: 8px !important;
+    flex-wrap: wrap !important;
+    white-space: normal !important;
+    gap: 12px !important;
   }
 
-  .social-title {
-    font-size: 18px !important;
-  }
-
-  .social-icons img {
-    height: 30px !important;
-  }
+  .social-title { font-size: 18px !important; }
+  .social-icons img { height: 30px !important; }
 }
