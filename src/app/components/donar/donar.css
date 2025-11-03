@@ -6,7 +6,7 @@
 
 /* Título principal */
 .title{
-  font-family:'Rowdies', system-ui;
+  font-family: 'Rubik Mono One', sans-serif;
   color:var(--marron-titulos);
   font-size:clamp(28px,5vw,48px);
   text-align:center;
@@ -53,6 +53,7 @@
   margin:8px 0 10px;
 }
 .chip{
+  font-family: 'NATS', sans-serif;
   background:var(--blanco);
   border:2px solid var(--chip-border);
   padding:8px 16px;
@@ -69,6 +70,7 @@
 .field{ margin:10px 0; }
 
 label{
+  font-family: 'Play', sans-serif;
   display:block;
   font-size:14px;
   color:var(--marron-titulos);
@@ -77,6 +79,7 @@ label{
 }
 
 input{
+  font-family: 'Play', sans-serif;
   width:100%;
   box-sizing:border-box;
   padding:12px 14px;
@@ -143,6 +146,7 @@ input:focus{
   margin-top:16px;
 }
 .btn{
+  font-family: 'NATS', sans-serif;
   background:var(--marron);
   color:var(--blanco);
   border:none;
@@ -161,18 +165,40 @@ input:focus{
 /* Botón volver */
 .back-btn{
   position:absolute;
-  top:8px;
-  left:12px;
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  background:rgba(0,0,0,.06);
-  border:1px solid rgba(0,0,0,.08);
-  display:grid;
-  place-items:center;
-  cursor:pointer;
+  top: 16px;
+  left: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--rosado);   /* bolita rosada */
+  border: 2px solid #f8d1cd;
+  box-shadow: 0 4px 10px rgba(0,0,0,.25);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all .25s ease;
+  z-index: 1200;
 }
-.back-btn svg{ width:18px; height:18px; }
+.back-btn:hover {
+  transform: scale(1.08);
+  background: #ffb4ac;         /* rosado un poco más fuerte */
+  box-shadow: 0 6px 14px rgba(0,0,0,.3);
+}
+
+.back-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.back-btn svg path {
+  stroke: #fff;                /* flecha blanca */
+  stroke-width: 2.5;
+  transition: transform .25s ease;
+}
+
+.back-btn:hover svg path {
+  transform: translateX(-2px); /* leve movimiento al pasar el mouse */
+}
 
 /* Responsive */
 @media (max-width:900px){
