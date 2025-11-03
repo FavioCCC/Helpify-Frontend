@@ -41,6 +41,17 @@ export class App {
     }
   }
 
+  scrollToFaq() {
+    const faqSection = document.getElementById('faq');
+    if (faqSection) {
+      faqSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Si no estás en /home, primero navega allí y luego haces el scroll
+      window.location.href = '/home#faq';
+    }
+  }
+
+
   // ====== Utilidades ======
   scrollTo(id: string): void {
     const el = document.getElementById(id);

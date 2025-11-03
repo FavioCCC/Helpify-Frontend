@@ -23,9 +23,7 @@
       </ul>
     </li>
 
-    <li routerLinkActive="active">
-      <a routerLink="/comunidad">COMUNIDAD</a>
-    </li>
+    <li routerLinkActive="active"><a routerLink="/comunidad">COMUNIDAD</a></li>
 
     <li class="has-sub">
       <a href="javascript:void(0)">PROYECTOS</a>
@@ -48,19 +46,22 @@
   <router-outlet></router-outlet>
 </main>
 
-<!-- FOOTER (como lo tenías) -->
+<!-- FOOTER -->
 <footer class="custom-footer">
   <div class="footer-content">
     <div class="footer-row">
       <div class="col-left">
         <h4 class="footer-title">CONTÁCTANOS</h4>
         <a class="footer-mail" href="mailto:helpify@gmail.com">Helpify&#64;gmail.com</a>
+        <a href="javascript:void(0)" class="footer-link" (click)="scrollToFaq()">PREGUNTAS FRECUENTES</a>
       </div>
+
       <nav class="col-center" aria-label="Enlaces legales">
-        <a routerLink="/faq" class="footer-link">PREGUNTAS FRECUENTES</a>
+
         <a routerLink="/reclamaciones" class="footer-link">LIBRO DE RECLAMACIONES</a>
         <a routerLink="/terminos" class="footer-link">TÉRMINOS Y CONDICIONES</a>
       </nav>
+
       <div class="col-right">
         <span class="social-title">ENCUÉNTRANOS EN</span>
         <div class="social-icons">
