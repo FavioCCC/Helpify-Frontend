@@ -1,71 +1,76 @@
-<div class="foro-pagina">
-  <div class="foro-box">
-    <p class="foro-label">💬 Comentarios:</p>
+<!-- src/app/components/comentario/foro/comentario.html -->
+<div class="foro-container">
 
-    <!-- ========== NUEVO COMENTARIO ========== -->
-    <div class="comentario-card nuevo-comentario">
+  <!-- 🔸 Título principal -->
+  <h1 class="titulo-foro">FORO</h1>
+
+  <!-- 🔸 Cuadro marrón con todo el contenido -->
+  <div class="foro-cuadro fuente-play">
+
+    <!-- Formulario de publicación -->
+    <div class="card form-card">
+      <h3 class="card-title">Publicar comentario</h3>
+
       <textarea
         [(ngModel)]="nuevoComentario"
-        placeholder="Ingresa tu comentario (mínimo 50 caracteres)*"
-        rows="4">
-      </textarea>
+        maxlength="500"
+        placeholder="Escribe tu comentario..."
+        class="input-area"
+      ></textarea>
 
-      <div class="card-bottom">
-        <div class="estrellas">
-          <span
-            *ngFor="let e of [1,2,3,4,5]"
-            (click)="seleccionarEstrella(e)"
-            [class.selected]="e <= nuevaEstrella">
-            ★
-          </span>
+      <div class="stars">
+        <label>Calificación:</label>
+        <div class="star-group">
+          <button type="button" class="star" [class.active]="nuevaEstrella >= 1" (click)="seleccionarEstrella(1)">★</button>
+          <button type="button" class="star" [class.active]="nuevaEstrella >= 2" (click)="seleccionarEstrella(2)">★</button>
+          <button type="button" class="star" [class.active]="nuevaEstrella >= 3" (click)="seleccionarEstrella(3)">★</button>
+          <button type="button" class="star" [class.active]="nuevaEstrella >= 4" (click)="seleccionarEstrella(4)">★</button>
+          <button type="button" class="star" [class.active]="nuevaEstrella >= 5" (click)="seleccionarEstrella(5)">★</button>
         </div>
-        <button (click)="publicarComentario()">Publicar</button>
       </div>
+
+      <!-- Botón centrado -->
+      <div class="actions fuente-nats">
+        <button class="btn primary" (click)="publicarComentario()">Publicar</button>
+      </div>
+
+      <p class="hint" *ngIf="!usuarioActual">Para publicar, primero debes iniciar sesión.</p>
+      <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
     </div>
 
-    <!-- línea marrón entre comentario nuevo y lista -->
-    <div class="separador"></div>
+    <!-- Lista de comentarios -->
+    <div class="card list-card">
+      <h3 class="card-title">Comentarios</h3>
 
-    <!-- ========== LISTA DE COMENTARIOS ========== -->
-    <div
-      class="comentario-card"
-      *ngFor="let c of comentarios">
-
-      <div class="comentario-header">
-        <span class="icono-usuario">🧍‍♂️</span>
-
-        <!-- si viene el usuario del backend -->
-        <ng-container *ngIf="c.usuario; else sinUsuario">
-          <span class="nombre-usuario">
-            {{ c.usuario.nombre }} {{ c.usuario.apellidopaterno }} {{ c.usuario.apellidomaterno }}
-          </span>
-        </ng-container>
-
-        <!-- si no viene el usuario -->
-        <ng-template #sinUsuario>
-          <span class="nombre-usuario">Usuario no identificado</span>
-        </ng-template>
-
-        <!-- fecha opcional -->
-        <span class="fecha">
-          - {{ c.fecha || (fechaActual | date:'yyyy-MM-dd') }}
-        </span>
+      <div *ngIf="comentarios.length === 0" class="empty">
+        Aún no hay comentarios.
       </div>
 
-      <p class="comentario-texto">
-        "{{ c.comentario }}"
-      </p>
+      <ul class="comentarios" *ngIf="comentarios.length > 0">
+        <li class="comentario-item" *ngFor="let c of comentarios; trackBy: trackById">
+          <div class="comentario-header">
+            <div class="user">
+              <span class="avatar">{{ (c.usuario?.nombre || 'U') | slice:0:1 }}</span>
+              <div class="user-info">
+                <strong>{{ c.usuario?.nombre || 'Usuario' }}</strong>
 
-      <div class="card-bottom">
-        <div class="estrellas">
-          <span
-            *ngFor="let e of [1,2,3,4,5]"
-            [class.selected]="e <= (c.estrella || 0)">
-            ★
-          </span>
-        </div>
-        <button (click)="eliminarComentario(c.idcomentario)">Eliminar</button>
-      </div>
+              </div>
+            </div>
+
+            <div class="score" [attr.aria-label]="'Calificación: ' + c.estrella">
+              <span class="star static" *ngFor="let s of [1,2,3,4,5]">
+                {{ s <= (c.estrella || 0) ? '★' : '☆' }}
+              </span>
+            </div>
+          </div>
+
+          <p class="comentario-text">{{ c.comentario }}</p>
+
+          <div class="item-actions fuente-nats">
+            <button class="btn danger" (click)="eliminarComentario(c.idcomentario)">Eliminar</button>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

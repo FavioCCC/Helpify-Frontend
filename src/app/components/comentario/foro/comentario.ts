@@ -4,7 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { Comentario } from '../../../models/comentario';
-import { ComentarioService } from '../../../services/comentarioService'; // ojo con el nombre del archivo
+import { IniciarsesionService } from '../../../services/inicarsesion-service';
+import { Router } from '@angular/router';
+import {ComentarioService} from '../../../services/comentarioService';
 
 @Component({
   selector: 'app-comentario',
@@ -14,98 +16,93 @@ import { ComentarioService } from '../../../services/comentarioService'; // ojo 
   imports: [CommonModule, FormsModule]
 })
 export class ComentarioComponent implements OnInit {
+  private comentarioService = inject(ComentarioService);
+  private auth = inject(IniciarsesionService);
+  private router = inject(Router);
 
-  nuevoComentario: string = '';
-  nuevaEstrella: number = 0;
+  nuevoComentario = '';
+  nuevaEstrella = 0;
 
   comentarios: Comentario[] = [];
+  cargando = false;
+  errorMsg = '';
 
-  fechaActual: Date = new Date();
-
-  private comentarioService = inject(ComentarioService);
+  usuarioActual: any = null;
 
   ngOnInit(): void {
+    // ⚠️ Permite ver el foro sin login, solo leer
+    this.usuarioActual = this.auth.getUsuario();
     this.cargarComentarios();
   }
 
-  // ================== CARGAR ==================
   private cargarComentarios(): void {
-    console.log('[ComentarioComponent] cargando comentarios...');
+    this.cargando = true;
+    this.errorMsg = '';
     this.comentarioService.list().subscribe({
-      next: (data: any[]) => {
-        console.log('[ComentarioComponent] datos recibidos del backend:', data);
-
-        // si el backend devolvió [], acá también verás []
-        this.comentarios = (data || []).map((d: any) => ({
-          idcomentario: d.idcomentario,
-          comentario: d.comentario,
-          estrella: d.estrella ?? 0,
-          usuario: d.usuario ?? null,
-          fecha: d.fecha ? new Date(d.fecha) : undefined
+      next: (data) => {
+        this.comentarios = (data || []).map(c => ({
+          ...c,
+          fecha: c.fecha ? new Date(c.fecha) : undefined
         }));
       },
       error: (err) => {
-        console.error('[ComentarioComponent] ERROR al cargar comentarios', err);
-        // this.comentarios = [
-        //   { idcomentario: 999, comentario: 'No se pudo cargar', estrella: 0 }
-        // ];
-      }
+        console.error('[Comentario] list error', err);
+        this.errorMsg = 'No se pudieron cargar los comentarios.';
+      },
+      complete: () => (this.cargando = false)
     });
   }
 
-  // ================== PUBLICAR ==================
   publicarComentario(): void {
-    if (!this.nuevoComentario.trim()) {
+    // ⛔ Si NO está logueado: redirige a iniciar sesión y no intenta publicar
+    if (!this.auth.isLoggedIn()) {
+      // opcional: guardar intención si quieres (no es necesario para tu flujo)
+      // localStorage.setItem('postLoginRedirect', '/home');
+      this.router.navigate(['/login']);
       return;
     }
 
-    const payload: Partial<Comentario> = {
-      comentario: this.nuevoComentario.trim(),
-      estrella: this.nuevaEstrella || 0
-    };
+    const texto = this.nuevoComentario.trim();
+    if (!texto) return;
 
-    console.log('[ComentarioComponent] publicando...', payload);
+    const payload = { comentario: texto, estrella: this.nuevaEstrella || 0 };
 
-    this.comentarioService.create(payload as Comentario).subscribe({
-      next: (resp: any) => {
-        console.log('[ComentarioComponent] respuesta al publicar:', resp);
-
-        const nuevo: Comentario = {
-          idcomentario: resp.idcomentario ?? 0,
-          comentario: resp.comentario,
-          estrella: resp.estrella ?? (this.nuevaEstrella || 0),
-          usuario: resp.usuario ?? null,
-          fecha: resp.fecha ? new Date(resp.fecha) : new Date()
-        };
-
-        // lo agrego arriba
-        this.comentarios = [nuevo, ...this.comentarios];
-
-        // limpio
+    this.comentarioService.create(payload).subscribe({
+      next: () => {
+        this.cargarComentarios();
         this.nuevoComentario = '';
         this.nuevaEstrella = 0;
       },
       error: (err) => {
-        console.error('[ComentarioComponent] ERROR al publicar', err);
+        console.error('[Comentario] create error', err);
+        this.errorMsg = 'No se pudo publicar el comentario.';
       }
     });
   }
 
-  // ================== ELIMINAR ==================
-  eliminarComentario(id: number): void {
-    console.log('[ComentarioComponent] eliminando comentario', id);
+  eliminarComentario(id?: number): void {
+    if (!id) return;
+
+    // También bloquea eliminar si no hay sesión
+    if (!this.auth.isLoggedIn()) {
+      this.router.navigate(['/iniciarsesion']);
+      return;
+    }
+
     this.comentarioService.delete(id).subscribe({
-      next: () => {
-        this.comentarios = this.comentarios.filter(c => c.idcomentario !== id);
-      },
+      next: () => this.cargarComentarios(),
       error: (err) => {
-        console.error('[ComentarioComponent] ERROR al eliminar', err);
+        console.error('[Comentario] delete error', err);
+        this.errorMsg = 'No se pudo eliminar el comentario.';
       }
     });
   }
 
-  // ================== ESTRELLAS ==================
-  seleccionarEstrella(valor: number): void {
-    this.nuevaEstrella = valor;
+  seleccionarEstrella(v: number): void {
+    this.nuevaEstrella = v;
+  }
+
+  trackById(_: number, c: Comentario) {
+    return c.idcomentario;
   }
 }
