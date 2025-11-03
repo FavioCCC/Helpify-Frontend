@@ -195,12 +195,13 @@
   margin-bottom: 8px;
   color: var(--marron-titulos);
   font-size: 18px;
-  font-family: 'NATS', sans-serif;
+  font-family: "Play", sans-serif;
 }
 .faq-card p {
   margin-bottom: 14px;
   color: #4a2c12;
   font-size: 15px;
+  text-align: justify;
 }
 
 
