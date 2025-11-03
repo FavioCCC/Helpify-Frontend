@@ -18,6 +18,10 @@ export class ProyectoService {
     return this.httpCliente.get<Proyecto[]>(this.url + '/proyectos');
   }
 
+  obtenerPorId(id: number): Observable<Proyecto> {
+    return this.httpCliente.get<Proyecto>(`${this.url}/proyectos/${id}`);
+  }
+
   // Búsquedas de backend
   buscarPorNombre(nombre: string): Observable<Proyecto[]> {
     const params = new HttpParams().set('nombre', nombre);
@@ -32,5 +36,12 @@ export class ProyectoService {
   buscarPorAnioMes(anio: number, mes: number): Observable<Proyecto[]> {
     const params = new HttpParams().set('anio', String(anio)).set('mes', String(mes));
     return this.httpCliente.get<Proyecto[]>(this.url + '/proyectos/buscar/anio-mes', { params });
+  }
+  marcarWishlist(idProyecto: number, body: { userId: number }): Observable<any> {
+    return this.httpCliente.post(`${this.url}/proyectos/${idProyecto}/wishlist`, body);
+  }
+
+  inscribirme(idProyecto: number, body: { userId: number }): Observable<any> {
+    return this.httpCliente.post(`${this.url}/proyectos/${idProyecto}/inscripciones`, body);
   }
 }
