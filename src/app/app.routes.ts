@@ -5,6 +5,7 @@ import { ComentarioComponent } from './components/comentario/foro/comentario';
 import { Iniciarsesion } from './components/usuario/iniciarsesion/iniciarsesion';
 import { DonarComponent } from './components/donar/donar';
 import { PerfilComponent } from './components/usuario/perfil/perfil';
+import {PerfilEditar} from './components/usuario/perfil-editar/perfil-editar';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -15,6 +16,7 @@ export const routes: Routes = [
       .then(m => m.InfoProyecto)},
   { path: 'foros', component: ComentarioComponent },
   { path: 'perfil', component: PerfilComponent },
+  { path: 'perfil-editar', component: PerfilEditar},
   { path: 'login', component: Iniciarsesion },
   { path: 'donar', component: DonarComponent },
   { path: '**', redirectTo: '' }
