@@ -13,6 +13,7 @@ export const routes: Routes = [
   { path: 'home', component: Home },
   { path: 'perfil-editar', component: PerfilEditar },
   { path: 'proyectos', component: ListarProyectos },
+  { path: 'proyectos/nuevo', component: RegistroProyecto },
   { path: 'proyectos/:id',
     loadComponent: () => import('./components/proyecto/infoproyecto/infoproyecto')
       .then(m => m.InfoProyecto)},
