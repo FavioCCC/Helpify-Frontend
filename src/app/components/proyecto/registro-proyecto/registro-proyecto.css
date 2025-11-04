@@ -26,12 +26,6 @@
   font-size: 40px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
 input[type="text"],
 input[type="number"],
 input[type="date"],
@@ -50,6 +44,12 @@ input:focus {
   outline: none;
   border-color: #A36226;
   box-shadow: 0 0 4px #A36226;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .fileRow {
