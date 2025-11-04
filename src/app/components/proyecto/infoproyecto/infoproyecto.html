@@ -9,7 +9,7 @@
     <div class="izquierda">
       <img class="imagen" [src]="proyecto.imagen" [alt]="proyecto.nombreproyecto" />
       <div class="acciones">
-        <button class="btn editar">Modificar ✏️</button>
+        <button class="btn editar">Modificar✍️</button>
         <button class="btn eliminar">Eliminar ✖</button>
       </div>
     </div>
@@ -20,17 +20,17 @@
       <p class="descripcion">“{{ proyecto.descripcion }}”</p>
 
       <ul class="detalles">
-        <li>• <b>Monto objetivo:</b> S/. {{ proyecto.montoobjetivo }}</li>
-        <li>• <b>Monto recaudado:</b> S/. {{ proyecto.montorecaudado ?? 0 }}</li>
-        <li>• <b>Fecha inicio:</b> {{ proyecto.fechainicio | date:'dd \'de\' MMMM \'de\' yyyy' }}</li>
-        <li>• <b>Fecha fin:</b> {{ proyecto.fechafin   | date:'dd \'de\' MMMM \'de\' yyyy' }}</li>
-        <li>• <b>Nombre de la Organización:</b> {{ proyecto.nombreorganizacion || '—' }}</li>
-        <li>• <b>Escuela beneficiada:</b> {{ proyecto.escuelabeneficiada || '—' }}</li>
-        <li>• <b>Cupo máximo:</b> {{ proyecto.cupoMaximo ?? '—' }}</li>
+        <li>• Monto objetivo: S/. {{ proyecto.montoobjetivo }}</li>
+        <li>• Monto recaudado: S/. {{ proyecto.montorecaudado ?? 0 }}</li>
+        <li>• Fecha inicio: {{ proyecto.fechainicio | date:'dd \'de\' MMMM \'de\' yyyy' }}</li>
+        <li>• Fecha fin: {{ proyecto.fechafin   | date:'dd \'de\' MMMM \'de\' yyyy' }}</li>
+        <li>• Nombre de la Organización: {{ proyecto.nombreorganizacion || '—' }}</li>
+        <li>• Escuela beneficiada: {{ proyecto.escuelabeneficiada || '—' }}</li>
+        <li>• Cupo máximo: {{ proyecto.cupoMaximo ?? '—' }}</li>
       </ul>
 
       <div class="acciones-derecha">
-        <button class="btn inscribirme" (click)="inscribirme()">Deseo inscribirme ✏️</button>
+        <button class="btn inscribirme" (click)="inscribirme()">Deseo inscribirme✍️️</button>
         <button class="btn contribuir"  routerLink="/donar" >Deseo contribuir $ </button>
       </div>
     </div>

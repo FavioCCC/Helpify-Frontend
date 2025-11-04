@@ -31,7 +31,6 @@ export class ProyectoService {
       .pipe(tap(() => console.log('[PROYECTO SERVICE] GET /proyectos/', id)));
   }
 
-  // ✅ POST protegido: ahora SÍ manda Bearer
   crear(proyecto: Proyecto): Observable<any> {
     console.log('[PROYECTO SERVICE] POST /proyecto payload:', proyecto);
     return this.http.post(`${this.url}/proyecto`, proyecto, this.authOptions())
