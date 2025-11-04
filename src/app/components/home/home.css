@@ -277,3 +277,144 @@
   .btn-ver { font-size: .85rem; padding: .4rem .7rem; }
 }
 
+
+/* --- VARIABLES DE COLOR (Opcional, pero recomendado) --- */
+:root {
+  --color-fondo-principal: #f5f0e3; /* Crema/Amarillo claro del contenedor */
+  --color-texto-principal: #452d1f; /* Marrón oscuro para texto y títulos */
+  --color-borde-item: #e0d0b0; /* Borde suave */
+  --color-fondo-pagina: #e6c89c; /* Marrón/Melocotón claro exterior */
+}
+
+/* Estilo del Contenedor Principal (la sección que irá en el Home) */
+.donacion-section {
+  background-color: var(--color-fondo-pagina);
+  padding: 30px 0;
+  font-family: Arial, sans-serif; /* Usar la fuente de tu proyecto */
+}
+
+/* Título de la Sección */
+.donacion-title {
+  font-family: 'Rubik Mono One', sans-serif;
+  font-size: 2.5em;
+  text-align: center;
+  color: var(--color-texto-principal);
+  margin-bottom: 20px;
+  /* Ajusta la fuente si usas una fuente custom (como la de la imagen) */
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+/* Contenedor de las dos Columnas */
+.donacion-content {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--color-fondo-principal);
+  border-radius: 8px;
+
+  padding: 20px;
+}
+
+/* --- COLUMNA IZQUIERDA: ÍTEMS DE DONACIÓN --- */
+.donacion-items-list {
+  flex: 1.5; /* Ocupa más espacio que la columna derecha */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-right: 20px;
+}
+
+.donacion-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white; /* Fondo blanco dentro del item */
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid var(--color-borde-item);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.donacion-item p {
+  flex: 1;
+  margin: 0;
+  color: var(--color-texto-principal);
+  font-size: 1.05em;
+  font-family: 'NATS', sans-serif;
+}
+
+
+/* --- COLUMNA DERECHA: INSTRUCCIONES --- */
+.donacion-instructions {
+  flex: 1; /* Ocupa menos espacio */
+  padding-left: 20px;
+  border-left: 1px solid var(--color-borde-item);
+  color: var(--color-texto-principal);
+}
+
+.donacion-instructions h3 {
+  font-family: 'NATS', sans-serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.donacion-instructions ul {
+  list-style: disc;
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.donacion-instructions ul li {
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+
+/* --- Responsive (Ajuste para pantallas pequeñas) --- */
+@media (max-width: 850px) {
+  .donacion-content {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .donacion-items-list {
+    padding-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .donacion-instructions {
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px solid var(--color-borde-item);
+    padding-top: 20px;
+  }
+}
+/* Estilos para las imágenes pequeñas de los ítems (libros, útiles, etc.) */
+.item-img-icon {
+  /* Asegura que la imagen nunca supere el ancho de su contenedor (60px) */
+  max-width: 100%;
+  max-height: 60px; /* Limita la altura de la imagen a 60px */
+  width: auto;     /* Permite que el ancho se ajuste proporcionalmente */
+  height: 100%;    /* Permite que la altura se ajuste dentro del max-height */
+  object-fit: contain;
+}
+/* Y asegúrate de que el contenedor de la imagen tenga un tamaño fijo: */
+.item-image {
+  width: 80px;
+  height: 80px;
+  /* ... (otros estilos) ... */
+}
+
+/* Asegura que la imagen principal de la derecha ocupe el espacio */
+.acopio-image-container img {
+  position: relative;
+  max-width: 80%;
+  width: 300px;
+  height: 240px;
+  border-radius: 4px; /* Mantener bordes redondeados */
+  display: block; /* Eliminar espacios extra debajo de la imagen */
+}
+
