@@ -1,0 +1,22 @@
+<h1 class="titulo">USUARIO</h1>
+<div class="usuario-card">
+  <span class="icono">👤</span>
+  <span class="nombre">{{ nombreUsuario }}</span>
+</div>
+
+<h2 class="titulo">WISHLIST</h2>
+
+<div *ngIf="loading" class="mensaje">Cargando...</div>
+<div *ngIf="error" class="mensaje">{{ error }}</div>
+
+
+<section *ngIf="!loading && proyectos.length">
+  <div class="card" *ngFor="let p of proyectos">
+    <div class="texto">
+      <h3>{{ p.nombreproyecto }}</h3>
+      <p>"{{ p.descripcion }}"</p>
+    </div>
+    <button class="btn-ver" [routerLink]="['/proyecto-wishlist', p.idproyecto]">Ver más</button>
+  </div>
+</section>
+

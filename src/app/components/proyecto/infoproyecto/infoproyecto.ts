@@ -38,7 +38,31 @@ export class InfoProyecto implements OnInit {
     });
   }
 
-  marcarWishlist() {}
+  marcarWishlist() {
+    if (!this.proyecto?.idproyecto) return;
+
+    this.loading = true;
+    this.error = '';
+
+    this.proyectoService.agregarAWishlist(this.proyecto.idproyecto).subscribe({
+      next: () => {
+        alert('Proyecto añadido a tu wishlist');
+        this.router.navigate(['/wishlist']); // ajusta la ruta si tu página se llama distinto
+      },
+      error: (e) => {
+        if (e?.status === 401) {
+          this.error = 'Debes iniciar sesión para usar tu wishlist.';
+        } else if (e?.status === 403) {
+          this.error = 'Necesitas rol VOLUNTARIO o DONANTE para usar la wishlist.';
+        } else if (e?.status === 409) {
+          this.error = 'Este proyecto ya está en tu wishlist.';
+        } else {
+          this.error = 'No se pudo añadir a la wishlist.';
+        }
+      },
+      complete: () => this.loading = false
+    });
+  }
 
   confirmarInscripcion(): void {
     const ok = window.confirm('¿Confirmas que deseas inscribirte en este proyecto?');
