@@ -17,6 +17,12 @@ export const routes: Routes = [
   { path: 'proyectos/:id',
     loadComponent: () => import('./components/proyecto/infoproyecto/infoproyecto')
       .then(m => m.InfoProyecto)},
+  {
+    path: 'wishlist',
+    loadComponent: () => import('./components/wishlist/listar-wishlist/listar-wishlist')
+      .then(m => m.ListarWishlistComponent)
+  },
+
   { path: 'foros', component: ComentarioComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'login', component: Iniciarsesion },
