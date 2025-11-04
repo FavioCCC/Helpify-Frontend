@@ -12,7 +12,7 @@
   display: block;
   background: var(--anaranjado);
   font-family: 'Play', sans-serif;
-  color: var(--marron);
+  color: #6D4118;
   padding-bottom: 40px;
 }
 
@@ -21,16 +21,16 @@
   margin: 20px;
   width: 40px;
   height: 40px;
-  border: 2px solid var(--marron);
+  border: 2px solid #6D4118;
   border-radius: 50%;
   background: transparent;
-  color: var(--marron);
+  color: #6D4118;
   font-size: 20px;
   cursor: pointer;
   transition: 0.2s;
 }
 .back-btn:hover {
-  background: var(--marron);
+  background: #6D4118;
   color: var(--amarillo);
 }
 
@@ -38,9 +38,42 @@
 .titulo {
   text-align: center;
   font-family: 'Rubik Mono One', monospace;
-  color: var(--marron);
+  color: #6D4118;
   letter-spacing: 3px;
   margin: 0 0 20px 0;
+}
+
+/* ===== TARJETA DEL PROYECTO ===== */
+.proyecto-card {
+  background: var(--amarillo);
+  border: 2px solid #6D4118;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 20px 30px;
+  max-width: 1000px;
+  position: relative;
+}
+
+.izquierda {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.add-btn {
+  position: absolute;
+  top: 10px;
+  left: 18%;
+  transform: translateX(-50%);
+  background: #FFC2BD;
+  border: 2px solid #6D4118;
+  border-radius: 20px;
+  padding: 6px 18px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.add-btn:hover {
+  background: #ffb6b0;
 }
 
 /* ===== TARJETA DEL PROYECTO ===== */
@@ -54,23 +87,6 @@
   position: relative;
 }
 
-/* Botón Añadir arriba */
-.add-btn {
-  position: absolute;
-  top: 10px;
-  left: 20px;
-  background: var(--rosado);
-  border: none;
-  border-radius: 20px;
-  padding: 6px 18px;
-  font-family: 'NATS', sans-serif;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.add-btn:hover {
-  background: #ffb6b0;
-}
-
 /* ===== ESTRUCTURA ===== */
 .contenido {
   display: flex;
@@ -80,17 +96,14 @@
 }
 
 /* ===== IZQUIERDA ===== */
-.izquierda {
-  flex: 1;
-  text-align: center;
-}
 .imagen {
   width: 250px;
   height: 230px;
   object-fit: cover;
   border-radius: 5px;
-  margin-top: 30px;
+  margin-top: 40px; /* espacio para el botón encima */
 }
+
 .acciones {
   display: flex;
   justify-content: center;
@@ -103,6 +116,7 @@
   flex: 2;
   min-width: 300px;
 }
+
 .nombre {
   text-align: center;
   font-size: 32px;
@@ -111,17 +125,20 @@
   color: var(--marron);
   margin-bottom: 10px;
 }
+
 .descripcion {
   font-style: italic;
   text-align: justify;
   margin-bottom: 15px;
 }
+
 .detalles {
   list-style: none;
   padding: 0;
   line-height: 1.8;
   color: var(--marron);
 }
+
 .detalles b {
   color: var(--marron);
   font-weight: bold;
@@ -130,25 +147,31 @@
 /* ===== BOTONES ===== */
 .btn {
   background: var(--rosado);
-  border: none;
+  border: 2px solid #6D4118;
   border-radius: 20px;
   padding: 8px 20px;
   font-family: 'NATS', sans-serif;
   cursor: pointer;
   transition: 0.2s;
 }
+
 .btn:hover {
   transform: scale(1.05);
 }
+
 .btn.eliminar {
   background: #f8a9a7;
 }
+
 .btn.editar {
   background: var(--rosado);
 }
-.btn.inscribirme, .btn.contribuir {
+
+.btn.inscribirme,
+.btn.contribuir {
   background: var(--rosado);
 }
+
 .acciones-derecha {
   display: flex;
   justify-content: flex-end;
@@ -163,11 +186,21 @@
     flex-direction: column;
     align-items: center;
   }
+
   .acciones-derecha {
     justify-content: center;
   }
+
   .nombre {
     font-size: 26px;
+  }
+
+  .add-btn {
+    top: 8px;
+  }
+
+  .imagen {
+    margin-top: 35px;
   }
 }
 

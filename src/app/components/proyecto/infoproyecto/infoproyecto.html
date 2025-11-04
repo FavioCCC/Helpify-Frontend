@@ -9,18 +9,8 @@
     <div class="izquierda">
       <img class="imagen" [src]="proyecto.imagen" [alt]="proyecto.nombreproyecto" />
       <div class="acciones">
-        <a class="btn editar" routerLink="/perfil-editar">Modificar ✏️</a>
-        <button class="btn eliminar btn-secondary" (click)="eliminarCuenta()">Eliminar ✖</button>
-      </div>
-
-      <div *ngIf="mostrarModalConfirmacion" class="modal-overlay">
-        <div class="modal-dialog">
-          <p class="modal-pregunta">¿Está seguro de eliminar este proyecto?</p>
-          <div class="modal-botones">
-            <button class="btn btn-confirmar" (click)="confirmarEliminacion()">Sí</button>
-            <button class="btn btn-cancelar" (click)="cancelarEliminacion()">No</button>
-          </div>
-        </div>
+        <button class="btn editar">Modificar ✏️</button>
+        <button class="btn eliminar">Eliminar ✖</button>
       </div>
     </div>
 
