@@ -43,17 +43,6 @@
   margin: 0 0 20px 0;
 }
 
-/* ===== TARJETA DEL PROYECTO ===== */
-.proyecto-card {
-  background: var(--amarillo);
-  border: 2px solid var(--marron);
-  border-radius: 5px;
-  margin: 0 auto;
-  padding: 20px 30px;
-  max-width: 1000px;
-  position: relative;
-}
-
 /* Botón Añadir arriba */
 .add-btn {
   position: absolute;
@@ -69,6 +58,17 @@
 }
 .add-btn:hover {
   background: #ffb6b0;
+}
+
+/* ===== TARJETA DEL PROYECTO ===== */
+.proyecto-card {
+  background: var(--amarillo);
+  border: 2px solid var(--marron);
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 20px 30px;
+  max-width: 1000px;
+  position: relative;
 }
 
 /* ===== ESTRUCTURA ===== */

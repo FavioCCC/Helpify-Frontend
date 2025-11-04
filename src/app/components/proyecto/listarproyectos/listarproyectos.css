@@ -50,6 +50,13 @@ body{ font-family: 'Play', system-ui, sans-serif; }
 }
 .filter-field input::placeholder{ color:#b99266; }
 
+/* icono del ojo */
+.icon-eye{
+  width: 20px;
+  height: 20px;
+  fill: #000000;
+}
+
 /* Botón Buscar centrado */
 /* acciones centradas con separación */
 .filter-actions{
@@ -86,13 +93,6 @@ body{ font-family: 'Play', system-ui, sans-serif; }
   align-items: center;
   gap: 8px;
   text-decoration: none;             /* quitar subrayado*/
-}
-
-/* icono del ojo */
-.icon-eye{
-  width: 20px;
-  height: 20px;
-  fill: #000000;
 }
 
 /* ===== Listado ===== */
