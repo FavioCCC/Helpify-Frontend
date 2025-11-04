@@ -57,8 +57,12 @@ export class ProyectoService {
     return this.http.get<Proyecto[]>(`${this.url}/buscar/anio-mes`, { ...this.authOptions(), params });
   }
 
-  marcarWishlist(idProyecto: number, body: { userId: number }): Observable<any> {
-    return this.http.post(`${this.url}/proyectos/${idProyecto}/wishlist`, body, this.authOptions());
+  agregarAWishlist(idProyecto: number): Observable<void> {
+    return this.http.post<void>(`${this.url}/wishlist/agregar/${idProyecto}`, null, this.authOptions());
+  }
+
+  obtenerWishlist(): Observable<Proyecto[]> {
+    return this.http.get<Proyecto[]>(`${this.url}/wishlist`, this.authOptions());
   }
 
   inscribirme(idProyecto: number): Observable<any> {
