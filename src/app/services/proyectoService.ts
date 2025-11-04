@@ -31,6 +31,7 @@ export class ProyectoService {
       .pipe(tap(() => console.log('[PROYECTO SERVICE] GET /proyectos/', id)));
   }
 
+  // POST
   crear(proyecto: Proyecto): Observable<any> {
     console.log('[PROYECTO SERVICE] POST /proyecto payload:', proyecto);
     return this.http.post(`${this.url}/proyecto`, proyecto, this.authOptions())
@@ -60,7 +61,10 @@ export class ProyectoService {
     return this.http.post(`${this.url}/proyectos/${idProyecto}/wishlist`, body, this.authOptions());
   }
 
-  inscribirme(idProyecto: number, body: { userId: number }): Observable<any> {
-    return this.http.post(`${this.url}/proyectos/${idProyecto}/inscripciones`, body, this.authOptions());
+  inscribirme(idProyecto: number): Observable<any> {
+    const opts = this.authOptions();
+    console.log('[INSCRIPCION] headers', (opts as any).headers?.keys?.());
+    console.log('[INSCRIPCION] Authorization', (opts as any).headers?.get?.('Authorization'));
+    return this.http.post(`${this.url}/inscripcion/${idProyecto}`, null, opts);
   }
 }
