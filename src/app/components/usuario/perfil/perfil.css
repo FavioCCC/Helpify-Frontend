@@ -128,11 +128,9 @@
 
 /* 1. Fondo Oscuro (Overlay) */
 .modal-overlay {
-  /* CAMBIO CLAVE: Usar 'fixed' para cubrir el viewport */
   position: fixed;
   top: 0;
   left: 0;
-  /* Aseguran que cubra todo el viewport */
   width: 100%;
   height: 100%;
 

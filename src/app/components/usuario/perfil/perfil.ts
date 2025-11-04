@@ -91,10 +91,10 @@ export class PerfilComponent implements OnInit {
 // 4. Función que se llamará cuando el usuario presione 'Sí' en el modal
   confirmarEliminacion(): void {
     if (!this.usuario) return;
-    if (confirm('¿Eliminar su cuenta de forma permanente?')) {
+    if (confirm('¿Eliminar su cuenta de manera permanente?')) {
       this.perfilService.eliminarCuenta(this.usuario.idusuario).subscribe({
         next: () => { this.auth.logout(); this.router.navigate(['/']); },
-        error: () => alert('No se pudo eliminar la cuenta.')
+        error: () => alert('No se pudo eliminar su cuenta cuenta.')
       });
     }
   }
