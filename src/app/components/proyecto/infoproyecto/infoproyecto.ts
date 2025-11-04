@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProyectoService } from '../../../services/proyectoService';
-import { Proyecto } from '../../../models/proyecto'; // ⬅ importa tu model
+import { Proyecto } from '../../../models/proyecto';
 
 @Component({
   selector: 'app-info-proyecto',
@@ -15,7 +15,7 @@ export class InfoProyecto implements OnInit {
   private route = inject(ActivatedRoute);
   private proyectoService = inject(ProyectoService);
 
-  proyecto: Proyecto | null = null;   // ⬅ tipado real
+  proyecto: Proyecto | null = null;
   loading = false;
   error = '';
 
@@ -35,6 +35,6 @@ export class InfoProyecto implements OnInit {
     });
   }
 
-  marcarWishlist() { /* opcional */ }
-  inscribirme() { /* opcional */ }
+  marcarWishlist() {  }
+  inscribirme() {  }
 }
