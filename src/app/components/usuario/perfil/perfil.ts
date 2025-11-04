@@ -3,10 +3,8 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { Usuario } from '../../../models/usuario';
-import {PerfilService} from '../../../services/perfil-service';
-import {catchError, finalize, of} from 'rxjs';
-import {IniciarsesionService} from '../../../services/inicarsesion-service';
-
+import { PerfilService } from '../../../services/perfil-service';
+import { IniciarsesionService } from '../../../services/inicarsesion-service';
 
 @Component({
   selector: 'app-perfil',
@@ -21,6 +19,9 @@ export class PerfilComponent implements OnInit {
   usuario?: Usuario;
   error = '';
 
+  // Modal
+  mostrarModalConfirmacion = false;
+
   constructor(
     private auth: IniciarsesionService,
     private perfilService: PerfilService,
@@ -28,23 +29,29 @@ export class PerfilComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // 1) ¿Hay token?
+    // ★ Si no hay sesión, manda al login de inmediato
     this.logeado = this.auth.isLoggedIn();
-    if (!this.logeado) { this.cargando = false; return; }
+    if (!this.logeado) {
+      this.cargando = false;
+      this.router.navigate(['/login'], {
+        queryParams: { redirect: '/perfil' },
+        replaceUrl: true
+      });
+      return;
+    }
 
-    // 2) Pinta de inmediato con lo que ya guardaste en el login
+    // Pinta con lo que quedó del login
     this.pintarDesdeLocal();
-    this.cargando = false; // no te quedes en "Cargando..."
+    this.cargando = false;
 
-    // 3) (Opcional) Refresca desde el backend SIN romper la UI si falla
+    // Refresca desde backend (no rompe la UI si falla)
     this.perfilService.getPerfilActual().subscribe({
       next: (u) => {
         if (!u) return;
         if (u.fecharegistro) u.fecharegistro = new Date(u.fecharegistro as any);
-        this.usuario = u; // actualiza con lo más nuevo del server
+        this.usuario = u;
       },
       error: (e) => {
-        // No cambies la vista; ya está pintada con localStorage
         console.warn('No se pudo refrescar /usuario/me:', e?.status || e);
       }
     });
@@ -58,46 +65,51 @@ export class PerfilComponent implements OnInit {
         fecharegistro: local.fecharegistro ? new Date(local.fecharegistro) : (undefined as any)
       };
     } else {
-      // Si por algún motivo no hay usuario guardado, fuerza el estado "no logueado"
+      // ★ Sin usuario en storage → fuerza estado no logueado y redirige
       this.logeado = false;
-    }
-  }
-
-  cerrarSesion(): void {
-    this.auth.logout();
-    this.router.navigate(['/login']);
-  }
-
-
-  irALogin(): void {
-    this.router.navigate(['/login'], { queryParams: { redirect: '/' } });
-  }
-// 1. Variable para controlar el modal
-  mostrarModalConfirmacion: boolean = false;
-
-// ... (otras funciones)
-
-// 2. Modifica esta función para mostrar el modal
-  eliminarCuenta(): void {
-    // En lugar de llamar al servicio de eliminación, mostramos el modal
-    this.mostrarModalConfirmacion = true;
-  }
-
-// 3. Función para cerrar el modal (si el usuario presiona 'No' o fuera del modal)
-  cancelarEliminacion(): void {
-    this.mostrarModalConfirmacion = false;
-  }
-
-// 4. Función que se llamará cuando el usuario presione 'Sí' en el modal
-  confirmarEliminacion(): void {
-    if (!this.usuario) return;
-    if (confirm('¿Eliminar su cuenta de manera permanente?')) {
-      this.perfilService.eliminarCuenta(this.usuario.idusuario).subscribe({
-        next: () => { this.auth.logout(); this.router.navigate(['/']); },
-        error: () => alert('No se pudo eliminar su cuenta cuenta.')
+      this.router.navigate(['/login'], {
+        queryParams: { redirect: '/perfil' },
+        replaceUrl: true
       });
     }
   }
 
+  // ★ Cerrar sesión: limpia estado y al login
+  cerrarSesion(): void {
+    this.auth.logout();
+    this.usuario = undefined;
+    this.logeado = false;
+    this.router.navigate(['/login'], { replaceUrl: true });
+  }
 
+  irALogin(): void {
+    this.router.navigate(['/login'], { queryParams: { redirect: '/perfil' } });
+  }
+
+  eliminarCuenta(): void {
+    this.mostrarModalConfirmacion = true;
+  }
+
+  cancelarEliminacion(): void {
+    this.mostrarModalConfirmacion = false;
+  }
+
+  // ★ Confirmar eliminación: borra, limpia estado y al login
+  confirmarEliminacion(): void {
+    if (!this.usuario?.idusuario) return;
+
+    this.perfilService.eliminarCuenta(this.usuario.idusuario).subscribe({
+      next: () => {
+        this.mostrarModalConfirmacion = false;
+        this.auth.logout();
+        this.usuario = undefined;
+        this.logeado = false;
+        this.router.navigate(['/login'], { replaceUrl: true });
+      },
+      error: () => {
+        alert('No se pudo eliminar su cuenta.');
+        this.mostrarModalConfirmacion = false;
+      }
+    });
+  }
 }

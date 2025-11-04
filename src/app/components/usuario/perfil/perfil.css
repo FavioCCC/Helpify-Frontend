@@ -46,6 +46,14 @@
   margin: 0;
 }
 
+/* Botones generales */
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
 /* Datos centrados */
 .datos {
   font-family: 'Play', sans-serif;
@@ -64,14 +72,6 @@
 
 .datos strong {
   font-weight: 700;
-}
-
-/* Botones generales */
-.acciones {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
 }
 
 .btn {
