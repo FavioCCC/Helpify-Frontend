@@ -68,7 +68,28 @@ export class PerfilComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+
+  irALogin(): void {
+    this.router.navigate(['/login'], { queryParams: { redirect: '/' } });
+  }
+// 1. Variable para controlar el modal
+  mostrarModalConfirmacion: boolean = false;
+
+// ... (otras funciones)
+
+// 2. Modifica esta función para mostrar el modal
   eliminarCuenta(): void {
+    // En lugar de llamar al servicio de eliminación, mostramos el modal
+    this.mostrarModalConfirmacion = true;
+  }
+
+// 3. Función para cerrar el modal (si el usuario presiona 'No' o fuera del modal)
+  cancelarEliminacion(): void {
+    this.mostrarModalConfirmacion = false;
+  }
+
+// 4. Función que se llamará cuando el usuario presione 'Sí' en el modal
+  confirmarEliminacion(): void {
     if (!this.usuario) return;
     if (confirm('¿Eliminar su cuenta de forma permanente?')) {
       this.perfilService.eliminarCuenta(this.usuario.idusuario).subscribe({
@@ -77,11 +98,6 @@ export class PerfilComponent implements OnInit {
       });
     }
   }
-
-  irALogin(): void {
-    this.router.navigate(['/login'], { queryParams: { redirect: '/' } });
-  }
-
 
 
 }

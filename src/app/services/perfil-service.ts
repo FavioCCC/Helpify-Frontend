@@ -22,6 +22,14 @@ export class PerfilService {
     });
   }
 
+  crearPerfil(nuevoUsuario: Omit<Usuario, "idusuario" | "fecharegistro"> & { password: string }): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.api}/usuario`, nuevoUsuario, {
+        withCredentials: true
+    });
+
+  }
+
+
   actualizarPerfil(usuario: Usuario): Observable<Usuario> {
     const token = this.auth.getToken() || '';
     return this.http.put<Usuario>(`${this.api}/usuario`, usuario, {
