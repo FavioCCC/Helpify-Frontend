@@ -6,7 +6,6 @@ import { Iniciarsesion } from './components/usuario/iniciarsesion/iniciarsesion'
 import { DonarComponent } from './components/donar/donar';
 import { PerfilComponent } from './components/usuario/perfil/perfil';
 import {PerfilEditar} from './components/usuario/perfil-editar/perfil-editar';
-import {PerfilCrear} from './components/usuario/crearperfil/crearperfil';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,6 +19,5 @@ export const routes: Routes = [
   { path: 'perfil-editar', component: PerfilEditar},
   { path: 'login', component: Iniciarsesion },
   { path: 'donar', component: DonarComponent },
-  {path: 'crearperfil', component: PerfilCrear},
   { path: '**', redirectTo: '' }
 ];

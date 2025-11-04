@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=NATS&family=Play&family=Rubik+Mono+One&display=swap');
+
+:host {
+  display: block;
+  background: #f6d4ad;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+.wrap {
+  max-width: 800px;        /* centrado más angosto */
+  margin: 40px auto;       /* centra horizontal y agrega espacio arriba */
+  background: #FFEAAA;
+  border: 2px solid #6D4118;
+  padding: 24px 32px;      /* padding equilibrado */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.titulo {
+  font-family: "Rubik Mono One", sans-serif;
+  text-align: center;
+  letter-spacing: 2px;
+  color: #6D4118;
+  margin-bottom: 24px;
+  font-size: 40px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="file"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  border: 2px solid #6D4118;
+  background: #ffffff;
+  font-family: "Play", sans-serif;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #A36226;
+  box-shadow: 0 0 4px #A36226;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  font-family: "Play", sans-serif;
+  color: #6D4118;
+  margin-top: 8px;
+}
+
+button {
+  align-self: center;
+  margin-top: 14px;
+  padding: 10px 28px;
+  border-radius: 999px;
+  border: 2px solid #6D4118;
+  background: #FFC2BD;
+  font-family: "NATS", sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .wrap {
+    margin: 20px;
+    padding: 20px;
+  }
+}
