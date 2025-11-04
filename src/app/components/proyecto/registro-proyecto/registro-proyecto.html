@@ -1,0 +1,24 @@
+<div class="wrap">
+  <h1 class="titulo">INFORMACIÓN DEL PROYECTO</h1>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="card">
+    <input class="in" type="text" placeholder="Nombre del proyecto*" formControlName="nombreproyecto" />
+    <input class="in" type="text" placeholder="Descripción*" formControlName="descripcion" />
+    <input class="in" type="number" placeholder="Monto objetivo*" formControlName="montoobjetivo" />
+    <input class="in" type="number" placeholder="Monto recaudado" formControlName="montorecaudado" />
+
+    <input type="date" placeholder="Fecha inicio*" formControlName="fechainicio" />
+    <input type="date" placeholder="Fecha fin*" formControlName="fechafin" />
+
+    <input class="in" type="text" placeholder="Nombre de la Organización*" formControlName="nombreorganizacion" />
+    <input class="in" type="text" placeholder="Escuela beneficiada*" formControlName="escuelabeneficiada" />
+    <input class="in" type="number" placeholder="Cupo máximo*" formControlName="cupoMaximo" />
+
+    <div class="fileRow">
+      <label>Imagen</label>
+      <input type="file" accept="image/*" (change)="onFileChange($event)" />
+    </div>
+
+    <button class="btn" type="submit" [disabled]="enviando">Crear</button>
+  </form>
+</div>
