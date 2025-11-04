@@ -62,19 +62,6 @@
 .mat-ripple-element {
   background-color: rgba(109, 65, 24, 0.15) !important; /* marrón translúcido */
 }
-
-/* === TÍTULO === */
-.title {
-  text-align: center;
-  font-size: 44px;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-family: 'Rubik Mono One', monospace;
-}
-
 /* ===== BOTÓN VOLVER ===== */
 .back-btn {
   margin: 20px;
@@ -88,6 +75,19 @@
   cursor: pointer;
   transition: 0.2s;
 }
+
+/* === TÍTULO === */
+.title {
+  text-align: center;
+  font-size: 44px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Rubik Mono One', monospace;
+}
+
 .back-btn:hover {
   background: var(--marron);
   color: var(--amarillo);
