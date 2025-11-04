@@ -4,41 +4,43 @@
     <p>Cargando...</p>
   </div>
 </section>
+    <!-- Estado: No logeado -->
+    <section *ngIf="!cargando && logeado && usuario" class="perfil-wrapper">
+      <div class="perfil-card">
 
-<!-- Estado: No logueado -->
-<section *ngIf="!cargando && !logeado" class="perfil-wrapper">
-  <div class="perfil-card sin-sesion">
-    <p class="mensaje">No pudimos obtener los datos del perfil.</p>
-    <button class="btn" (click)="irALogin()">Iniciar sesión</button>
-  </div>
-</section>
+        <div class="titulo-container">
+          <div class="avatar">👤</div>
+          <h2 class="titulo">MI PERFIL</h2>
+        </div>
 
-<!-- Estado: Logueado y con datos -->
-<section *ngIf="!cargando && logeado && usuario" class="perfil-wrapper">
-  <div class="perfil-card">
-    <div class="titulo-container">
-      <div class="avatar">👤</div>
-      <h2 class="titulo">MI PERFIL</h2>
-    </div>
+        <div class="datos">
+          <p><strong>Documento:</strong> {{ usuario.nombredocumento }} - {{ usuario.numerodocumento }}</p>
+          <p><strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellidopaterno }} {{ usuario.apellidomaterno }}</p>
+          <p><strong>Teléfono:</strong> {{ usuario.celular }}</p>
+          <p><strong>Correo:</strong> {{ usuario.correo }}</p>
+          <p><strong>Contraseña:</strong> Por seguridad no se puede mostrar la contraseña</p>
+          <p><strong>Fecha de registro:</strong> {{ usuario.fecharegistro | date:'dd/MM/yyyy' }}</p>
+          <p><strong>Rol:</strong> Administrador</p>
+        </div>
 
-    <div class="datos">
-      <p><strong>Documento:</strong> {{ usuario.nombredocumento }} - {{ usuario.numerodocumento }}</p>
-      <p><strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellidopaterno }} {{ usuario.apellidomaterno }}</p>
-      <p><strong>Teléfono:</strong> {{ usuario.celular }}</p>
-      <p><strong>Correo:</strong> {{ usuario.correo }}</p>
-      <p><strong>Contraseña:</strong> Por seguridad no se puede mostrar la contraseña</p>
-      <p><strong>Fecha de registro:</strong> {{ usuario.fecharegistro | date:'dd/MM/yyyy' }}</p>
-    </div>
+        <div class="acciones">
+          <a class="btn" routerLink="/perfil-editar">Actualizar</a>
+          <button class="btn btn-secondary" (click)="eliminarCuenta()">Eliminar</button>
+        </div>
 
-    <!-- ÚNICO bloque de acciones -->
-    <div class="acciones">
-      <a class="btn" routerLink="/perfil-editar">Actualizar</a>
-      <button class="btn btn-secondary" (click)="eliminarCuenta()">Eliminar</button>
-    </div>
+        <div class="acciones cerrar-sesion">
+          <button class="btn btn-logout" (click)="cerrarSesion()">Cerrar sesión</button>
+        </div>
 
-    <!-- Cerrar sesión -->
-    <div class="acciones cerrar-sesion">
-      <button class="btn btn-logout" (click)="cerrarSesion()">Cerrar sesión</button>
-    </div>
-  </div>
-</section>
+        <div *ngIf="mostrarModalConfirmacion" class="modal-overlay">
+          <div class="modal-dialog">
+            <p class="modal-pregunta">¿Estás seguro de eliminar tu perfil?</p>
+            <div class="modal-botones">
+              <button class="btn btn-confirmar" (click)="confirmarEliminacion()">Sí</button>
+              <button class="btn btn-cancelar" (click)="cancelarEliminacion()">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
