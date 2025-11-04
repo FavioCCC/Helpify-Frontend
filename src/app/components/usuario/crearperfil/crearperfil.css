@@ -7,6 +7,11 @@
   --blanco: #FFFFFF;
 }
 
+/* === CORRIGE SUPERPOSICIÓN (para que aparezca arriba del form) === */
+.cdk-overlay-container {
+  z-index: 2000 !important;
+}
+
 /* === CONTENEDOR PRINCIPAL === */
 .perfil-card {
   max-width: 750px;
@@ -15,11 +20,6 @@
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   background-color: #6D4118;
-}
-
-/* === CORRIGE SUPERPOSICIÓN (para que aparezca arriba del form) === */
-.cdk-overlay-container {
-  z-index: 2000 !important;
 }
 
 /* === ESTILO DEL MENÚ DESPLEGABLE mat-select === */
