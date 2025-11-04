@@ -6,10 +6,12 @@ import { Iniciarsesion } from './components/usuario/iniciarsesion/iniciarsesion'
 import { DonarComponent } from './components/donar/donar';
 import { PerfilComponent } from './components/usuario/perfil/perfil';
 import { RegistroProyecto } from './components/proyecto/registro-proyecto/registro-proyecto';
+import {PerfilEditar} from './components/usuario/perfil-editar/perfil-editar';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: Home },
+  { path: 'perfil-editar', component: PerfilEditar },
   { path: 'proyectos', component: ListarProyectos },
   { path: 'proyectos/nuevo', component: RegistroProyecto },
   { path: 'proyectos/:id', loadComponent: () =>
