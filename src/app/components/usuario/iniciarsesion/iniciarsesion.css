@@ -82,19 +82,10 @@ body{ font-family: 'Play', system-ui, sans-serif; }
   font-size: 0.95rem;
 }
 
-
 .form-actions{
   display: flex;
   justify-content: center;
   margin-top: 8px;
-}
-
-/* ===== Botones ===== */
-/* Contenedor del botón ENVIAR */
-.form-actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 14px;
 }
 
 /* Botones generales */
@@ -114,6 +105,14 @@ body{ font-family: 'Play', system-ui, sans-serif; }
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+}
+
+/* ===== Botones ===== */
+/* Contenedor del botón ENVIAR */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
 }
 
 /* “ENVIAR” centrado */
