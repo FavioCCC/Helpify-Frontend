@@ -1,0 +1,65 @@
+<button class="back-btn" [routerLink]="['/perfil']" aria-label="Volver">←</button>
+<mat-card class="perfil-card">
+  <mat-card-title class="title">ACTUALIZAR PERFIL</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="perfilForm" class="form-container" (ngSubmit)="onSubmit()">
+
+      <!-- Tipo de documento -->
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Tipo de documento</mat-label>
+        <mat-select formControlName="nombredocumento">
+          <mat-option value="DNI">DNI</mat-option>
+          <mat-option value="CE">Carnet de Extranjería</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Número de documento -->
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Número de documento</mat-label>
+        <input matInput formControlName="numerodocumento" placeholder="Ingrese su número de documento" />
+      </mat-form-field>
+
+      <!-- Nombre -->
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" placeholder="Ingrese su nombre" />
+      </mat-form-field>
+
+      <!-- Apellido paterno -->
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Apellido paterno</mat-label>
+        <input matInput formControlName="apellidopaterno" placeholder="Ingrese su apellido paterno" />
+      </mat-form-field>
+
+      <!-- Apellido materno -->
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Apellido materno</mat-label>
+        <input matInput formControlName="apellidomaterno" placeholder="Ingrese su apellido materno" />
+      </mat-form-field>
+
+      <!-- Número de celular -->
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Número de celular</mat-label>
+        <input matInput type="tel" formControlName="celular" placeholder="Ingrese su número de celular" />
+      </mat-form-field>
+
+      <!-- Correo electrónico -->
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput type="email" formControlName="correo" placeholder="Ingrese su correo electrónico" />
+      </mat-form-field>
+
+      <!-- Contraseña NO SE ESTÁ SEGURO DE INCLUIR
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="contrasena" placeholder="Ingrese su contraseña" />
+      </mat-form-field>-->
+
+      <div class="boton-container">
+        <button type="submit" mat-raised-button color="accent" [disabled]="!perfilForm.valid">
+          ENVIAR
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
