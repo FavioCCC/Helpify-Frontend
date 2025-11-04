@@ -1,0 +1,181 @@
+/* ===== PALETA ===== */
+:root {
+  --marron: #6D4118;
+  --rosado: #FFC2BD;
+  --anaranjado: #FAC99B;
+  --amarillo: #FFEAAA;
+  --blanco: #FFFFFF;
+}
+
+/* === CONTENEDOR PRINCIPAL === */
+.perfil-card {
+  max-width: 750px;
+  margin: 60px auto;
+  padding: 24px 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  background-color: #6D4118;
+}
+
+/* === CORRIGE SUPERPOSICIÓN (para que aparezca arriba del form) === */
+.cdk-overlay-container {
+  z-index: 2000 !important;
+}
+
+/* === ESTILO DEL MENÚ DESPLEGABLE mat-select === */
+.mat-mdc-select-panel,
+.mat-select-panel {
+  background-color: #fff8ec !important; /* fondo beige claro */
+  border: 2px solid #6D4118 !important; /* borde marrón oscuro */
+  border-radius: 8px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  color: #4b2e14 !important; /* texto marrón oscuro */
+  z-index: 2000 !important;
+}
+
+/* === OPCIONES DENTRO DEL MENÚ === */
+.mat-mdc-option,
+.mdc-list-item {
+  color: #4b2e14 !important; /* texto marrón oscuro */
+  font-weight: 500;
+  background-color: #FBE7B2 !important;
+  transition: background-color 0.2s ease;
+  font-family: "Play", sans-serif;
+}
+
+/* === EFECTO HOVER === */
+.mat-mdc-option:hover,
+.mdc-list-item:hover {
+  background-color: #F2C4B3 !important; /* rosa pastel */
+  color: #6D4118 !important;
+}
+
+/* === OPCIÓN SELECCIONADA === */
+.mdc-list-item--selected,
+.mat-mdc-option-active {
+  background-color: #FBE7B2 !important; /* beige cálido */
+  color: #6D4118 !important;
+  font-weight: 600;
+}
+
+/* === QUITA LA TRANSPARENCIA DEL RIPPLE (onda al hacer clic) === */
+.mat-ripple-element {
+  background-color: rgba(109, 65, 24, 0.15) !important; /* marrón translúcido */
+}
+
+/* === TÍTULO === */
+.title {
+  text-align: center;
+  font-size: 44px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Rubik Mono One', monospace;
+}
+
+/* ===== BOTÓN VOLVER ===== */
+.back-btn {
+  margin: 20px;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--marron);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--marron);
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.back-btn:hover {
+  background: var(--marron);
+  color: var(--amarillo);
+}
+
+/* === FORMULARIO === */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* === CAMPOS === */
+mat-form-field.full-width {
+  width: 100%;
+}
+
+mat-label {
+  font-weight: 500;
+  font-size: 20px;
+  color: white;
+}
+
+input[matInput],
+mat-select {
+  font-size: 22px;
+  color: var(--marron);
+  padding-left: 5px;
+  background-color: var(--amarillo);
+  height: 40px;
+}
+
+mat-option {
+  font-size: 20px;
+  color: var(--rosado);
+  background: var(--amarillo);
+}
+
+/* === BOTÓN ENVIAR === */
+.boton-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+button[mat-raised-button] {
+  width: 20%;
+  padding: 10px 0;
+  font-weight: 600;
+  font-size: 22px;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+  font-family: 'NATS', sans-serif;
+}
+
+/* === EFECTOS VISUALES === */
+button[mat-raised-button][color="accent"] {
+  background-color: #FFC2BD;
+  color: #6D4118;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[mat-raised-button][color="accent"]:hover {
+  background-color: #FFC2BD;
+  color: white;
+}
+/* Contenedor general del formulario para espaciado */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espacio entre todos los campos */
+}
+
+/* Estilos para el checkbox y su error */
+.checkbox-container {
+  margin-top: 10px; /* Espacio superior para separarlo del campo anterior */
+  margin-bottom: 20px; /* Espacio inferior para separarlo del botón */
+  display: flex; /* Para alinear el error debajo si es necesario */
+  flex-direction: column;
+}
+
+/* Estilo para el mensaje de error del checkbox */
+.terminos-error {
+  /* Asegura que el error use el color estándar de Material (rojo) */
+  color: #f44336;
+  /* Reduce un poco el tamaño de fuente para que no sea tan dominante como el error de mat-form-field */
+  font-size: 12px;
+  /* Alinea el texto para que coincida con el borde del checkbox */
+  margin-left: 24px;
+  margin-top: 4px;
+}
