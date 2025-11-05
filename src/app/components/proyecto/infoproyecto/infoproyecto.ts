@@ -22,9 +22,17 @@ export class InfoProyecto implements OnInit {
   yaInscrito = false;
   necesitaUniversitario = false;
 
+  // PROPIEDADES DE ESTADO PARA MODALES Y MENSAJES
+  mensajeExito: string = '';
+  mostrarConfirmacionEliminar: boolean = false; // Controla el modal de eliminación
+  mostrarConfirmacionInscripcion: boolean = false; // Controla el modal de inscripción
+
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (!Number.isFinite(id)) { this.error = 'Proyecto inválido.'; return; }
+    if (!Number.isFinite(id)) {
+      this.error = 'Proyecto inválido.';
+      return;
+    }
     this.cargar(id);
   }
 
@@ -33,8 +41,12 @@ export class InfoProyecto implements OnInit {
     this.error = '';
     this.proyectoService.obtenerPorId(id).subscribe({
       next: (p) => this.proyecto = p,
-      error: () => { this.error = 'No se pudo cargar el proyecto.'; },
-      complete: () => { this.loading = false; }
+      error: () => {
+        this.error = 'No se pudo cargar el proyecto.';
+      },
+      complete: () => {
+        this.loading = false;
+      }
     });
   }
 
@@ -43,11 +55,11 @@ export class InfoProyecto implements OnInit {
 
     this.loading = true;
     this.error = '';
+    this.mensajeExito = '';
 
     this.proyectoService.agregarAWishlist(this.proyecto.idproyecto).subscribe({
       next: () => {
-        alert('Proyecto añadido a tu wishlist');
-        this.router.navigate(['/wishlist']); // ajusta la ruta si tu página se llama distinto
+        this.mensajeExito = '¡Proyecto añadido a tu wishlist!';
       },
       error: (e) => {
         if (e?.status === 401) {
@@ -65,18 +77,21 @@ export class InfoProyecto implements OnInit {
   }
 
   confirmarInscripcion(): void {
+
     const ok = window.confirm('¿Confirmas que deseas inscribirte en este proyecto?');
+
     if (!ok) return; // Se queda en la misma página
+
     this.realizarInscripcion();
+
   }
+
 
   private realizarInscripcion(): void {
     if (!this.proyecto?.idproyecto) return;
-
     this.loading = true;
     this.error = '';
     this.necesitaUniversitario = false; // resetea antes del intento
-
     this.proyectoService.inscribirme(this.proyecto.idproyecto).subscribe({
       next: () => {
         alert('¡Inscripción exitosa!');
@@ -86,8 +101,8 @@ export class InfoProyecto implements OnInit {
         if (e?.status === 401) {
           this.error = 'Debes iniciar sesión nuevamente.';
         } else if (e?.status === 403) {
-          // Puede ser falta de rol o falta de ficha Universitario.
-          // El backend ya envía un mensaje claro; además, activamos bandera UI.
+// Puede ser falta de rol o falta de ficha Universitario.
+// El backend ya envía un mensaje claro; además, activamos bandera UI.
           this.necesitaUniversitario = true;
           this.error = e?.error?.message ?? 'Debes registrarte como Universitario para inscribirte.';
         } else if (e?.status === 409) {
@@ -100,4 +115,70 @@ export class InfoProyecto implements OnInit {
       complete: () => this.loading = false
     });
   }
-}
+
+    /**
+     * Muestra el diálogo de confirmación de eliminación (para modal).
+     */
+    confirmarEliminacion()
+  :
+    void {
+
+      if(!
+    this.proyecto?.idproyecto
+  )
+    return;
+
+    this.loading = true;
+    this.error = '';
+    this.mensajeExito = '';
+    this.mostrarConfirmacionEliminar = false; // Oculta el modal al iniciar la eliminación
+
+    this.proyectoService.eliminarProyecto(this.proyecto.idproyecto).subscribe({
+      next: () => {
+        // Mensaje de éxito del sistema y redirección
+        this.mensajeExito = 'Proyecto eliminado correctamente. Redirigiendo...';
+        setTimeout(() => this.router.navigate(['/proyectos']), 1500);
+      },
+      error: (e) => {
+        // Lógica para mostrar mensajes de error específicos del sistema
+        if (e?.status === 401) {
+          this.error = 'Error de eliminación: Debes iniciar sesión para realizar esta acción.';
+        } else if (e?.status === 403) {
+          this.error = 'Error de eliminación: No tienes el rol de ADMINISTRADOR para eliminar proyectos.';
+        } else {
+          // Captura el mensaje de error del backend o un error genérico
+          const detalle = e?.error?.message || e.message || e.statusText || 'Error desconocido';
+          this.error = `No se pudo eliminar el proyecto. Motivo: ${detalle}`;
+        }
+        console.error('Error detallado al eliminar proyecto:', e);
+      },
+      complete: () => this.loading = false
+    });
+    this.limpiarMensajes();
+  }
+
+    /**
+     * Oculta el diálogo de confirmación, cancelando la acción.
+     */
+    cancelarEliminacion()
+  :
+    void {
+      this.mostrarConfirmacionEliminar = false;
+    }
+
+    /**
+     * Ejecuta la eliminación del proyecto a través del servicio.
+     * La lógica de Next/Error ha sido actualizada para dar mensajes de sistema específicos.
+     */
+    eliminarProyecto()
+  :
+    void {
+      this.mostrarConfirmacionEliminar = true;
+    }
+    limpiarMensajes()
+  :
+    void {
+      this.error = '';
+      this.mensajeExito = '';
+    }
+  }
