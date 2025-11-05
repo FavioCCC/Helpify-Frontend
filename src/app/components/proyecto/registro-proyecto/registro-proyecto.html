@@ -1,3 +1,18 @@
+
+<!-- CONTENEDOR DE MENSAJES DEL SISTEMA (Flotante en la parte superior derecha) -->
+<div class="system-message-container">
+  <!-- Mensaje de Éxito -->
+  <div *ngIf="mensajeExito" class="system-message success-box">
+    {{ mensajeExito }}
+    <button (click)="limpiarMensajes()">×</button>
+  </div>
+  <!-- Mensaje de Error -->
+  <div *ngIf="error" class="system-message error-box">
+    {{ error }}
+    <button (click)="limpiarMensajes()">×</button>
+  </div>
+</div>
+
 <div class="wrap">
   <h1 class="titulo">INFORMACIÓN DEL PROYECTO</h1>
 

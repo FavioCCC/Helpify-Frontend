@@ -35,7 +35,6 @@ export class CrearCuenta {
 
   cargando = false;
 
-  // ⚠️ Ajusta estos IDs a los reales en tu BD
   ROL_ID_MAP: Record<Rol, number> = {
     VOLUNTARIO: 2,
     DONANTE: 3
@@ -62,7 +61,7 @@ export class CrearCuenta {
     }
 
     const v = this.crearCuentaForm.value;
-    const rol = v.rol as Rol; // ← evita 'any' para indexar el mapa
+    const rol = v.rol as Rol;
     const idRol = this.ROL_ID_MAP[rol];
 
     const nuevoUsuario: Omit<Usuario, 'idusuario' | 'fecharegistro'> & { idRol: number } = {

@@ -8,6 +8,48 @@
   margin: 0;
 }
 
+/* --- ESTILOS MODAL Y MENSAJES DE SISTEMA --- */
+/* Contenedor de Mensajes del Sistema (Flotante) */
+.system-message-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  max-width: 350px;
+  width: 100%;
+}
+
+/* Estilos para el mensaje de Error */
+.system-message.error-box {
+  background-color: #f8d7da; /* Fondo rojo claro */
+  color: #721c24; /* Texto rojo oscuro */
+  border: 1px solid #f5c6cb;
+}
+/* Estilos para el mensaje de Éxito */
+.system-message.success-box {
+  background-color: #d4edda; /* Fondo verde claro */
+  color: #155724; /* Texto verde oscuro */
+  border: 1px solid #c3e6cb;
+}
+
+.system-message {
+  padding: 15px 40px 15px 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+.system-message button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
 .wrap {
   max-width: 800px;        /* centrado más angosto */
   margin: 40px auto;       /* centra horizontal y agrega espacio arriba */

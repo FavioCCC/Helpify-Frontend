@@ -1,3 +1,15 @@
+
+<div class="toast-container">
+  <div *ngIf="mensajeExito" class="toast toast-success">
+    {{ mensajeExito }}
+    <button (click)="limpiarMensajes()">×</button>
+  </div>
+  <div *ngIf="error" class="toast toast-error">
+    {{ error }}
+    <button (click)="limpiarMensajes()">×</button>
+  </div>
+</div>
+
 <section class="login-page">
   <div class="login-card">
     <h1 class="login-title">¡BIENVENIDO<br> A  HELPIFY!</h1>

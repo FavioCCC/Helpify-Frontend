@@ -1,4 +1,16 @@
 <button class="back-btn" [routerLink]="['/perfil']" aria-label="Volver">←</button>
+<!-- TOASTS ARRIBA-DERECHA -->
+<div class="toast-container">
+  <div *ngIf="mensajeExito" class="toast toast-success">
+    {{ mensajeExito }}
+    <button (click)="limpiarMensajes()">×</button>
+  </div>
+  <div *ngIf="error" class="toast toast-error">
+    {{ error }}
+    <button (click)="limpiarMensajes()">×</button>
+  </div>
+</div>
+
 <mat-card class="perfil-card">
   <mat-card-title class="title">ACTUALIZAR PERFIL</mat-card-title>
   <mat-card-content>
