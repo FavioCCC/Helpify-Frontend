@@ -17,6 +17,9 @@ export class PerfilComponent implements OnInit {
   cargando = true;
   logeado = false;
   usuario?: Usuario;
+
+  // mensajes del sistema
+  mensajeExito = '';
   error = '';
 
   // Modal
@@ -29,7 +32,6 @@ export class PerfilComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // ★ Si no hay sesión, manda al login de inmediato
     this.logeado = this.auth.isLoggedIn();
     if (!this.logeado) {
       this.cargando = false;
@@ -40,11 +42,9 @@ export class PerfilComponent implements OnInit {
       return;
     }
 
-    // Pinta con lo que quedó del login
     this.pintarDesdeLocal();
     this.cargando = false;
 
-    // Refresca desde backend (no rompe la UI si falla)
     this.perfilService.getPerfilActual().subscribe({
       next: (u) => {
         if (!u) return;
@@ -65,7 +65,6 @@ export class PerfilComponent implements OnInit {
         fecharegistro: local.fecharegistro ? new Date(local.fecharegistro) : (undefined as any)
       };
     } else {
-      // ★ Sin usuario en storage → fuerza estado no logueado y redirige
       this.logeado = false;
       this.router.navigate(['/login'], {
         queryParams: { redirect: '/perfil' },
@@ -74,12 +73,30 @@ export class PerfilComponent implements OnInit {
     }
   }
 
-  // ★ Cerrar sesión: limpia estado y al login
+    limpiarMensajes(): void {
+    this.mensajeExito = '';
+    this.error = '';
+  }
+    private flashExito(msg: string, ms = 2500): void {
+    this.mensajeExito = msg;
+    setTimeout(() => (this.mensajeExito = ''), ms);
+  }
+
+  private flashError(msg: string, ms = 3500): void {
+    this.error = msg;
+    setTimeout(() => (this.error = ''), ms);
+  }
+
+  //Cerrar sesión: muestra mensaje y redirige
   cerrarSesion(): void {
     this.auth.logout();
-    this.usuario = undefined;
-    this.logeado = false;
-    this.router.navigate(['/login'], { replaceUrl: true });
+    this.flashExito('Sesión cerrada correctamente.');
+    // pequeña pausa para que se vea el toast antes de salir
+    setTimeout(() => {
+      this.usuario = undefined;
+      this.logeado = false;
+      this.router.navigate(['/login'], { replaceUrl: true });
+    }, 700);
   }
 
   irALogin(): void {
@@ -94,21 +111,27 @@ export class PerfilComponent implements OnInit {
     this.mostrarModalConfirmacion = false;
   }
 
-  // ★ Confirmar eliminación: borra, limpia estado y al login
+  //Confirmar eliminación: borra, muestra éxito y redirige
   confirmarEliminacion(): void {
     if (!this.usuario?.idusuario) return;
 
     this.perfilService.eliminarCuenta(this.usuario.idusuario).subscribe({
       next: () => {
         this.mostrarModalConfirmacion = false;
-        this.auth.logout();
-        this.usuario = undefined;
-        this.logeado = false;
-        this.router.navigate(['/login'], { replaceUrl: true });
+        this.flashExito('Cuenta eliminada exitosamente.');
+        // pausa para que el usuario alcance a leer el mensaje
+        setTimeout(() => {
+          this.auth.logout();
+          this.usuario = undefined;
+          this.logeado = false;
+          this.router.navigate(['/login'], { replaceUrl: true });
+        }, 900);
       },
-      error: () => {
-        alert('No se pudo eliminar su cuenta.');
+      error: (e) => {
         this.mostrarModalConfirmacion = false;
+        this.flashError(
+          e?.error?.message || 'No se pudo eliminar su cuenta. Inténtelo nuevamente.'
+        );
       }
     });
   }
