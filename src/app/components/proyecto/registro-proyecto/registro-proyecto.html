@@ -1,4 +1,3 @@
-
 <!-- CONTENEDOR DE MENSAJES DEL SISTEMA (Flotante en la parte superior derecha) -->
 <div class="system-message-container">
   <!-- Mensaje de Éxito -->
@@ -18,22 +17,65 @@
 
   <form [formGroup]="form" (ngSubmit)="submit()" class="card">
     <input class="in" type="text" placeholder="Nombre del proyecto*" formControlName="nombreproyecto" />
+    <small class="err" *ngIf="form.get('nombreproyecto')?.hasError('required') && form.get('nombreproyecto')?.touched">
+      El nombre es obligatorio.
+    </small>
+
     <input class="in" type="text" placeholder="Descripción*" formControlName="descripcion" />
+    <small class="err" *ngIf="form.get('descripcion')?.hasError('required') && form.get('descripcion')?.touched">
+      La descripción es obligatoria.
+    </small>
+
     <input class="in" type="number" placeholder="Monto objetivo*" formControlName="montoobjetivo" />
+    <small class="err" *ngIf="form.get('montoobjetivo')?.hasError('required') && form.get('montoobjetivo')?.touched">
+      El monto objetivo es obligatorio.
+    </small>
+    <small class="err" *ngIf="form.get('montoobjetivo')?.hasError('min') && form.get('montoobjetivo')?.touched">
+      El monto objetivo debe ser mayor a 0.
+    </small>
+
     <input class="in" type="number" placeholder="Monto recaudado" formControlName="montorecaudado" />
+    <small class="err" *ngIf="form.get('montorecaudado')?.hasError('min') && form.get('montorecaudado')?.touched">
+      El monto recaudado no puede ser negativo.
+    </small>
 
     <input type="date" placeholder="Fecha inicio*" formControlName="fechainicio" />
+    <small class="err" *ngIf="form.get('fechainicio')?.hasError('required') && form.get('fechainicio')?.touched">
+      La fecha de inicio es obligatoria.
+    </small>
+
     <input type="date" placeholder="Fecha fin*" formControlName="fechafin" />
+    <small class="err" *ngIf="form.get('fechafin')?.hasError('required') && form.get('fechafin')?.touched">
+      La fecha de fin es obligatoria.
+    </small>
+    <small class="err" *ngIf="form.get('fechafin')?.hasError('rangoFechas') && form.get('fechafin')?.touched">
+      La fecha fin no puede ser anterior a la fecha inicio.
+    </small>
 
     <input class="in" type="text" placeholder="Nombre de la Organización*" formControlName="nombreorganizacion" />
+    <small class="err" *ngIf="form.get('nombreorganizacion')?.hasError('required') && form.get('nombreorganizacion')?.touched">
+      El nombre de la organización es obligatorio.
+    </small>
+
     <input class="in" type="text" placeholder="Escuela beneficiada*" formControlName="escuelabeneficiada" />
+    <small class="err" *ngIf="form.get('escuelabeneficiada')?.hasError('required') && form.get('escuelabeneficiada')?.touched">
+      La escuela beneficiada es obligatoria.
+    </small>
+
     <input class="in" type="number" placeholder="Cupo máximo*" formControlName="cupoMaximo" />
+    <small class="err" *ngIf="form.get('cupoMaximo')?.hasError('required') && form.get('cupoMaximo')?.touched">
+      El cupo máximo es obligatorio.
+    </small>
+    <small class="err" *ngIf="form.get('cupoMaximo')?.hasError('min') && form.get('cupoMaximo')?.touched">
+      El cupo máximo debe ser mayor a 0.
+    </small>
 
     <div class="fileRow">
       <label>Imagen</label>
       <input type="file" accept="image/*" (change)="onFileChange($event)" />
     </div>
 
+    <!-- Botón NO depende de form.invalid, solo de 'enviando' -->
     <button class="btn" type="submit" [disabled]="enviando">Crear</button>
   </form>
 </div>
