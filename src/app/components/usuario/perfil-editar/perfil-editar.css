@@ -6,6 +6,32 @@
   --amarillo: #FFEAAA;
   --blanco: #FFFFFF;
 }
+.toast-container{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  max-width: 360px;
+  width: 100%;
+  z-index: 4000;
+}
+.toast{
+  position: relative;
+  padding: 14px 42px 14px 14px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,.12);
+  font-family: "Play", sans-serif;
+  border: 1px solid transparent;
+}
+.toast button{
+  position: absolute;
+  top: 6px; right: 8px;
+  background: none; border: 0;
+  font-size: 18px; cursor: pointer; color: inherit;
+}
+.toast-success{ background:#d4edda; color:#155724; border-color:#c3e6cb; }
+.toast-error{   background:#f8d7da; color:#721c24; border-color:#f5c6cb; }
+
 
 /* === CONTENEDOR PRINCIPAL === */
 .perfil-card {

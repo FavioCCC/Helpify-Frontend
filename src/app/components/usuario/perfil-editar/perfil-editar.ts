@@ -1,8 +1,7 @@
 import {Component, inject} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {MatFormField, MatFormFieldModule, MatLabel} from '@angular/material/form-field';
-
-
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatSelect, MatOption, MatSelectModule} from '@angular/material/select';
 import {PerfilService} from '../../../services/perfil-service';
@@ -13,6 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 @Component({
   selector: 'app-perfil-editar',
   imports: [
+    CommonModule,
     MatCard,
     MatCardTitle,
     MatCardContent,
@@ -36,6 +36,13 @@ export class PerfilEditar {
   router = inject(Router)
   cargando: boolean = true;
   usuario?: Usuario;
+  mensajeExito = '';
+  error = '';
+
+  limpiarMensajes() {
+    this.mensajeExito = '';
+    this.error = '';
+  }
 
   constructor() {
     this.perfilForm = this.fb.group({
@@ -91,16 +98,15 @@ export class PerfilEditar {
 
       console.log('Datos actualizados:', usuarioActualizado);
 
-
       this.perfilService.actualizarPerfil(usuarioActualizado).subscribe({
         next: (respuesta) => {
           console.log('Perfil actualizado correctamente:', respuesta);
-          alert('Perfil actualizado con éxito');
-          this.router.navigate(['/home']);
+          this.mensajeExito = 'Perfil actualizado con éxito. Redirigiendo...';
+          setTimeout(() => this.router.navigate(['/home']), 1500);
         },
         error: (err) => {
           console.error('Error al actualizar perfil:', err);
-          alert('Error al actualizar el perfil.');
+          this.error = err?.error?.message || 'Error al actualizar el perfil.';
         }
       });
     } else {
