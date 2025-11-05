@@ -71,4 +71,15 @@ export class ProyectoService {
     console.log('[INSCRIPCION] Authorization', (opts as any).headers?.get?.('Authorization'));
     return this.http.post(`${this.url}/inscripcion/${idProyecto}`, null, opts);
   }
+  eliminarProyecto(idProyecto: number): Observable<void> {
+    const token = this.auth.getToken() || '';
+
+    // CORRECCIÓN CLAVE: Se añade responseType: 'text' para evitar el error de parsing.
+    // Usamos 'text' as 'json' para satisfacer el tipado de TypeScript.
+    return this.http.delete<void>(`${this.url}/proyecto/${idProyecto}`, {
+      headers: { Authorization: token },
+      withCredentials: true,
+      responseType: 'text' as 'json' // <--- ESTA LÍNEA SOLUCIONA EL ERROR DE PARSING
+    });
+  }
 }
