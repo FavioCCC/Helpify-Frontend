@@ -1,181 +1,148 @@
-/* ===== PALETA ===== */
-:root {
-  --marron: #6D4118;
-  --rosado: #FFC2BD;
-  --anaranjado: #FAC99B;
-  --amarillo: #FFEAAA;
-  --blanco: #FFFFFF;
+/* Fuentes */
+@import url('https://fonts.googleapis.com/css2?family=NATS&family=Play:wght@400;700&family=Rubik+Mono+One&display=swap');
+
+:host{
+  display:block;
+  min-height:100vh;
+  background:#FAC99B;
+  color:#6D4118;
+  font-family:'Play', sans-serif; /* Campos y labels */
+  padding-bottom:60px;
 }
 
-/* === CORRIGE SUPERPOSICIÓN (para que aparezca arriba del form) === */
-.cdk-overlay-container {
-  z-index: 2000 !important;
+/* Botón volver */
+.back-btn{
+  margin:20px;
+  width:40px;height:40px;
+  border:2px solid #6D4118;border-radius:50%;
+  background:transparent;color:#6D4118;font-size:20px;
+  cursor:pointer;transition:.2s;
+}
+.back-btn:hover{ background:#6D4118;color:#FFEAAA; }
+
+/* Contenedor */
+.crear-card{
+  max-width:900px;margin:auto;
+  background:#6D4118;color:#FFEAAA;
+  padding:24px;border-radius:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+  overflow:visible; /* por si el overlay del select cae fuera */
 }
 
-/* === CONTENEDOR PRINCIPAL === */
-.perfil-card {
-  max-width: 750px;
-  margin: 60px auto;
-  padding: 24px 32px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  background-color: #6D4118;
+/* Título: Rubik Mono One */
+.title{
+  font-family:'Rubik Mono One', sans-serif;
+  text-align:center;
+  font-size:2.2rem;
+  letter-spacing:2px;
+  word-spacing:14px; /* separa palabras como en el mock */
+  margin-bottom:16px;
+  color:#FFFFFF;
 }
 
-/* === ESTILO DEL MENÚ DESPLEGABLE mat-select === */
-.mat-mdc-select-panel,
-.mat-select-panel {
-  background-color: #fff8ec !important; /* fondo beige claro */
-  border: 2px solid #6D4118 !important; /* borde marrón oscuro */
-  border-radius: 8px !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  color: #4b2e14 !important; /* texto marrón oscuro */
-  z-index: 2000 !important;
+/* ====== Layout formulario: botón a la derecha ====== */
+.form-container{
+  display:grid;
+  grid-template-columns: 1fr auto; /* columna principal + columna del botón */
+  gap:12px 16px;
+}
+.full-width{ width:100%; }
+
+/* Todos los campos ocupan el ancho completo (las dos columnas) */
+.form-container mat-form-field,
+.form-container .full-width{
+  grid-column:1 / -1;
 }
 
-/* === OPCIONES DENTRO DEL MENÚ === */
-.mat-mdc-option,
-.mdc-list-item {
-  color: #4b2e14 !important; /* texto marrón oscuro */
-  font-weight: 500;
-  background-color: #FBE7B2 !important;
-  transition: background-color 0.2s ease;
-  font-family: "Play", sans-serif;
+/* Checkbox a la izquierda */
+.form-container .mat-mdc-checkbox{
+  grid-column:1;
+  align-self:center;
 }
 
-/* === EFECTO HOVER === */
-.mat-mdc-option:hover,
-.mdc-list-item:hover {
-  background-color: #F2C4B3 !important; /* rosa pastel */
-  color: #6D4118 !important;
+/* Contenedor del botón a la derecha */
+.boton-container{
+  grid-column:2;
+  justify-self:end;
+  margin-top:0; /* sin separación extra */
 }
 
-/* === OPCIÓN SELECCIONADA === */
-.mdc-list-item--selected,
-.mat-mdc-option-active {
-  background-color: #FBE7B2 !important; /* beige cálido */
-  color: #6D4118 !important;
-  font-weight: 600;
+/* ====== Overrides Angular Material (inputs/select) ====== */
+::ng-deep .crear-card .mat-mdc-form-field .mdc-text-field--filled{
+  background:#FFEAAA !important;   /* fondo crema de los campos */
+  border-radius:8px !important;
+}
+::ng-deep .crear-card .mdc-text-field--filled:not(.mdc-text-field--disabled){
+  color:#6D4118 !important;
+}
+::ng-deep .crear-card input.mat-mdc-input-element,
+::ng-deep .crear-card .mat-mdc-select-value{
+  color:#6D4118 !important;
+  font-family:'Play', sans-serif !important;  /* fuente de campos */
+  font-size:0.98rem;
+}
+::ng-deep .crear-card .mat-mdc-form-field-label{
+  color:#6D4118 !important;
+  font-family:'Play', sans-serif !important;
+}
+::ng-deep .crear-card .mat-mdc-select-arrow,
+::ng-deep .crear-card .mat-mdc-select-trigger .mat-mdc-select-arrow svg{
+  fill:#6D4118 !important;
 }
 
-/* === QUITA LA TRANSPARENCIA DEL RIPPLE (onda al hacer clic) === */
-.mat-ripple-element {
-  background-color: rgba(109, 65, 24, 0.15) !important; /* marrón translúcido */
+/* ====== Panel desplegado del mat-select (overlay) ====== */
+::ng-deep .mat-mdc-select-panel{
+  background:#FFEAAA !important;     /* fondo crema del panel */
+  color:#6D4118 !important;
+  border:2px solid #6D4118;
+  border-radius:10px;
+  box-shadow:0 12px 28px rgba(0,0,0,.35);
 }
-/* ===== BOTÓN VOLVER ===== */
-.back-btn {
-  margin: 20px;
-  width: 40px;
-  height: 40px;
-  border: 2px solid var(--marron);
-  border-radius: 50%;
-  background: transparent;
-  color: var(--marron);
-  font-size: 20px;
-  cursor: pointer;
-  transition: 0.2s;
+::ng-deep .mat-mdc-option{
+  font-family:'Play', sans-serif !important;
+  color:#6D4118 !important;
+}
+::ng-deep .mat-mdc-option:hover{
+  background:#FFDFAF !important;
+}
+::ng-deep .mat-mdc-option.mdc-list-item--selected .mdc-list-item__primary-text,
+::ng-deep .mat-mdc-option.mat-mdc-option-active{
+  color:#6D4118 !important;
+  font-weight:700;
+}
+/* Asegura que el overlay quede por encima de todo */
+::ng-deep .cdk-overlay-container{ z-index:1000; }
+
+/* ====== Checkbox ====== */
+::ng-deep .crear-card .mdc-checkbox{
+  --mdc-checkbox-selected-icon-color:#6D4118;
+  --mdc-checkbox-selected-checkmark-color:#FFEAAA;
+  --mdc-checkbox-selected-focus-icon-color:#6D4118;
+  --mdc-checkbox-selected-hover-icon-color:#6D4118;
+}
+.mat-mdc-checkbox label,
+.mat-mdc-checkbox .mdc-label{
+  color:#FFEAAA;
+  font-family:'Play', sans-serif;
 }
 
-/* === TÍTULO === */
-.title {
-  text-align: center;
-  font-size: 44px;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-family: 'Rubik Mono One', monospace;
+/* ====== Botón enviar: NATS ====== */
+::ng-deep .crear-card button.mdc-button{
+  font-family:'NATS', sans-serif !important;
+  background:#FFC2BD !important;   /* fondo rosado */
+  color:#000 !important;            /* texto negro */
+  border:2px solid #6D4118 !important;
+  border-radius:999px !important;
+  padding:8px 22px !important;
+  box-shadow:0 3px 0 #6D4118;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+::ng-deep .crear-card button.mdc-button:hover{
+  filter:brightness(.98);
+  transform:translateY(1px);
+  box-shadow:0 2px 0 #6D4118;
 }
 
-.back-btn:hover {
-  background: var(--marron);
-  color: var(--amarillo);
-}
-
-/* === FORMULARIO === */
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* === CAMPOS === */
-mat-form-field.full-width {
-  width: 100%;
-}
-
-mat-label {
-  font-weight: 500;
-  font-size: 20px;
-  color: white;
-}
-
-input[matInput],
-mat-select {
-  font-size: 22px;
-  color: var(--marron);
-  padding-left: 5px;
-  background-color: var(--amarillo);
-  height: 40px;
-}
-
-mat-option {
-  font-size: 20px;
-  color: var(--rosado);
-  background: var(--amarillo);
-}
-
-/* === BOTÓN ENVIAR === */
-.boton-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 24px;
-}
-
-button[mat-raised-button] {
-  width: 20%;
-  padding: 10px 0;
-  font-weight: 600;
-  font-size: 22px;
-  border-radius: 8px;
-  letter-spacing: 0.5px;
-  font-family: 'NATS', sans-serif;
-}
-
-/* === EFECTOS VISUALES === */
-button[mat-raised-button][color="accent"] {
-  background-color: #FFC2BD;
-  color: #6D4118;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-button[mat-raised-button][color="accent"]:hover {
-  background-color: #FFC2BD;
-  color: white;
-}
-/* Contenedor general del formulario para espaciado */
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Espacio entre todos los campos */
-}
-
-/* Estilos para el checkbox y su error */
-.checkbox-container {
-  margin-top: 10px; /* Espacio superior para separarlo del campo anterior */
-  margin-bottom: 20px; /* Espacio inferior para separarlo del botón */
-  display: flex; /* Para alinear el error debajo si es necesario */
-  flex-direction: column;
-}
-
-/* Estilo para el mensaje de error del checkbox */
-.terminos-error {
-  /* Asegura que el error use el color estándar de Material (rojo) */
-  color: #f44336;
-  /* Reduce un poco el tamaño de fuente para que no sea tan dominante como el error de mat-form-field */
-  font-size: 12px;
-  /* Alinea el texto para que coincida con el borde del checkbox */
-  margin-left: 24px;
-  margin-top: 4px;
-}
+/* Mensaje opcional de error */
+.error-terminos{ color:#FFB3B3; font-size:.85rem; }
