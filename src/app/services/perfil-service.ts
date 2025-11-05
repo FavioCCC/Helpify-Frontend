@@ -22,11 +22,11 @@ export class PerfilService {
     });
   }
 
-  crearPerfil(nuevoUsuario: Omit<Usuario, "idusuario" | "fecharegistro"> & { password: string }): Observable<Usuario> {
+  crearCuenta(nuevoUsuario: Omit<Usuario, 'idusuario' | 'fecharegistro'> & { idRol: number }
+  ): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.api}/usuario`, nuevoUsuario, {
-        withCredentials: true
+      withCredentials: true
     });
-
   }
 
 
