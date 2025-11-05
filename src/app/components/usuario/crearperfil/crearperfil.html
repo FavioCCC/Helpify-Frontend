@@ -1,81 +1,127 @@
-<button class="back-btn" [routerLink]="['/login']" aria-label="Volver">←</button>
+<button class="back-btn" [routerLink]="['/']" aria-label="Volver">←</button>
 
-<mat-card class="perfil-card">
-  <mat-card-title class="title">CREA UNA CUENTA</mat-card-title>
+<mat-card class="crear-card">
+  <mat-card-title class="title">CREAR CUENTA</mat-card-title>
   <mat-card-content>
-    <form [formGroup]="perfilForm" class="form-container" (ngSubmit)="onSubmit()">
+    <form [formGroup]="crearCuentaForm" (ngSubmit)="onSubmit()" class="form-container">
 
+      <!-- Tipo de documento -->
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Tipo de documento <span class="required-asterisk">*</span></mat-label>
-        <mat-select formControlName="nombredocumento" required>
+        <mat-label>Tipo de documento</mat-label>
+        <mat-select formControlName="nombredocumento">
           <mat-option value="DNI">DNI</mat-option>
-          <mat-option value="CE">Carnet de Extranjería</mat-option>
+          <mat-option value="RUC">RUC</mat-option>
+          <mat-option value="CE">Carnet de Extranjería (CE)</mat-option>
         </mat-select>
-        <mat-error *ngIf="perfilForm.get('nombredocumento')?.hasError('required')">
-          Debe seleccionar un tipo de documento.
+        <mat-error *ngIf="crearCuentaForm.get('nombredocumento')?.hasError('required')">
+          El tipo de documento es obligatorio.
         </mat-error>
       </mat-form-field>
 
+      <!-- Número de documento -->
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Número de documento <span class="required-asterisk">*</span></mat-label>
-        <input matInput formControlName="numerodocumento" placeholder="Ej. 12345678" type="text" required />
+        <mat-label>Número de documento</mat-label>
+        <input matInput formControlName="numerodocumento" placeholder="Ingrese su número de documento" />
+
+        <mat-error *ngIf="crearCuentaForm.get('numerodocumento')?.hasError('required')">
+          El número de documento es obligatorio.
+        </mat-error>
+
+        <mat-error *ngIf="crearCuentaForm.get('numerodocumento')?.hasError('minlength')">
+          Debe tener al menos 8 dígitos.
+        </mat-error>
+
+        <mat-error *ngIf="crearCuentaForm.get('numerodocumento')?.hasError('dniDuplicado')">
+          Este número de documento ya está registrado por otro usuario.
+        </mat-error>
       </mat-form-field>
 
+      <!-- Nombre -->
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Nombre <span class="required-asterisk">*</span></mat-label>
-        <input matInput formControlName="nombre" placeholder="Ingrese su nombre" required />
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" placeholder="Ingrese su nombre" />
+        <mat-error *ngIf="crearCuentaForm.get('nombre')?.hasError('required')">
+          El nombre es obligatorio.
+        </mat-error>
       </mat-form-field>
 
+      <!-- Apellido paterno -->
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Apellido paterno <span class="required-asterisk">*</span></mat-label>
-        <input matInput formControlName="apellidopaterno" placeholder="Ingrese su apellido paterno" required />
+        <mat-label>Apellido paterno</mat-label>
+        <input matInput formControlName="apellidopaterno" placeholder="Ingrese su apellido paterno" />
+        <mat-error *ngIf="crearCuentaForm.get('apellidopaterno')?.hasError('required')">
+          El apellido paterno es obligatorio.
+        </mat-error>
       </mat-form-field>
 
+      <!-- Apellido materno -->
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Apellido materno <span class="required-asterisk">*</span></mat-label>
-        <input matInput formControlName="apellidomaterno" placeholder="Ingrese su apellido materno" required />
+        <mat-label>Apellido materno</mat-label>
+        <input matInput formControlName="apellidomaterno" placeholder="Ingrese su apellido materno" />
+        <mat-error *ngIf="crearCuentaForm.get('apellidomaterno')?.hasError('required')">
+          El apellido materno es obligatorio.
+        </mat-error>
       </mat-form-field>
 
+      <!-- Celular -->
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Número de celular <span class="required-asterisk">*</span></mat-label>
-        <input matInput type="tel" formControlName="celular" placeholder="Ej. 999123456 (9 dígitos)" required />
+        <mat-label>Celular</mat-label>
+        <input matInput type="tel" formControlName="celular" placeholder="Ingrese su número de celular" />
+        <mat-error *ngIf="crearCuentaForm.get('celular')?.hasError('required')">
+          El número de celular es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="crearCuentaForm.get('celular')?.hasError('pattern')">
+          Debe tener 9 dígitos numéricos.
+        </mat-error>
       </mat-form-field>
 
+      <!-- Correo -->
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Correo electrónico <span class="required-asterisk">*</span></mat-label>
-        <input matInput type="email" formControlName="correo" placeholder="ejemplo@correo.com" required />
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput type="email" formControlName="correo" placeholder="Ingrese su correo" />
+        <mat-error *ngIf="crearCuentaForm.get('correo')?.hasError('required')">
+          El correo es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="crearCuentaForm.get('correo')?.hasError('email')">
+          Ingrese un correo válido.
+        </mat-error>
       </mat-form-field>
 
+      <!-- Contraseña -->
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Contraseña <span class="required-asterisk">*</span></mat-label>
-        <input matInput type="password" formControlName="password" placeholder="Mínimo 6 caracteres" required />
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Ingrese su contraseña, debe tener minimo 8 dígitos" />
+        <mat-error *ngIf="crearCuentaForm.get('password')?.hasError('required')">
+          La contraseña es obligatoria.
+        </mat-error>
+        <mat-error *ngIf="crearCuentaForm.get('password')?.hasError('minlength')">
+          La contraseña debe tener al menos 6 caracteres.
+        </mat-error>
       </mat-form-field>
 
+      <!-- Rol -->
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Rol <span class="required-asterisk">*</span></mat-label>
-        <mat-select formControlName="rol" required>
-          <mat-option value="Voluntario">Voluntario</mat-option>
-          <mat-option value="Universitario">Universitario</mat-option>
+        <mat-label>Rol</mat-label>
+        <mat-select formControlName="rol">
+          <mat-option value="VOLUNTARIO">VOLUNTARIO</mat-option>
+          <mat-option value="DONANTE">DONANTE</mat-option>
         </mat-select>
-        <mat-error *ngIf="perfilForm.get('rol')?.hasError('required')">
-          Debe seleccionar un rol.
+        <mat-error *ngIf="crearCuentaForm.get('rol')?.hasError('required')">
+          Seleccione un rol.
         </mat-error>
       </mat-form-field>
 
-      <div class="checkbox-container">
-        <mat-checkbox formControlName="terminos" class="terminos-checkbox">
-          Acepto los términos y condiciones
-        </mat-checkbox>
-
-        <mat-error *ngIf="perfilForm.get('terminos')?.hasError('required') && perfilForm.get('terminos')?.touched" class="terminos-error">
-          Debe aceptar los términos y condiciones.
-        </mat-error>
-      </div>
+      <!-- Términos -->
+      <mat-checkbox formControlName="aceptaTerminos">
+        Acepto los términos y condiciones
+      </mat-checkbox>
+      <mat-error *ngIf="crearCuentaForm.get('aceptaTerminos')?.hasError('required')">
+        Debe aceptar los términos y condiciones.
+      </mat-error>
 
       <div class="boton-container">
-        <button type="submit" mat-raised-button color="accent"
-                [disabled]="perfilForm.invalid || !perfilForm.get('terminos')?.value">
-          ENVIAR
+        <button mat-raised-button color="accent" type="submit" [disabled]="cargando">
+          {{ cargando ? 'ENVIANDO…' : 'CREAR CUENTA' }}
         </button>
       </div>
     </form>
