@@ -1,4 +1,4 @@
-<button class="back-btn" [routerLink]="['/proyectos']" aria-label="Volver">←</button>
+<button class="back-btn" [routerLink]="['/home']" aria-label="Volver">←</button>
 <section class="donaciones-container">
   <h2 class="titulo-seccion">DONACIONES</h2>
 
@@ -20,8 +20,9 @@
             <img src="assets/imagenes/icono-donacion.png" alt="Icono Donación">
           </div>
           <div class="donacion-detalles">
-            <p>Fecha: {{ d.fechadonacion | date:'dd/MM/yyyy' }}</p>
-            <p>Monto: S/ {{ d.pago?.monto }}</p>
+            <p><strong>Donante:</strong> {{ d.usuario?.nombre }} {{ d.usuario?.apellidopaterno }}</p>
+            <p><strong>Fecha:</strong> {{ d.fechadonacion | date:'dd/MM/yyyy' }}</p>
+            <p><strong>Monto:</strong> S/ {{ d.pago?.monto }}</p>
           </div>
         </div>
       </div>
