@@ -1,0 +1,19 @@
+<h2 class="pop-title">Código de estudiante:</h2>
+
+<form class="dialog-form" [formGroup]="form" (ngSubmit)="enviar()">
+  <mat-form-field appearance="fill" class="w">
+    <input matInput formControlName="codigo" placeholder="Ingrese su codigo" maxlength="20" />
+    <mat-error *ngIf="form.controls['codigo'].hasError('required')">
+      Obligatorio
+    </mat-error>
+    <mat-error *ngIf="form.controls['codigo'].hasError('minlength')">
+      Mínimo 5 caracteres
+    </mat-error>
+  </mat-form-field>
+
+  <div class="acciones">
+    <button class="pill-btn" mat-raised-button color="accent" type="submit" [disabled]="form.invalid">
+      Enviar
+    </button>
+  </div>
+</form>
