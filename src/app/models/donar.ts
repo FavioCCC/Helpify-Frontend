@@ -1,3 +1,5 @@
+import {Usuario} from './usuario';
+
 /**
  * Modelo de Donación
  * Representa una donación registrada por un usuario/donante.
@@ -26,4 +28,6 @@ export interface Donacion {
 
   /** (Opcional) Código de transacción (si tu backend lo genera) */
   codigoTransaccion?: string;
+
+  usuario: Usuario;
 }
