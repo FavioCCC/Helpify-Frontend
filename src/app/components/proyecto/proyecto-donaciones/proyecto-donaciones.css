@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=NATS&family=Play:wght@400;700&display=swap');
+
+:root {
+  --marron: #6D4118;
+  --amarillo:      #FFEAAA;
+  --anaranjado: #FAC99B;
+  --rosado:   #FFC2BD;
+  --blanco: #FFFFFF;
+}
+
+* { box-sizing: border-box; }
+
+/* ===== BOTÓN VOLVER ===== */
+.back-btn {
+  margin: 20px;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #6D4118;
+  border-radius: 50%;
+  background: transparent;
+  color: #6D4118;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.back-btn:hover {
+  background: var(--marron);
+  color: var(--amarillo);
+}
+
+.donaciones-container {
+  max-width: 1000px;
+  margin: 20px auto 40px;
+  padding: 16px;
+  font-family: 'Play', sans-serif;
+  background-color: #F8E4CA;
+
+}
+
+.titulo-seccion {
+  text-align: center;
+  font-size: 50px;
+  font-weight: 900;
+  font-family: 'Rubik Mono One', monospace;
+  color: var(--marron);
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.donaciones-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 20px;
+}
+
+.proyecto-panel {
+  background: var(--amarillo);
+  border: 2px solid var(--marron);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+.proyecto-panel:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.proyecto-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 4px;
+}
+
+.proyecto-icono {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  border: 2px solid var(--marron);
+}
+
+.proyecto-info {
+  flex: 1;
+}
+
+.proyecto-nombre {
+  margin: 0;
+  color: var(--marron);
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: "Play", sans-serif;
+}
+
+.proyecto-descripcion {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #4b2d17;
+  font-family: "Play", sans-serif;
+}
+
+.mat-expansion-panel {
+  padding: 25px 1px 25px;
+}
+
+.donaciones-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.donacion-card {
+  display: flex;
+  align-items: center;
+  background: var(--rosado);
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: var(--marron);
+}
+
+.donacion-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 14px;
+}
+
+.donacion-icono img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin-right: 16px;
+}
+
+
+.donacion-detalles p {
+  margin: 0;
+  line-height: 1.4;
+  font-size: 1.05rem;
+}
+
+.sin-datos {
+  color: #4b2d17;
+  font-style: italic;
+  margin-top: 8px;
+  padding: 8px;
+}

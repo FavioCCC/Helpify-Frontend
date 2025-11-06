@@ -1,0 +1,34 @@
+<button class="back-btn" [routerLink]="['/proyectos']" aria-label="Volver">←</button>
+<section class="donaciones-container">
+  <h2 class="titulo-seccion">DONACIONES</h2>
+
+  <mat-accordion class="donaciones-accordion">
+    <mat-expansion-panel *ngFor="let proyecto of proyectos" class="proyecto-panel">
+      <mat-expansion-panel-header>
+        <div class="proyecto-header">
+          <img class="proyecto-icono" [src]="proyecto.imagen" alt="icono proyecto">
+          <div class="proyecto-info">
+            <h3 class="proyecto-nombre">{{ proyecto.nombreproyecto }}</h3>
+            <p class="proyecto-descripcion">"{{ proyecto.descripcion }}"</p>
+          </div>
+        </div>
+      </mat-expansion-panel-header>
+
+      <div class="donaciones-lista" *ngIf="proyecto.donaciones?.length > 0; else sinDonaciones">
+        <div class="donacion-card" *ngFor="let d of proyecto.donaciones">
+          <div class="donacion-icono">
+            <img src="assets/imagenes/icono-donacion.png" alt="Icono Donación">
+          </div>
+          <div class="donacion-detalles">
+            <p>Fecha: {{ d.fechadonacion | date:'dd/MM/yyyy' }}</p>
+            <p>Monto: S/ {{ d.pago?.monto }}</p>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #sinDonaciones>
+        <p class="sin-datos">Este proyecto aún no tiene donaciones registradas.</p>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</section>
