@@ -8,6 +8,7 @@ import { PerfilComponent } from './components/usuario/perfil/perfil';
 import { RegistroProyecto } from './components/proyecto/registro-proyecto/registro-proyecto';
 import {PerfilEditar} from './components/usuario/perfil-editar/perfil-editar';
 import {CrearCuenta} from './components/usuario/crearperfil/crearperfil';
+import {ProyectoDonaciones} from './components/proyecto/proyecto-donaciones/proyecto-donaciones';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -23,7 +24,7 @@ export const routes: Routes = [
     loadComponent: () => import('./components/wishlist/listar-wishlist/listar-wishlist')
       .then(m => m.ListarWishlistComponent)
   },
-
+  { path: 'proyectos-donaciones', component: ProyectoDonaciones },
   { path: 'foros', component: ComentarioComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'login', component: Iniciarsesion },
