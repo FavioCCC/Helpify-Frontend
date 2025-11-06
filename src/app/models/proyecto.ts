@@ -1,3 +1,5 @@
+import {Donacion} from './donar';
+
 export class Proyecto {
   idproyecto: number;
   nombreproyecto: string;
@@ -10,4 +12,5 @@ export class Proyecto {
   escuelabeneficiada: string;
   cupoMaximo: number;
   imagen: string;
+  donaciones?: Donacion[];
 }
