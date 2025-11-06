@@ -31,6 +31,13 @@ export class ProyectoService {
       .pipe(tap(() => console.log('[PROYECTO SERVICE] GET /proyectos/', id)));
   }
 
+  listarProyectosConDonaciones(): Observable<Proyecto[]> {
+    return this.http.get<Proyecto[]>(`${this.url}/proyectos/donaciones`, this.authOptions())
+      .pipe(
+        tap(() => console.log('[PROYECTO SERVICE] GET /proyectos/donaciones'))
+      );
+  }
+
   // POST
   crear(proyecto: Proyecto): Observable<any> {
     console.log('[PROYECTO SERVICE] POST /proyecto payload:', proyecto);
