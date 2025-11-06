@@ -18,19 +18,30 @@
       <a [routerLink]="['/home']">HOME</a>
       <ul class="menu-vertical">
         <li>
-          <a href="/perfil" class="submenu-link perfil-item" (click)="irAPerfil($event)">PERFIL</a>
+          <a routerLink="/perfil" class="submenu-link perfil-item" (click)="irAPerfil($event)">PERFIL</a>
         </li>
       </ul>
     </li>
 
-    <li routerLinkActive="active"><a routerLink="/comunidad">COMUNIDAD</a></li>
+    <!-- COMUNIDAD + REPORTES -->
+    <li class="has-sub" routerLinkActive="active">
+      <a>COMUNIDAD</a>
+      <ul class="menu-vertical">
+        <li>
+          <a routerLink="/proyectos-donaciones" class="submenu-link comunidad-item">REPORTE DE DONACIONES</a>
+        </li>
+        <li>
+          <a routerLink="/" class="submenu-link comunidad-item">REPORTE DE INSCRIPCIONES</a>
+        </li>
+      </ul>
+    </li>
+
 
     <li class="has-sub">
       <a href="javascript:void(0)">PROYECTOS</a>
       <ul class="menu-vertical">
         <li><a routerLink="/proyectos">Listado de proyectos</a></li>
         <li><a routerLink="/proyectos/nuevo">Agregar un proyecto</a></li>
-        <li><a routerLink="/reportes/participacion">Reporte de participación</a></li>
         <li><a routerLink="/reportes/estadisticos">Reportes estadísticos</a></li>
       </ul>
     </li>
