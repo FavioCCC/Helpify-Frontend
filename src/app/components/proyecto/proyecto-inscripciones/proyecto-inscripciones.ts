@@ -7,12 +7,11 @@ import {
 } from '@angular/material/expansion';
 import {CommonModule, DatePipe} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
-import {ProyectoService} from '../../../services/proyectoService';
 import {RouterLink} from '@angular/router';
+import {ProyectoService} from '../../../services/proyectoService';
 
 @Component({
-  selector: 'app-proyecto-donaciones',
-  standalone: true,
+  selector: 'app-proyecto-inscripciones',
   imports: [
     MatAccordion,
     MatExpansionPanel,
@@ -22,10 +21,10 @@ import {RouterLink} from '@angular/router';
     MatExpansionModule,
     RouterLink
   ],
-  templateUrl: './proyecto-donaciones.html',
-  styleUrl: './proyecto-donaciones.css',
+  templateUrl: './proyecto-inscripciones.html',
+  styleUrl: './proyecto-inscripciones.css',
 })
-export class ProyectoDonaciones {
+export class ProyectoInscripciones {
   proyectos: any[] = [];
   loading = false;
   error = '';
@@ -33,27 +32,27 @@ export class ProyectoDonaciones {
   private proyectoService = inject(ProyectoService);
 
   ngOnInit(): void {
-    this.cargarProyectosConDonaciones();
+    this.cargarProyectosConInscripciones();
   }
 
-  cargarProyectosConDonaciones(): void {
+  cargarProyectosConInscripciones(): void {
     this.loading = true;
     this.error = '';
 
-    this.proyectoService.listarProyectosConDonaciones().subscribe({
+    this.proyectoService.listarProyectosConInscripciones().subscribe({
       next: (data) => {
-        console.log('[DONACIONES] Datos cargados:', data);
+        console.log('[INSCRIPCIONES] Datos cargados:', data);
         this.proyectos = data ?? [];
-        if (this.proyectos.length === 0){
-          this.error = 'No hay proyectos con donaciones registradas'
+        if (this.proyectos.length === 0) {
+          this.error = 'No hay proyectos con inscripciones registradas.';
         }
       },
       error: (err) => {
-        console.error('Error al cargar proyectos con donaciones:', err);
-        if (err.status == 403) {
-          this.error = 'Error de visualización: No tienes el rol de ADMINISTRADOR O DONANTE para visualizar las donaciones de cada proyecto';
+        console.error('Error al cargar proyectos con inscripciones:', err);
+        if (err.status === 403) {
+          this.error = 'Error de visualización: No tienes el rol de ADMINISTRADOR O VOLUNTARIO para visualizar las inscripciones de cada proyecto.';
         } else {
-          this.error = 'Ocurrió un error al cargar las donaciones.'
+          this.error = 'Ocurrió un error al cargar las inscripciones.';
         }
         this.proyectos = [];
       },
