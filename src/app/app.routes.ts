@@ -9,6 +9,7 @@ import { RegistroProyecto } from './components/proyecto/registro-proyecto/regist
 import {PerfilEditar} from './components/usuario/perfil-editar/perfil-editar';
 import {CrearCuenta} from './components/usuario/crearperfil/crearperfil';
 import {ProyectoDonaciones} from './components/proyecto/proyecto-donaciones/proyecto-donaciones';
+import {ProyectoInscripciones} from './components/proyecto/proyecto-inscripciones/proyecto-inscripciones';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -25,6 +26,7 @@ export const routes: Routes = [
       .then(m => m.ListarWishlistComponent)
   },
   { path: 'proyectos-donaciones', component: ProyectoDonaciones },
+  {path: 'proyectos-inscripciones', component: ProyectoInscripciones},
   { path: 'foros', component: ComentarioComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'login', component: Iniciarsesion },
