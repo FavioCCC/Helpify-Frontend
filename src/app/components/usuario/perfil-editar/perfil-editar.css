@@ -152,6 +152,10 @@ mat-option {
   background: var(--amarillo);
 }
 
+mat-error {
+  color: var(--blanco);
+}
+
 /* === BOTÓN ENVIAR === */
 .boton-container {
   display: flex;
