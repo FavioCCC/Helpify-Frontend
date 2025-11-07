@@ -1,4 +1,10 @@
 <button class="back-btn" [routerLink]="['/home']" aria-label="Volver">←</button>
+<div class="system-message-container" *ngIf="error">
+  <div class="system-message error-box">
+    {{ error }}
+    <button (click)="limpiarMensajes()">×</button>
+  </div>
+</div>
 <section class="donaciones-container">
   <h2 class="titulo-seccion">DONACIONES</h2>
 
@@ -20,7 +26,7 @@
             <img src="assets/imagenes/icono-donacion.png" alt="Icono Donación">
           </div>
           <div class="donacion-detalles">
-            <p><strong>Donante:</strong> {{ d.usuario?.nombre }} {{ d.usuario?.apellidopaterno }}</p>
+            <p><strong>Donante:</strong> {{ d.usuario?.nombre }} {{ d.usuario?.apellidopaterno }} {{ d.usuario?.apellidomaterno }}</p>
             <p><strong>Fecha:</strong> {{ d.fechadonacion | date:'dd/MM/yyyy' }}</p>
             <p><strong>Monto:</strong> S/ {{ d.pago?.monto }}</p>
           </div>
