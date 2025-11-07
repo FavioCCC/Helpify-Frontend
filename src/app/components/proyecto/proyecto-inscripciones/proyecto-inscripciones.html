@@ -1,0 +1,67 @@
+<button class="back-btn" [routerLink]="['/home']" aria-label="Volver">←</button>
+
+<div class="system-message-container" *ngIf="error">
+  <div class="system-message error-box">
+    {{ error }}
+    <button (click)="limpiarMensajes()">×</button>
+  </div>
+</div>
+
+<section class="donaciones-container">
+  <h2 class="titulo-seccion">INSCRIPCIONES</h2>
+
+  <mat-accordion class="donaciones-accordion">
+    <mat-expansion-panel *ngFor="let proyecto of proyectos" class="proyecto-panel">
+
+      <!-- Encabezado del proyecto -->
+      <mat-expansion-panel-header>
+        <div class="proyecto-header">
+          <img class="proyecto-icono" [src]="proyecto.imagen" alt="icono proyecto">
+          <div class="proyecto-info">
+            <h3 class="proyecto-nombre">{{ proyecto.nombreproyecto }}</h3>
+            <p class="proyecto-descripcion">"{{ proyecto.descripcion }}"</p>
+          </div>
+        </div>
+      </mat-expansion-panel-header>
+
+      <!-- Lista de inscripciones -->
+      <div class="donaciones-lista" *ngIf="proyecto.inscripciones?.length > 0; else sinInscripciones">
+
+        <div class="donacion-card" *ngFor="let insc of proyecto.inscripciones">
+
+          <!-- Icono del voluntario -->
+          <div class="donacion-icono">
+            <img src="assets/imagenes/icono%20-%20voluntario.png" alt="Icono Voluntario">
+          </div>
+
+          <!-- Datos del voluntario -->
+          <div class="donacion-detalles">
+            <p>
+              <strong>Voluntario:</strong>
+              {{ insc.universitario.usuario?.nombre }}
+              {{ insc.universitario.usuario?.apellidopaterno }}
+              {{ insc.universitario.usuario?.apellidomaterno }}
+            </p>
+
+            <p>
+              <strong>Código UPC:</strong>
+              {{ insc.universitario.codigoestudiante }}
+            </p>
+
+            <p>
+              <strong>Fecha de inscripción:</strong>
+              {{ insc.fecharegistro | date:'dd/MM/yyyy' }}
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- No hay inscripciones -->
+      <ng-template #sinInscripciones>
+        <p class="sin-datos">Este proyecto aún no tiene universitarios inscritos.</p>
+      </ng-template>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</section>
