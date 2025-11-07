@@ -18,7 +18,6 @@ import {RouterLink} from '@angular/router';
     MatExpansionPanel,
     MatExpansionPanelHeader,
     DatePipe,
-    MatIcon,
     CommonModule,
     MatExpansionModule,
     RouterLink
@@ -45,16 +44,26 @@ export class ProyectoDonaciones {
       next: (data) => {
         console.log('[DONACIONES] Datos cargados:', data);
         this.proyectos = data ?? [];
-        this.error = this.proyectos.length === 0 ? 'No hay proyectos con donaciones registradas.' : '';
+        if (this.proyectos.length === 0){
+          this.error = 'No hay proyectos con donaciones registradas'
+        }
       },
       error: (err) => {
         console.error('Error al cargar proyectos con donaciones:', err);
-        this.error = 'Ocurrió un error al cargar las donaciones.';
+        if (err.status == 403) {
+          this.error = 'Error de visualización: No tienes el rol de ADMINISTRADOR O DONANTE para visualizar las donaciones de cada proyecto';
+        } else {
+          this.error = 'Ocurrió un error al cargar las donaciones.'
+        }
         this.proyectos = [];
       },
       complete: () => {
         this.loading = false;
       }
     });
+  }
+
+  limpiarMensajes(): void {
+    this.error = '';
   }
 }
