@@ -38,6 +38,13 @@ export class ProyectoService {
       );
   }
 
+  listarProyectosConInscripciones(): Observable<Proyecto[]> {
+    return this.http.get<Proyecto[]>(`${this.url}/proyectos/inscripciones`, this.authOptions())
+      .pipe(
+        tap(() => console.log('[PROYECTO SERVICE] GET /proyectos/inscripciones'))
+      );
+  }
+
   // POST
   crear(proyecto: Proyecto): Observable<any> {
     console.log('[PROYECTO SERVICE] POST /proyecto payload:', proyecto);
