@@ -21,55 +21,86 @@
         <mat-label>Tipo de documento</mat-label>
         <mat-select formControlName="nombredocumento">
           <mat-option value="DNI">DNI</mat-option>
-          <mat-option value="CE">Carnet de Extranjería</mat-option>
+          <mat-option value="CE">Carnet de Extranjería (CE)</mat-option>
         </mat-select>
+        <mat-error *ngIf="perfilForm.get('nombredocumento')?.hasError('required')">
+          El tipo de documento es obligatorio.
+        </mat-error>
       </mat-form-field>
 
       <!-- Número de documento -->
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Número de documento</mat-label>
         <input matInput formControlName="numerodocumento" placeholder="Ingrese su número de documento" />
+
+        <mat-error *ngIf="perfilForm.get('numerodocumento')?.hasError('required')">
+          El número de documento es obligatorio.
+        </mat-error>
+
+        <mat-error *ngIf="perfilForm.get('numerodocumento')?.hasError('minlength')">
+          Debe tener al menos 8 dígitos.
+        </mat-error>
+
+        <mat-error *ngIf="perfilForm.get('numerodocumento')?.hasError('dniDuplicado')">
+          Este número de documento ya está registrado por otro usuario.
+        </mat-error>
       </mat-form-field>
 
       <!-- Nombre -->
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Nombre</mat-label>
         <input matInput formControlName="nombre" placeholder="Ingrese su nombre" />
+        <mat-error *ngIf="perfilForm.get('nombre')?.hasError('required')">
+          El nombre es obligatorio.
+        </mat-error>
       </mat-form-field>
 
       <!-- Apellido paterno -->
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Apellido paterno</mat-label>
         <input matInput formControlName="apellidopaterno" placeholder="Ingrese su apellido paterno" />
+        <mat-error *ngIf="perfilForm.get('apellidopaterno')?.hasError('required')">
+          El apellido paterno es obligatorio.
+        </mat-error>
       </mat-form-field>
 
       <!-- Apellido materno -->
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Apellido materno</mat-label>
         <input matInput formControlName="apellidomaterno" placeholder="Ingrese su apellido materno" />
+        <mat-error *ngIf="perfilForm.get('apellidomaterno')?.hasError('required')">
+          El apellido materno es obligatorio.
+        </mat-error>
       </mat-form-field>
 
       <!-- Número de celular -->
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Número de celular</mat-label>
+        <mat-label>Celular</mat-label>
         <input matInput type="tel" formControlName="celular" placeholder="Ingrese su número de celular" />
+        <mat-error *ngIf="perfilForm.get('celular')?.hasError('required')">
+          El número de celular es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="perfilForm.get('celular')?.hasError('pattern')">
+          Debe tener 9 dígitos numéricos.
+        </mat-error>
       </mat-form-field>
 
       <!-- Correo electrónico -->
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Correo electrónico</mat-label>
         <input matInput type="email" formControlName="correo" placeholder="Ingrese su correo electrónico" />
+        <mat-error *ngIf="perfilForm.get('correo')?.hasError('required')">
+          El correo es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="perfilForm.get('correo')?.hasError('email')">
+          Ingrese un correo válido.
+        </mat-error>
       </mat-form-field>
 
-      <!-- Contraseña NO SE ESTÁ SEGURO DE INCLUIR
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Contraseña</mat-label>
-        <input matInput type="password" formControlName="contrasena" placeholder="Ingrese su contraseña" />
-      </mat-form-field>-->
-
+      <!-- Botón -->
       <div class="boton-container">
-        <button type="submit" mat-raised-button color="accent" [disabled]="!perfilForm.valid">
-          ENVIAR
+        <button type="submit" mat-raised-button color="accent" [disabled]= "cargando">
+          {{ cargando ? 'ACTUALIZANDO...' : 'ENVIAR' }}
         </button>
       </div>
     </form>
