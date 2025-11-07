@@ -7,10 +7,10 @@
   </div>
 </div>
 
-<section class="donaciones-container">
+<section class="inscripciones-container">
   <h2 class="titulo-seccion">INSCRIPCIONES</h2>
 
-  <mat-accordion class="donaciones-accordion">
+  <mat-accordion class="inscripciones-accordion">
     <mat-expansion-panel *ngFor="let proyecto of proyectos" class="proyecto-panel">
 
       <!-- Encabezado del proyecto -->
@@ -25,17 +25,17 @@
       </mat-expansion-panel-header>
 
       <!-- Lista de inscripciones -->
-      <div class="donaciones-lista" *ngIf="proyecto.inscripciones?.length > 0; else sinInscripciones">
+      <div class="inscripciones-lista" *ngIf="proyecto.inscripciones?.length > 0; else sinInscripciones">
 
-        <div class="donacion-card" *ngFor="let insc of proyecto.inscripciones">
+        <div class="inscripcion-card" *ngFor="let insc of proyecto.inscripciones">
 
           <!-- Icono del voluntario -->
-          <div class="donacion-icono">
+          <div class="inscripcion-icono">
             <img src="assets/imagenes/icono%20-%20voluntario.png" alt="Icono Voluntario">
           </div>
 
           <!-- Datos del voluntario -->
-          <div class="donacion-detalles">
+          <div class="inscripcion-detalles">
             <p>
               <strong>Voluntario:</strong>
               {{ insc.universitario.usuario?.nombre }}
