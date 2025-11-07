@@ -64,7 +64,7 @@
   line-height: 1;
 }
 
-.donaciones-container {
+.inscripciones-container {
   max-width: 1000px;
   margin: 20px auto 40px;
   padding: 16px;
@@ -83,7 +83,7 @@
   margin-bottom: 20px;
 }
 
-.donaciones-accordion {
+.inscripciones-accordion {
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -139,14 +139,14 @@
   padding: 25px 1px 25px;
 }
 
-.donaciones-lista {
+.inscripciones-lista {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 12px;
 }
 
-.donacion-card {
+.inscripcion-card {
   display: flex;
   align-items: center;
   background: var(--rosado);
@@ -155,14 +155,14 @@
   color: var(--marron);
 }
 
-.donacion-icono {
+.inscripcion-icono {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 14px;
 }
 
-.donacion-icono img {
+.inscripcion-icono img {
   width: 48px;
   height: 48px;
   object-fit: contain;
@@ -170,7 +170,7 @@
 }
 
 
-.donacion-detalles p {
+.inscripcion-detalles p {
   margin: 0;
   line-height: 1.4;
   font-size: 1.05rem;
