@@ -16,7 +16,8 @@
       <h3>{{ p.nombreproyecto }}</h3>
       <p>"{{ p.descripcion }}"</p>
     </div>
-    <button class="btn-ver" [routerLink]="['/proyecto-wishlist', p.idproyecto]">Ver más</button>
+    <button class="btn-ver" [routerLink]="['/proyectos', p.idproyecto]">Ver más</button>
+    <button class="btn-quitar" (click)="eliminar(p.idproyecto)">Quitar</button>
   </div>
 </section>
 
