@@ -79,6 +79,12 @@ export class ProyectoService {
     return this.http.get<Proyecto[]>(`${this.url}/wishlist`, this.authOptions());
   }
 
+  eliminarDeWishlist(idProyecto: number) {
+    return this.http.delete<void>(
+      `${this.url}/wishlist/quitar/${idProyecto}`,
+      this.authOptions()
+    );
+  }
   inscribirme(idProyecto: number): Observable<any> {
     const opts = this.authOptions();
     console.log('[INSCRIPCION] headers', (opts as any).headers?.keys?.());
