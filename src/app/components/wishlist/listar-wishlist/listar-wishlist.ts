@@ -41,4 +41,23 @@ export class ListarWishlistComponent implements OnInit {
       complete: () => this.loading = false
     });
   }
+
+  eliminar(idProyecto: number): void {
+    this.error = '';
+
+    const copia = [...this.proyectos];
+    this.proyectos = this.proyectos.filter(p => p.idproyecto !== idProyecto);
+
+    this.proyectoService.eliminarDeWishlist(idProyecto).subscribe({
+      next: () => this.cargarWishlist(), // ← recarga desde el server
+      error: (e) => {
+        // Revertir si falla
+        this.proyectos = copia;
+        this.error = (e?.status === 401 || e?.status === 403)
+          ? 'No tienes permisos o tu sesión expiró. Inicia sesión nuevamente.'
+          : 'No se pudo eliminar el proyecto de tu wishlist.';
+      }
+    });
+  }
+
 }
