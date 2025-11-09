@@ -16,10 +16,13 @@
           <div class="proyecto-info">
             <h3 class="proyecto-nombre">{{ proyecto.nombreproyecto }}</h3>
             <p class="proyecto-descripcion">"{{ proyecto.descripcion }}"</p>
+            <p class="proyecto-descripcion"><u>Monto objetivo</u>: {{proyecto.montoobjetivo}}</p>
+            <p class="proyecto-descripcion"><u>Monto recaudado</u>: {{proyecto.montorecaudado}}</p>
           </div>
         </div>
       </mat-expansion-panel-header>
 
+      <br>
       <div class="donaciones-lista" *ngIf="proyecto.donaciones?.length > 0; else sinDonaciones">
         <div class="donacion-card" *ngFor="let d of proyecto.donaciones">
           <div class="donacion-icono">
