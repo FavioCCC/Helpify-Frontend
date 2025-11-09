@@ -11,6 +11,7 @@ export class Proyecto {
   nombreorganizacion: string;
   escuelabeneficiada: string;
   cupoMaximo: number;
+  cupoRestante: number;
   imagen: string;
   donaciones?: Donacion[];
 }

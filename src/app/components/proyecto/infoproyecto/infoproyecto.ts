@@ -22,10 +22,9 @@ export class InfoProyecto implements OnInit {
   yaInscrito = false;
   necesitaUniversitario = false;
 
-  // PROPIEDADES DE ESTADO PARA MODALES Y MENSAJES
   mensajeExito: string = '';
-  mostrarConfirmacionEliminar: boolean = false; // Controla el modal de eliminación
-  mostrarConfirmacionInscripcion: boolean = false; // Controla el modal de inscripción
+  mostrarConfirmacionEliminar: boolean = false;
+  mostrarConfirmacionInscripcion: boolean = false;
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -80,7 +79,7 @@ export class InfoProyecto implements OnInit {
 
     const ok = window.confirm('¿Confirmas que deseas inscribirte en este proyecto?');
 
-    if (!ok) return; // Se queda en la misma página
+    if (!ok) return;
 
     this.realizarInscripcion();
 
@@ -89,37 +88,70 @@ export class InfoProyecto implements OnInit {
 
   private realizarInscripcion(): void {
     if (!this.proyecto?.idproyecto) return;
+    if (this.loading) return;
     this.loading = true;
     this.error = '';
-    this.necesitaUniversitario = false; // resetea antes del intento
+    this.necesitaUniversitario = false;
+
     this.proyectoService.inscribirme(this.proyecto.idproyecto).subscribe({
       next: () => {
         alert('¡Inscripción exitosa!');
         this.router.navigate(['/proyectos']);
+        this.loading = false;
       },
       error: (e) => {
+        this.loading = false; // resetear también en error
+        const backendMsg = this.parseBackendError(e);
+
         if (e?.status === 401) {
-          this.error = 'Debes iniciar sesión nuevamente.';
+          this.error = backendMsg || 'Debes iniciar sesión nuevamente.';
         } else if (e?.status === 403) {
-// Puede ser falta de rol o falta de ficha Universitario.
-// El backend ya envía un mensaje claro; además, activamos bandera UI.
           this.necesitaUniversitario = true;
-          this.error = e?.error?.message ?? 'Debes registrarte como Universitario para inscribirte.';
+          this.error = backendMsg || 'Debes registrarte como Universitario para inscribirte.';
         } else if (e?.status === 409) {
-          this.error = 'Ya estás inscrita en este proyecto.';
           this.yaInscrito = true;
+          this.error = backendMsg || 'Ya estás inscrito en este proyecto.';
         } else {
-          this.error = 'No se pudo completar la inscripción.';
+          this.error = backendMsg || 'No se pudo completar la inscripción.';
         }
-      },
-      complete: () => this.loading = false
+        console.error('Error inscribirme:', e);
+      }
     });
   }
 
-    /**
-     * Muestra el diálogo de confirmación de eliminación (para modal).
-     */
-    confirmarEliminacion()
+  private parseBackendError(e: any): string | null {
+    if (!e) return null;
+
+    // Angular HttpErrorResponse suele tener e.error con el body
+    const payload = e.error ?? e;
+
+    // si payload es string, intentar parsear JSON
+    if (typeof payload === 'string' && payload.trim()) {
+      try {
+        const parsed = JSON.parse(payload);
+        return parsed.message ?? parsed.mensaje ?? JSON.stringify(parsed);
+      } catch {
+        return payload;
+      }
+    }
+
+    // si payload es objeto, chequear propiedades comunes
+    if (typeof payload === 'object' && payload !== null) {
+      if (payload.message) return payload.message;
+      if (payload.mensaje) return payload.mensaje;
+      if (payload.error && typeof payload.error === 'string') return payload.error;
+      if (Array.isArray(payload.errors) && payload.errors.length) {
+        const first = payload.errors[0];
+        return (first && (first.message || first.defaultMessage)) ? (first.message || first.defaultMessage) : JSON.stringify(payload.errors);
+      }
+    }
+
+    if (e?.message) return e.message;
+    if (e?.statusText) return e.statusText;
+    return null;
+  }
+
+  confirmarEliminacion()
   :
     void {
 
@@ -135,18 +167,15 @@ export class InfoProyecto implements OnInit {
 
     this.proyectoService.eliminarProyecto(this.proyecto.idproyecto).subscribe({
       next: () => {
-        // Mensaje de éxito del sistema y redirección
         this.mensajeExito = 'Proyecto eliminado correctamente. Redirigiendo...';
         setTimeout(() => this.router.navigate(['/proyectos']), 1500);
       },
       error: (e) => {
-        // Lógica para mostrar mensajes de error específicos del sistema
         if (e?.status === 401) {
           this.error = 'Error de eliminación: Debes iniciar sesión para realizar esta acción.';
         } else if (e?.status === 403) {
           this.error = 'Error de eliminación: No tienes el rol de ADMINISTRADOR para eliminar proyectos.';
         } else {
-          // Captura el mensaje de error del backend o un error genérico
           const detalle = e?.error?.message || e.message || e.statusText || 'Error desconocido';
           this.error = `No se pudo eliminar el proyecto. Motivo: ${detalle}`;
         }
@@ -157,19 +186,13 @@ export class InfoProyecto implements OnInit {
     this.limpiarMensajes();
   }
 
-    /**
-     * Oculta el diálogo de confirmación, cancelando la acción.
-     */
+
     cancelarEliminacion()
   :
     void {
       this.mostrarConfirmacionEliminar = false;
     }
 
-    /**
-     * Ejecuta la eliminación del proyecto a través del servicio.
-     * La lógica de Next/Error ha sido actualizada para dar mensajes de sistema específicos.
-     */
     eliminarProyecto()
   :
     void {
