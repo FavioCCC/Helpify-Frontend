@@ -21,7 +21,9 @@
     <div class="izquierda">
       <img class="imagen" [src]="proyecto.imagen" [alt]="proyecto.nombreproyecto" />
       <div class="acciones">
-        <a class="btn" routerLink="/proyecto/modificar">Modificar</a>
+
+        <button class="btn btn-secondary" [routerLink]="['/proyectos', proyecto?.idproyecto, 'modificar']">Modificar</button>
+
         <button class="btn btn-secondary" (click)="eliminarProyecto()">Eliminar</button>
       </div>
       <div *ngIf="mostrarConfirmacionEliminar" class="modal-overlay">
