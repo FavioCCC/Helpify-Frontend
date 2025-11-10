@@ -17,6 +17,9 @@ export const routes: Routes = [
   { path: 'perfil/editar', component: PerfilEditar },
   { path: 'proyectos', component: ListarProyectos },
   { path: 'proyectos/nuevo', component: RegistroProyecto },
+  { path: 'proyectos/:id/modificar',
+    loadComponent: () => import('./components/proyecto/modificar-proyecto/modificar-proyecto')
+      .then(m => m.ModificarProyecto)},
   { path: 'proyectos/:id',
     loadComponent: () => import('./components/proyecto/infoproyecto/infoproyecto')
       .then(m => m.InfoProyecto)},
