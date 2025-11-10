@@ -1,0 +1,122 @@
+
+
+
+<!-- CONTENEDOR DE MENSAJES DEL SISTEMA (Flotante en la parte superior derecha) -->
+<div class="system-message-container">
+  <!-- Mensaje de Éxito -->
+  <div *ngIf="mensajeExito" class="system-message success-box">
+    {{ mensajeExito }}
+    <button (click)="limpiarMensajes()">×</button>
+  </div>
+  <!-- Mensaje de Error -->
+  <div *ngIf="error" class="system-message error-box">
+    {{ error }}
+    <button (click)="limpiarMensajes()">×</button>
+  </div>
+
+
+
+</div>
+
+<div class="wrap">
+  <button class="back-btn" [routerLink]="['/proyectos', proyecto?.idproyecto]" aria-label="Volver">←</button>
+  <h1 class="titulo">MODIFICAR PROYECTO</h1>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="card">
+    <input class="in" type="text" placeholder="Nombre del proyecto*" formControlName="nombreproyecto" />
+    <small class="err" *ngIf="form.get('nombreproyecto')?.hasError('required') && form.get('nombreproyecto')?.touched">
+      El nombre es obligatorio.
+    </small>
+
+    <input class="in" type="text" placeholder="Descripción*" formControlName="descripcion" />
+    <small class="err" *ngIf="form.get('descripcion')?.hasError('required') && form.get('descripcion')?.touched">
+      La descripción es obligatoria.
+    </small>
+
+    <input class="in" type="number" placeholder="Monto objetivo*" formControlName="montoobjetivo" />
+    <small class="err" *ngIf="form.get('montoobjetivo')?.hasError('required') && form.get('montoobjetivo')?.touched">
+      El monto objetivo es obligatorio.
+    </small>
+    <small class="err" *ngIf="form.get('montoobjetivo')?.hasError('min') && form.get('montoobjetivo')?.touched">
+      El monto objetivo debe ser mayor a 0.
+    </small>
+
+    <input class="in" type="number" placeholder="Monto recaudado" formControlName="montorecaudado" />
+    <small class="err" *ngIf="form.get('montorecaudado')?.hasError('min') && form.get('montorecaudado')?.touched">
+      El monto recaudado no puede ser negativo.
+    </small>
+
+    <input type="date" placeholder="Fecha inicio*" formControlName="fechainicio" />
+    <small class="err" *ngIf="form.get('fechainicio')?.hasError('required') && form.get('fechainicio')?.touched">
+      La fecha de inicio es obligatoria.
+    </small>
+
+    <input type="date" placeholder="Fecha fin*" formControlName="fechafin" />
+    <small class="err" *ngIf="form.get('fechafin')?.hasError('required') && form.get('fechafin')?.touched">
+      La fecha de fin es obligatoria.
+    </small>
+    <small class="err" *ngIf="form.get('fechafin')?.hasError('rangoFechas') && form.get('fechafin')?.touched">
+      La fecha fin no puede ser anterior a la fecha inicio.
+    </small>
+
+    <input class="in" type="text" placeholder="Nombre de la Organización*" formControlName="nombreorganizacion" />
+    <small class="err" *ngIf="form.get('nombreorganizacion')?.hasError('required') && form.get('nombreorganizacion')?.touched">
+      El nombre de la organización es obligatorio.
+    </small>
+
+    <input class="in" type="text" placeholder="Escuela beneficiada*" formControlName="escuelabeneficiada" />
+    <small class="err" *ngIf="form.get('escuelabeneficiada')?.hasError('required') && form.get('escuelabeneficiada')?.touched">
+      La escuela beneficiada es obligatoria.
+    </small>
+
+    <input class="in" type="number" placeholder="Cupo máximo*" formControlName="cupoMaximo" />
+    <small class="err" *ngIf="form.get('cupoMaximo')?.hasError('required') && form.get('cupoMaximo')?.touched">
+      El cupo máximo es obligatorio.
+    </small>
+    <small class="err" *ngIf="form.get('cupoMaximo')?.hasError('min') && form.get('cupoMaximo')?.touched">
+      El cupo máximo debe ser mayor a 0.
+    </small>
+
+    <div class="fileRow">
+      <label>Imagen</label>
+
+      <!-- Si ya existe una imagen o se selecciona una nueva -->
+      <div class="thumb" *ngIf="previewUrl || proyecto?.imagen">
+        <img
+          [src]="previewUrl || proyecto?.imagen"
+          [alt]="proyecto?.nombreproyecto || 'Vista previa'"
+          (click)="abrirPreview()"
+        />
+      </div>
+
+      <!-- Si no hay ninguna imagen, no se muestra nada -->
+      <input
+        #fileInput
+        type="file"
+        accept="image/*"
+        (change)="onFileChange($event)"
+      />
+      <small class="hint">
+        Formatos: JPG/PNG/WebP. Máx. 3 MB (configurable).
+      </small>
+      <small *ngIf="archivoImagen" class="hint" style="color:#155724;">
+        Nueva imagen seleccionada (sin guardar aún)
+      </small>
+      <button *ngIf="archivoImagen" type="button" (click)="cancelarCambioImagen()" class="btn">
+        🗑️
+      </button>
+    </div>
+
+
+    <!-- Botón NO depende de form.invalid, solo de 'enviando' -->
+    <button class="btn" type="submit" [disabled]="enviando">ENVIAR</button>
+  </form>
+
+  <!-- Modal simple para ver imagen grande -->
+  <div class="modal-overlay" *ngIf="mostrarPreview" (click)="cerrarPreview()">
+    <div class="modal-body" (click)="$event.stopPropagation()">
+      <img [src]="previewUrl || proyecto?.imagen" alt="Vista previa grande" />
+      <button class="btn-close" (click)="cerrarPreview()">Cerrar</button>
+    </div>
+  </div>
+</div>
