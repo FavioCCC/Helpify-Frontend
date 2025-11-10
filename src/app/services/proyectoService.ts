@@ -5,6 +5,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Proyecto } from '../models/proyecto';
 import {IniciarsesionService} from './inicarsesion-service';
+import {Usuario} from '../models/usuario';
 
 
 @Injectable({ providedIn: 'root' })
@@ -100,6 +101,13 @@ export class ProyectoService {
       headers: { Authorization: token },
       withCredentials: true,
       responseType: 'text' as 'json' // <--- ESTA LÍNEA SOLUCIONA EL ERROR DE PARSING
+    });
+  }
+  actualizarProyecto(proyecto: Proyecto): Observable<Usuario> {
+    const token = this.auth.getToken() || '';
+    return this.http.put<Usuario>(`${this.url}/proyecto`, proyecto, {
+      headers: { Authorization: token },
+      withCredentials: true
     });
   }
 }
