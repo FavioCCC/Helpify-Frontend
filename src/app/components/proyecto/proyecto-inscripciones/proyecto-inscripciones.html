@@ -20,10 +20,12 @@
           <div class="proyecto-info">
             <h3 class="proyecto-nombre">{{ proyecto.nombreproyecto }}</h3>
             <p class="proyecto-descripcion">"{{ proyecto.descripcion }}"</p>
+            <p class="proyecto-descripcion"><u>Cupos restantes</u>: {{proyecto.cupoRestante}}</p>
           </div>
         </div>
       </mat-expansion-panel-header>
 
+      <br>
       <!-- Lista de inscripciones -->
       <div class="inscripciones-lista" *ngIf="proyecto.inscripciones?.length > 0; else sinInscripciones">
 

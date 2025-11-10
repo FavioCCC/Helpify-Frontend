@@ -1,7 +1,5 @@
 <button class="back-btn" [routerLink]="['/proyectos']" aria-label="Volver">←</button>
 
-
-
 <h1 class="titulo">INFORMACIÓN DEL PROYECTO</h1>
 <!-- CONTENEDOR DE MENSAJES DEL SISTEMA (Flotante en la parte superior derecha) -->
 <div class="system-message-container">
@@ -17,126 +15,64 @@
   </div>
 </div>
 
-
 <section class="proyecto-card" *ngIf="proyecto">
-
   <button class="add-btn" (click)="marcarWishlist()">Añadir ❤️</button>
-
-
-
   <div class="contenido">
-
     <div class="izquierda">
-
       <img class="imagen" [src]="proyecto.imagen" [alt]="proyecto.nombreproyecto" />
-
       <div class="acciones">
 
         <button class="btn btn-secondary" [routerLink]="['/proyectos', proyecto?.idproyecto, 'modificar']">Modificar</button>
 
         <button class="btn btn-secondary" (click)="eliminarProyecto()">Eliminar</button>
-
       </div>
-
-
-
       <div *ngIf="mostrarConfirmacionEliminar" class="modal-overlay">
-
         <div class="modal-dialog">
-
           <p class="modal-pregunta">¿Estás seguro de eliminar este proyecto?</p>
-
           <div class="modal-botones">
-
             <button class="btn btn-confirmar" (click)="confirmarEliminacion()">Sí</button>
-
             <button class="btn btn-cancelar" (click)="cancelarEliminacion()">No</button>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
-
-
 
     <div class="derecha">
-
       <h2 class="nombre">{{ proyecto.nombreproyecto }}</h2>
-
-
-
       <p class="descripcion">“{{ proyecto.descripcion }}”</p>
-
-
-
       <ul class="detalles">
-
         <li>• Monto objetivo: S/. {{ proyecto.montoobjetivo }}</li>
-
         <li>• Monto recaudado: S/. {{ proyecto.montorecaudado ?? 0 }}</li>
-
         <li>• Fecha inicio: {{ proyecto.fechainicio | date:'dd \'de\' MMMM \'de\' yyyy' }}</li>
-
         <li>• Fecha fin: {{ proyecto.fechafin | date:'dd \'de\' MMMM \'de\' yyyy' }}</li>
-
         <li>• Nombre de la Organización: {{ proyecto.nombreorganizacion || '—' }}</li>
-
         <li>• Escuela beneficiada: {{ proyecto.escuelabeneficiada || '—' }}</li>
-
         <li>• Cupo máximo: {{ proyecto.cupoMaximo ?? '—' }}</li>
-
+        <li>• Cupo restante: {{ proyecto.cupoRestante ?? '—' }}</li>
       </ul>
 
-
-
       <div class="acciones-derecha">
-
         <button class="btn inscribirme"
-
                 (click)="confirmarInscripcion()"
-
                 [disabled]="loading || yaInscrito || necesitaUniversitario"
-
                 [title]="yaInscrito ? 'Ya estás inscrita en este proyecto' : (necesitaUniversitario ? 'Completa tu registro de Universitario' : '')">
-
           {{
-
             yaInscrito
-
               ? 'Ya estás inscrita'
-
               : (necesitaUniversitario ? 'Debes registrarte como Universitario' : 'Deseo inscribirme✍️️')
-
           }}
-
         </button>
 
-
-
         <button class="btn contribuir" routerLink="/donar">Deseo contribuir $</button>
-
       </div>
-
-
 
       <div class="hint" *ngIf="necesitaUniversitario" style="margin-top:12px">
-
         Debes registrarte como <strong>Universitario</strong>.
-
-        <a [routerLink]="['/universitario/registro']">Completar registro</a>
-
+        <a [routerLink]="['/crearperfil']">Completar registro</a>
       </div>
-
     </div>
-
   </div>
-
 </section>
-
-
 
 <!-- <div class="estado" *ngIf="loading">Cargando...</div> -->
 <!-- <div class="estado error" *ngIf="error">{{ error }}</div> -->
