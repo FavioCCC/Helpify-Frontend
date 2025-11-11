@@ -7,22 +7,34 @@
 
   <h1 class="title">DONAR</h1>
 
-  <section class="panel">
+  <!-- Formulario reactivo -->
+  <section class="panel" [formGroup]="form">
     <div class="grid">
       <div>
         <h3 class="section-title">Monto</h3>
 
+        <!-- Chips de monto -->
         <div class="chips" id="chips">
-          <div class="chip" data-value="10">S/ 10</div>
-          <div class="chip" data-value="20">S/ 20</div>
-          <div class="chip" data-value="50">S/ 50</div>
-          <div class="chip" data-value="100">S/ 100</div>
+          <div class="chip" (click)="selectChip(10)"  [class.active]="form.get('monto')?.value === 10">S/ 10</div>
+          <div class="chip" (click)="selectChip(20)"  [class.active]="form.get('monto')?.value === 20">S/ 20</div>
+          <div class="chip" (click)="selectChip(50)"  [class.active]="form.get('monto')?.value === 50">S/ 50</div>
+          <div class="chip" (click)="selectChip(100)" [class.active]="form.get('monto')?.value === 100">S/ 100</div>
         </div>
 
         <div class="field">
           <label for="otro">Otro monto:</label>
-          <input id="otro" type="text" inputmode="decimal" placeholder="S/ 0" />
-          <small *ngIf="errors.monto" style="color:#a12626;font-weight:700">{{ errors.monto }}</small>
+          <input
+            id="otro"
+            type="text"
+            inputmode="decimal"
+            placeholder="S/ 0"
+            [value]="form.get('monto')?.value ?? ''"
+            (input)="onOtroMontoChange($event)" />
+          <small
+            *ngIf="form.get('monto')?.invalid && (form.get('monto')?.touched || form.get('monto')?.dirty)"
+            style="color:#a12626;font-weight:700">
+            {{ errors?.monto || 'Ingresa un monto válido (mín. S/ 1)' }}
+          </small>
         </div>
 
         <h3 class="section-title">Método de pago</h3>
@@ -32,30 +44,79 @@
 
         <div class="field">
           <label for="titular">Nombre de la tarjeta:</label>
-          <input id="titular" type="text" placeholder="Como aparece en la tarjeta" />
-          <small *ngIf="errors.titular" style="color:#a12626;font-weight:700">{{ errors.titular }}</small>
+          <input
+            id="titular"
+            type="text"
+            placeholder="Como aparece en la tarjeta"
+            formControlName="nombretitular" />
+          <small
+            *ngIf="form.get('nombretitular')?.invalid && (form.get('nombretitular')?.touched || form.get('nombretitular')?.dirty)"
+            style="color:#a12626;font-weight:700">
+            {{ errors?.titular || 'Ingresa el nombre del titular' }}
+          </small>
         </div>
 
         <div class="row-3">
           <div class="field">
             <label for="numero">Número de tarjeta:</label>
-            <input id="numero" type="text" inputmode="numeric" placeholder="0000 0000 0000 0000" maxlength="19" />
-            <small *ngIf="errors.numero" style="color:#a12626;font-weight:700">{{ errors.numero }}</small>
+            <input
+              id="numero"
+              type="text"
+              inputmode="numeric"
+              placeholder="0000 0000 0000 0000"
+              maxlength="19"
+              formControlName="numerotarjeta" />
+            <small
+              *ngIf="form.get('numerotarjeta')?.invalid && (form.get('numerotarjeta')?.touched || form.get('numerotarjeta')?.dirty)"
+              style="color:#a12626;font-weight:700">
+              {{ errors?.numero || 'Número de tarjeta inválido' }}
+            </small>
           </div>
+
           <div class="field">
             <label for="venc">Vencimiento:</label>
-            <input id="venc" type="text" inputmode="numeric" placeholder="MM/AA" maxlength="5" />
-            <small *ngIf="errors.venc" style="color:#a12626;font-weight:700">{{ errors.venc }}</small>
+            <!-- Mantiene MM/AA; el TS lo convierte a YYYY-MM-01 -->
+            <input
+              id="venc"
+              type="text"
+              inputmode="numeric"
+              placeholder="MM/AA"
+              maxlength="5"
+              [value]="form.get('venc')?.value || ''"
+              (input)="onVencInput($event)" />
+            <small
+              *ngIf="form.get('venc')?.invalid && (form.get('venc')?.touched || form.get('venc')?.dirty)"
+              style="color:#a12626;font-weight:700">
+              {{ errors?.venc || 'Vencimiento inválido (MM/AA)' }}
+            </small>
           </div>
+
           <div class="field">
             <label for="cvv">CVV:</label>
-            <input id="cvv" type="password" inputmode="numeric" placeholder="***" maxlength="4" />
-            <small *ngIf="errors.cvv" style="color:#a12626;font-weight:700">{{ errors.cvv }}</small>
+            <input
+              id="cvv"
+              type="password"
+              inputmode="numeric"
+              placeholder="***"
+              maxlength="4"
+              formControlName="cvv" />
+            <small
+              *ngIf="form.get('cvv')?.invalid && (form.get('cvv')?.touched || form.get('cvv')?.dirty)"
+              style="color:#a12626;font-weight:700">
+              {{ errors?.cvv || 'CVV inválido' }}
+            </small>
           </div>
         </div>
 
         <div class="actions">
-          <button class="btn" id="enviar" type="button" >Donar</button>
+          <button
+            class="btn"
+            id="enviar"
+            type="button"
+            (click)="onSubmit()"
+            [disabled]="form.invalid || cargando">
+            {{ cargando ? 'Procesando…' : 'Donar' }}
+          </button>
         </div>
 
         <p *ngIf="mensajeError" style="color:#a12626;font-weight:700">{{ mensajeError }}</p>
@@ -65,7 +126,7 @@
       <aside>
         <div class="summary">
           <h3>Resumen:</h3>
-          <div class="amount" id="amountText">S/ 0</div>
+          <div class="amount" id="amountText">S/ {{ (form.get('monto')?.value || 0) | number:'1.2-2' }}</div>
           <div id="breakdown" style="margin-top:8px;color:#8a6a46;font-size:14px;"></div>
         </div>
       </aside>
@@ -75,7 +136,13 @@
     <div class="modal-backdrop" *ngIf="receiptVisible" (click)="closeReceipt()" aria-hidden="true"></div>
 
     <!-- Modal del comprobante -->
-    <div class="modal" *ngIf="receiptVisible" role="dialog" aria-modal="true" aria-labelledby="reciboTitle" (click)="$event.stopPropagation()">
+    <div
+      class="modal"
+      *ngIf="receiptVisible"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="reciboTitle"
+      (click)="$event.stopPropagation()">
       <div class="modal-header">
         <h3 id="reciboTitle">Comprobante de donación:</h3>
         <button class="btn-close" type="button" (click)="closeReceipt()">Cerrar</button>
@@ -92,6 +159,7 @@
     </div>
   </section>
 </main>
+
 
 
 

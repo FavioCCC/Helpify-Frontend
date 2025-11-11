@@ -1,4 +1,4 @@
-import {Donacion} from './donar';
+import {Donacion} from './donacion';
 
 export class Proyecto {
   idproyecto: number;

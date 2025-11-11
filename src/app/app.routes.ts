@@ -28,12 +28,15 @@ export const routes: Routes = [
     loadComponent: () => import('./components/wishlist/listar-wishlist/listar-wishlist')
       .then(m => m.ListarWishlistComponent)
   },
+
   { path: 'proyectos-donaciones', component: ProyectoDonaciones },
   {path: 'proyectos-inscripciones', component: ProyectoInscripciones},
   { path: 'foros', component: ComentarioComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'login', component: Iniciarsesion },
-  { path: 'donar', component: DonarComponent },
+
+  { path: 'donar/:idProyecto', component: DonarComponent },
+
   { path: 'crearperfil', component: CrearCuenta },
   { path: '**', redirectTo: '' }
 ];

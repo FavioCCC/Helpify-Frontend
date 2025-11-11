@@ -1,51 +1,30 @@
+// src/app/services/pagoService.ts
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Donacion } from '../models/donar';
+import { Observable } from 'rxjs';
+import { PagoDTO } from '../models/pago';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class DonarService {
 
+export interface DonacionProyectoRef { idproyecto: number; }
+export interface DonacionCreate { monto?: number; proyecto: DonacionProyectoRef; }
+export interface DonacionRespuesta { id: number; estado?: string; monto?: number; proyecto?: DonacionProyectoRef; }
+
+@Injectable({ providedIn: 'root' })
+export class DonacionService {
   private http = inject(HttpClient);
+  private base = environment.apiUrl;
 
-  // Rutas base (ajústalas según tu backend)
-  private urlListar = `${environment.apiUrl}/donaciones`;
-  private urlDonacion = `${environment.apiUrl}/donacion`;
-
-  /**
-   * 1) Listar todas las donaciones
-   * Ejemplo: GET /api/donaciones
-   */
-  list(): Observable<Donacion[]> {
-    return this.http.get<Donacion[]>(this.urlListar, { withCredentials: true });
+  crear(d: DonacionCreate): Observable<DonacionRespuesta> {
+    return this.http.post<DonacionRespuesta>(`${this.base}/donacion`, d);
   }
 
-  /**
-   * 2) Registrar una nueva donación
-   * Ejemplo: POST /api/donacion
-   *
-   * @param donacion solo se envían los campos necesarios
-   */
-  create(donacion: Pick<Donacion, 'monto' | 'metodoPago' | 'titular'>): Observable<Donacion> {
-    return this.http.post<Donacion>(this.urlDonacion, donacion, { withCredentials: true });
+  pagar(dto: PagoDTO): Observable<{ mensaje: string; pago: PagoDTO }> {
+    return this.http.post<{ mensaje: string; pago: PagoDTO }>(`${this.base}/pago`, dto);
   }
 
-  /**
-   * 3) Eliminar una donación por ID
-   * Ejemplo: DELETE /api/donacion/{id}
-   */
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.urlDonacion}/${id}`, { withCredentials: true });
-  }
-
-  /**
-   * 4) (Opcional) Obtener una donación específica
-   * Ejemplo: GET /api/donacion/{id}
-   */
-  getById(id: number): Observable<Donacion> {
-    return this.http.get<Donacion>(`${this.urlDonacion}/${id}`, { withCredentials: true });
+  listarTodos(): Observable<PagoDTO[]> {
+    return this.http.get<PagoDTO[]>(`${this.base}/pago`);
   }
 }
+
