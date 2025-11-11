@@ -63,7 +63,8 @@
           }}
         </button>
 
-        <button class="btn contribuir" routerLink="/donar">Deseo contribuir $</button>
+        <button class="btn contribuir" [routerLink]="['/donar', proyecto?.idproyecto]">
+          Deseo contribuir $ </button>
       </div>
 
       <div class="hint" *ngIf="necesitaUniversitario" style="margin-top:12px">

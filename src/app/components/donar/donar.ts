@@ -1,27 +1,54 @@
-import {
-  Component, ElementRef, AfterViewInit, OnDestroy,
-  Renderer2
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { DonarService } from '../../services/donarService';
-import { Donacion } from '../../models/donar';
+import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DonacionService } from '../../services/donarService';
+import { PagoService } from '../../services/pagoService';
+
+import { DonacionCreate, DonacionRespuesta } from '../../models/donacion';
+import { PagoDTO, PagoRespuesta } from '../../models/pago';
+
+import { switchMap, finalize } from 'rxjs/operators';
+import { of } from 'rxjs';
+
+type Receipt = {
+  donante: string;
+  proyecto: string;
+  monto: number;
+  metodo: string;
+  last4: string;
+  fecha: string;
+  estado: string;
+};
 
 @Component({
-    selector: 'app-donar',
-    standalone: true,
-    imports: [CommonModule, FormsModule],
-    templateUrl: './donar.html',
-    styleUrls: ['./donar.css']
+  selector: 'app-donar',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './donar.html',
+  styleUrls: ['./donar.css']
 })
-export class DonarComponent implements AfterViewInit, OnDestroy {
+export class DonarComponent implements OnInit {
+  form!: FormGroup;
 
-  // ========== Estado para mensajes en la UI ==========
-  mensajeExito = '';
+  // mensajes
   mensajeError = '';
+  mensajeExito = '';
 
-  // Mensajes de validación por campo (enlázalos en tu HTML con *ngIf)
-  errors = {
+  // control de modal de comprobante
+  receiptVisible = false;
+  receipt: Receipt = {
+    donante: '',
+    proyecto: '',
+    monto: 0,
+    metodo: 'Tarjeta',
+    last4: '',
+    fecha: '',
+    estado: 'OK'
+  };
+
+  // errores de validación mostrados en tu HTML
+  errors: any = {
     monto: '',
     titular: '',
     numero: '',
@@ -29,238 +56,149 @@ export class DonarComponent implements AfterViewInit, OnDestroy {
     cvv: ''
   };
 
-  // ========== Estado del comprobante ==========
-  receiptVisible = false;
-  proyectoNombre = 'Tecnología para Aprender';  // cámbialo si viene por ruta/servicio
-  receipt = {
-    donante: '',
-    proyecto: '',
-    monto: 0,
-    metodo: 'Tarjeta',
-    last4: '',
-    fecha: '',
-    estado: 'Completa'
-  };
-
-  // ========== Referencias a elementos (por ID en el template) ==========
-  private chipsEl!: HTMLElement;
-  private otherEl!: HTMLInputElement;
-  private amountTextEl!: HTMLElement;
-  private breakdownEl!: HTMLElement;
-  private numeroEl!: HTMLInputElement;
-  private vencEl!: HTMLInputElement;
-  private cvvEl!: HTMLInputElement;
-  private enviarEl!: HTMLButtonElement;
-  private titularEl!: HTMLInputElement;
-
-  private unsubs: Array<() => void> = [];
-  private nf = new Intl.NumberFormat('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  cargando = false;
+  idProyecto!: number;
 
   constructor(
-    private el: ElementRef<HTMLElement>,
-    private renderer: Renderer2,
-    private donarService: DonarService
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private donacionService: DonacionService,
+    private pagoService: PagoService,
+    private router: Router
   ) {}
 
-  // ========== Utilidades equivalentes a tu JS ==========
-  private setAmount(n: number) {
-    const amount = isNaN(n) ? 0 : Math.max(0, Number(n));
-    if (this.amountTextEl) this.amountTextEl.textContent = `S/ ${this.nf.format(amount)}`;
-    if (this.breakdownEl) this.breakdownEl.textContent = amount > 0 ? 'Donación seleccionada' : '';
-  }
+  ngOnInit(): void {
+    this.idProyecto = Number(this.route.snapshot.paramMap.get('idProyecto'));
 
-  private getAmountFromDOM(): number {
-    if (!this.amountTextEl) return 0;
-    const txt = this.amountTextEl.textContent ?? '';
-    return Number(txt.replace(/[^\d.]/g, '')) || 0;
-  }
-
-  private clearChipsActive() {
-    if (!this.chipsEl) return;
-    Array.from(this.chipsEl.children).forEach(c => (c as HTMLElement).classList.remove('active'));
-  }
-
-  // ========== Validación de campos ==========
-  private validate(): boolean {
-    // limpia mensajes
-    this.errors = { monto: '', titular: '', numero: '', venc: '', cvv: '' };
-    this.mensajeError = '';
-
-    const amount = this.getAmountFromDOM();
-    const name = (this.titularEl?.value || '').trim();
-    const card = (this.numeroEl?.value || '').replace(/\s/g, '');
-    const mmYY = (this.vencEl?.value || '').trim();
-    const cvv = (this.cvvEl?.value || '').trim();
-
-    let ok = true;
-
-    if (amount <= 0) { this.errors.monto = 'Selecciona o ingresa un monto válido.'; ok = false; }
-    if (!name) { this.errors.titular = 'Ingresa el nombre del titular.'; ok = false; }
-    if (card.length < 13) { this.errors.numero = 'Número de tarjeta inválido.'; ok = false; }
-    if (!/^\d{2}\/\d{2}$/.test(mmYY)) { this.errors.venc = 'Vencimiento inválido. Usa MM/AA.'; ok = false; }
-    if (cvv.length < 3) { this.errors.cvv = 'CVV inválido.'; ok = false; }
-
-    if (!ok) this.mensajeError = 'Revisa los campos marcados.';
-    return ok;
-  }
-
-  // ========== Click en Donar (muestra comprobante si todo OK) ==========
-  private onDonarClick() {
-    this.mensajeExito = '';
-    this.mensajeError = '';
-    if (!this.validate()) return;
-
-    const amount = this.getAmountFromDOM();
-    const name = (this.titularEl?.value || '').trim();
-    const card = (this.numeroEl?.value || '').replace(/\s/g, '');
-
-    // armar payload para backend
-    const donacion: Pick<Donacion, 'monto' | 'metodoPago' | 'titular'> = {
-      monto: amount,
-      metodoPago: 'Tarjeta',
-      titular: name
-    };
-
-    this.donarService.create(donacion).subscribe({
-      next: () => {
-        // construir comprobante
-        const now = new Date();
-        this.receipt = {
-          donante: name,
-          proyecto: this.proyectoNombre,
-          monto: amount,
-          metodo: 'Tarjeta',
-          last4: card.slice(-4),
-          fecha: `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}, ${now.toLocaleTimeString('es-PE', { hour12: false })}`,
-          estado: 'Completa'
-        };
-        this.receiptVisible = true;  // ← muestra el modal
-        this.mensajeExito = `¡Gracias! Se registró una donación de S/ ${this.nf.format(amount)}.`;
-
-        // reset visual
-        this.clearChipsActive();
-        this.otherEl.value = '';
-        this.numeroEl.value = '';
-        this.vencEl.value = '';
-        this.cvvEl.value = '';
-        this.titularEl.value = '';
-        this.setAmount(0);
-      },
-      error: (err) => {
-        console.error(err);
-        this.mensajeError = 'Ocurrió un error al procesar tu donación.';
-      }
+    this.form = this.fb.group({
+      monto: [null, [Validators.required, Validators.min(1)]],
+      numerotarjeta: ['', [Validators.required, Validators.minLength(13)]],
+      nombretitular: ['', [Validators.required, Validators.minLength(2)]],
+      venc: ['', [Validators.required, this.mmAaValidator]],
+      cvv: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(4)]]
     });
   }
 
-  closeReceipt(): void { this.receiptVisible = false; }
+  // ===== Helpers de formato/validación =====
 
-  // ========== Eventos (Renderer2) ==========
-  private wireEvents() {
-    // Chips (delegado)
-    this.unsubs.push(
-      this.renderer.listen(this.chipsEl, 'click', (e: Event) => {
-        const chip = (e.target as HTMLElement).closest('.chip') as HTMLElement | null;
-        if (!chip) return;
-        this.clearChipsActive();
-        chip.classList.add('active');
-        const value = Number(chip.dataset['value'] || 0);
-        this.otherEl.value = `S/ ${value}`;
-        this.setAmount(value);
-        this.errors.monto = ''; // limpia error si lo había
-      })
-    );
+  // Valida formato MM/AA (muy simple)
+  private mmAaValidator = (control: any) => {
+    const v: string = control.value || '';
+    const ok = /^\d{2}\/\d{2}$/.test(v);
+    return ok ? null : { mmAa: true };
+  };
 
-    // Otro monto (input/blur)
-    this.unsubs.push(
-      this.renderer.listen(this.otherEl, 'input', () => {
-        const raw = this.otherEl.value.replace(/[^\d.]/g, '');
-        const val = raw ? Number(raw) : 0;
-        this.setAmount(val);
-        this.clearChipsActive();
-        this.errors.monto = ''; // limpia si escribe
-      })
-    );
-    this.unsubs.push(
-      this.renderer.listen(this.otherEl, 'blur', () => {
-        const raw = this.otherEl.value.replace(/[^\d.]/g, '');
-        const val = raw ? Number(raw) : 0;
-        this.otherEl.value = val ? `S/ ${val}` : '';
-      })
-    );
-
-    // Número tarjeta #### #### #### ####
-    this.unsubs.push(
-      this.renderer.listen(this.numeroEl, 'input', () => {
-        let v = this.numeroEl.value.replace(/\D/g, '').slice(0, 16);
-        this.numeroEl.value = v.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
-        this.errors.numero = '';
-      })
-    );
-
-    // Vencimiento MM/AA
-    this.unsubs.push(
-      this.renderer.listen(this.vencEl, 'input', () => {
-        let v = this.vencEl.value.replace(/\D/g, '').slice(0, 4);
-        if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
-        this.vencEl.value = v;
-        this.errors.venc = '';
-      })
-    );
-
-    // CVV (3–4)
-    this.unsubs.push(
-      this.renderer.listen(this.cvvEl, 'input', () => {
-        this.cvvEl.value = this.cvvEl.value.replace(/\D/g, '').slice(0, 4);
-        this.errors.cvv = '';
-      })
-    );
-
-    // Titular
-    this.unsubs.push(
-      this.renderer.listen(this.titularEl, 'input', () => { this.errors.titular = ''; })
-    );
-
-    // Botón Donar
-    this.unsubs.push(
-      this.renderer.listen(this.enviarEl, 'click', () => this.onDonarClick())
-    );
+  // Convierte 'MM/AA' → 'YYYY-MM-01' (asumiendo 20xx)
+  private vencToISO(venc: string): string {
+    if (!venc || venc.length !== 5) return '';
+    const mm = venc.slice(0, 2);
+    const yy = venc.slice(3);
+    const year = parseInt(yy, 10);
+    const yyyy = year >= 80 ? 1900 + year : 2000 + year;
+    return `${yyyy}-${mm}-01`;
   }
 
-  // ========== Ciclo de vida ==========
-  ngAfterViewInit(): void {
-    const root = this.el.nativeElement as HTMLElement;
+  // ===== Eventos que usa tu HTML =====
 
-    this.chipsEl      = root.querySelector('#chips')       as HTMLElement;
-    this.otherEl      = root.querySelector('#otro')        as HTMLInputElement;
-    this.amountTextEl = root.querySelector('#amountText')  as HTMLElement;
-    this.breakdownEl  = root.querySelector('#breakdown')   as HTMLElement;
-    this.numeroEl     = root.querySelector('#numero')      as HTMLInputElement;
-    this.vencEl       = root.querySelector('#venc')        as HTMLInputElement;
-    this.cvvEl        = root.querySelector('#cvv')         as HTMLInputElement;
-    this.enviarEl     = root.querySelector('#enviar')      as HTMLButtonElement;
-    this.titularEl    = root.querySelector('#titular')     as HTMLInputElement;
+  volver(): void {
+    history.back();
+  }
 
-    // Validar que existan los IDs requeridos
-    if (!this.chipsEl || !this.otherEl || !this.amountTextEl || !this.breakdownEl ||
-      !this.numeroEl || !this.vencEl || !this.cvvEl || !this.enviarEl || !this.titularEl) {
-      console.error('[DonarComponent] Faltan elementos con IDs requeridos en el template.');
+  closeReceipt(): void {
+    this.receiptVisible = false;
+  }
+
+  selectChip(valor: number): void {
+    this.form.patchValue({ monto: valor });
+  }
+
+  onOtroMontoChange(ev: Event): void {
+    const raw = (ev.target as HTMLInputElement).value || '';
+    // limpia símbolos y convierte a número decimal
+    const clean = raw.replace(/[^\d.,]/g, '').replace(',', '.');
+    const num = parseFloat(clean);
+    this.form.patchValue({ monto: isNaN(num) ? null : num });
+  }
+
+  onVencInput(ev: Event): void {
+    let v = (ev.target as HTMLInputElement).value || '';
+    // fuerza formato MM/AA en tiempo real
+    v = v.replace(/[^\d]/g, '').slice(0, 4);
+    if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+    this.form.patchValue({ venc: v }, { emitEvent: false });
+  }
+
+  // ===== Flujo crear Donación → Pagar =====
+
+  onSubmit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      // mensajes simples por campo (los lees en tu HTML si quieres)
       return;
     }
 
-    // Valor inicial como tu JS
-    this.otherEl.value = 'S/ 500';
-    this.setAmount(500);
+    this.cargando = true;
+    this.mensajeError = '';
+    this.mensajeExito = '';
+    this.receiptVisible = false;
 
-    // Conectar listeners
-    this.wireEvents();
+    // 1) Crear donación (usuario viene del JWT en el backend)
+    const donacion: DonacionCreate = {
+      monto: this.form.value.monto, // si tu back no usa monto en donación, puedes quitarlo
+      proyecto: { idproyecto: this.idProyecto }
+    };
+
+    this.donacionService.crear(donacion).pipe(
+      switchMap((d: DonacionRespuesta | null) => {
+        if (!d?.id) return of(null);
+
+        // 2) Pagar esa donación
+        const dto: PagoDTO = {
+          monto: this.form.value.monto,
+          numerotarjeta: (this.form.value.numerotarjeta || '').replace(/\s+/g, ''),
+          nombretitular: this.form.value.nombretitular,
+          fechaexpiracion: this.vencToISO(this.form.value.venc),
+          cvv: this.form.value.cvv, // el backend lo descarta/ignora
+          donacion: { id: d.id }
+        };
+        return this.pagoService.pagar(dto);
+      }),
+      finalize(() => (this.cargando = false))
+    )
+      .subscribe({
+        next: (resp: any) => {
+          if (!resp) {
+            this.mensajeError = 'No se pudo crear la donación.';
+            return;
+          }
+          this.mensajeExito = resp?.mensaje || '¡Pago realizado con éxito!';
+
+          const last4 = (resp?.pago?.numerotarjeta || '').slice(-4);
+          this.receipt = {
+            donante: this.form.value.nombretitular,
+            proyecto: `#${this.idProyecto}`,
+            monto: this.form.value.monto,
+            metodo: 'Tarjeta',
+            last4,
+            fecha: new Date().toISOString().slice(0, 10),
+            estado: resp?.pago?.status || 'OK'
+          };
+          this.receiptVisible = true;
+          this.form.reset();
+        },
+        error: (err) => {
+          if (err.status === 409 && (err.error?.message || '').toLowerCase().includes('pago')) {
+            this.mensajeError = 'Esta donación ya fue pagada.';
+          } else if (err.status === 403) {
+            this.mensajeError = 'No tienes permisos para realizar esta operación.';
+          } else if (err.status === 400) {
+            this.mensajeError = 'Datos inválidos. Verifica el formulario.';
+          } else if (err.status === 401) {
+            this.mensajeError = 'Sesión expirada. Inicia sesión nuevamente.';
+          } else {
+            this.mensajeError = err?.error?.message || 'Ocurrió un error procesando el pago.';
+          }
+        }
+      });
   }
-
-  ngOnDestroy(): void {
-    this.unsubs.forEach(u => { try { u(); } catch { /* noop */ } });
-    this.unsubs = [];
-  }
-
-  // Back
-  volver(): void { history.back(); }
 }
