@@ -43,9 +43,17 @@ export class ProyectoDonaciones {
     this.proyectoService.listarProyectosConDonaciones().subscribe({
       next: (data) => {
         console.log('[DONACIONES] Datos cargados:', data);
-        this.proyectos = data ?? [];
+        this.proyectos = (data ?? []).map((proyecto: any) => {
+          return {
+            ...proyecto,
+            donaciones: (proyecto.donaciones ?? []).filter(
+              (d: any) => d.estado?.toUpperCase() === 'COMPLETADO'
+            ),
+          };
+        }).filter(p => (p.donaciones?.length ?? 0) > 0);
+
         if (this.proyectos.length === 0){
-          this.error = 'No hay proyectos con donaciones registradas'
+          this.error = 'No hay proyectos con donaciones completadas.';
         }
       },
       error: (err) => {
@@ -53,7 +61,7 @@ export class ProyectoDonaciones {
         if (err.status == 403) {
           this.error = 'Error de visualización: No tienes el rol de ADMINISTRADOR O DONANTE para visualizar las donaciones de cada proyecto';
         } else {
-          this.error = 'Ocurrió un error al cargar las donaciones.'
+          this.error = 'Ocurrió un error al cargar las donaciones.';
         }
         this.proyectos = [];
       },
