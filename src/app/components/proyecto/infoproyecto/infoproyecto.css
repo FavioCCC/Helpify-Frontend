@@ -174,10 +174,10 @@
   background: var(--rosado);
 }
 
-.acciones-derecha {
+.acciones-derecha >div {
   display: flex;
   justify-content: flex-end;
-  gap: 15px;
+  gap: 24px;
   margin-top: 20px;
 }
 
@@ -328,6 +328,7 @@
     padding: 20px;
     margin-top: 10px;
   }
+
   .back-btn {
     top: 10px;
     left: 10px;
@@ -337,4 +338,12 @@
     right: 10px;
     max-width: 95%;
   }
+  .acciones-no-logueado {
+    display: flex;
+    flex-direction: row;      /* uno al lado del otro */
+    gap: 15px;                /* espacio entre botones */
+    justify-content: flex-start;  /* alineados a la izquierda */
+    margin-top: 10px;
+  }
+
 }
