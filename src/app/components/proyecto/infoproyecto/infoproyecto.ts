@@ -3,6 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProyectoService } from '../../../services/proyectoService';
 import { Proyecto } from '../../../models/proyecto';
+import {IniciarsesionService} from '../../../services/inicarsesion-service';
 
 @Component({
   selector: 'app-info-proyecto',
@@ -15,6 +16,7 @@ export class InfoProyecto implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private proyectoService = inject(ProyectoService);
+  private auth = inject(IniciarsesionService);
 
   proyecto: Proyecto | null = null;
   loading = false;
@@ -204,4 +206,14 @@ export class InfoProyecto implements OnInit {
       this.error = '';
       this.mensajeExito = '';
     }
+
+  get esAdmin(): boolean {
+    return this.auth.isAdmin();
+  }
+  get esVoluntario(): boolean {
+    return this.auth.userHasRole('VOLUNTARIO');
+  }
+  get esDonante(): boolean {
+    return this.auth.userHasRole('DONANTE');
+  }
   }

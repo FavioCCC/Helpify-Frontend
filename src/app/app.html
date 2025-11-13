@@ -27,26 +27,34 @@
     <li class="has-sub" routerLinkActive="active">
       <a>COMUNIDAD</a>
       <ul class="menu-vertical">
-        <li>
+        <!-- Ocultar para VOLUNTARIO -->
+        <li *ngIf="!esVoluntario">
           <a routerLink="/proyectos-donaciones" class="submenu-link comunidad-item">REPORTE DE DONACIONES</a>
         </li>
-        <li>
+        <!-- Ocultar para DONANTE -->
+        <li *ngIf="!esDonante">
           <a routerLink="/proyectos-inscripciones" class="submenu-link comunidad-item">REPORTE DE INSCRIPCIONES</a>
         </li>
       </ul>
     </li>
 
-
+    <!-- PROYECTOS -->
     <li class="has-sub">
       <a href="javascript:void(0)">PROYECTOS</a>
       <ul class="menu-vertical">
         <li><a routerLink="/proyectos">Listado de proyectos</a></li>
-        <li><a routerLink="/proyectos/nuevo">Agregar un proyecto</a></li>
-        <li><a routerLink="/reportes/estadisticos">Reportes estadísticos</a></li>
+
+        <!-- Registros de proyecto: solo Admin -->
+        <li *ngIf="esAdmin"><a routerLink="/proyectos/nuevo">Agregar un proyecto</a></li>
+
+        <!-- Reportes estadísticos: solo Admin -->
+        <li *ngIf="esAdmin"><a routerLink="/reportes/estadisticos">Reportes estadísticos</a></li>
       </ul>
     </li>
 
-    <li><a routerLink="/wishlist">WISHLIST</a></li>
+    <!-- WISHLIST: ocultar para ADMIN -->
+    <li *ngIf="!esAdmin"><a routerLink="/wishlist">WISHLIST</a></li>
+
     <li><a routerLink="/notificaciones">NOTIFICACIONES</a></li>
     <li><a routerLink="/foros">FOROS</a></li>
   </ul>
@@ -68,7 +76,6 @@
       </div>
 
       <nav class="col-center" aria-label="Enlaces legales">
-
         <a routerLink="/reclamaciones" class="footer-link">LIBRO DE RECLAMACIONES</a>
         <a routerLink="/terminos" class="footer-link">TÉRMINOS Y CONDICIONES</a>
       </nav>
