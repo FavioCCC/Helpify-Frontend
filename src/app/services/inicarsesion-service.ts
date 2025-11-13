@@ -56,7 +56,6 @@ export class IniciarsesionService {
 
   getToken(): string | null {
     const t = localStorage.getItem('auth_token');
-    // no imprimas todo el token, solo prefijo para no contaminar logs
     console.log('[AUTH] getToken() →', t ? t.substring(0, 20) + '...' : null);
     return t;
   }
