@@ -1,14 +1,13 @@
 <button class="back-btn" [routerLink]="['/proyectos']" aria-label="Volver">←</button>
 
 <h1 class="titulo">INFORMACIÓN DEL PROYECTO</h1>
-<!-- CONTENEDOR DE MENSAJES DEL SISTEMA (Flotante en la parte superior derecha) -->
+
+<!-- MENSAJES -->
 <div class="system-message-container">
-  <!-- Mensaje de Éxito -->
   <div *ngIf="mensajeExito" class="system-message success-box">
     {{ mensajeExito }}
     <button (click)="limpiarMensajes()">×</button>
   </div>
-  <!-- Mensaje de Error -->
   <div *ngIf="error" class="system-message error-box">
     {{ error }}
     <button (click)="limpiarMensajes()">×</button>
@@ -16,17 +15,29 @@
 </div>
 
 <section class="proyecto-card" *ngIf="proyecto">
-  <button class="add-btn" (click)="marcarWishlist()">Añadir ❤️</button>
+
+  <!-- Wishlist: SOLO voluntario o donante -->
+  <button class="add-btn" (click)="marcarWishlist()" *ngIf="esVoluntario || esDonante">
+    Añadir ❤️
+  </button>
+
   <div class="contenido">
     <div class="izquierda">
       <img class="imagen" [src]="proyecto.imagen" [alt]="proyecto.nombreproyecto" />
-      <div class="acciones">
 
-        <button class="btn btn-secondary" [routerLink]="['/proyectos', proyecto?.idproyecto, 'modificar']">Modificar</button>
+      <!-- Acciones de ADMIN (únicamente) -->
+      <div class="acciones" *ngIf="esAdmin">
+        <button class="btn btn-secondary" [routerLink]="['/proyectos', proyecto?.idproyecto, 'modificar']">
+          Modificar
+        </button>
 
-        <button class="btn btn-secondary" (click)="eliminarProyecto()">Eliminar</button>
+        <button class="btn btn-secondary" (click)="eliminarProyecto()">
+          Eliminar
+        </button>
       </div>
-      <div *ngIf="mostrarConfirmacionEliminar" class="modal-overlay">
+
+      <!-- Modal de confirmación (solo si es admin y está en flujo de eliminar) -->
+      <div *ngIf="esAdmin && mostrarConfirmacionEliminar" class="modal-overlay">
         <div class="modal-dialog">
           <p class="modal-pregunta">¿Estás seguro de eliminar este proyecto?</p>
           <div class="modal-botones">
@@ -40,6 +51,7 @@
     <div class="derecha">
       <h2 class="nombre">{{ proyecto.nombreproyecto }}</h2>
       <p class="descripcion">“{{ proyecto.descripcion }}”</p>
+
       <ul class="detalles">
         <li>• Monto objetivo: S/. {{ proyecto.montoobjetivo }}</li>
         <li>• Monto recaudado: S/. {{ proyecto.montorecaudado ?? 0 }}</li>
@@ -52,7 +64,9 @@
       </ul>
 
       <div class="acciones-derecha">
+        <!-- Deseo inscribirme: SOLO voluntario -->
         <button class="btn inscribirme"
+                *ngIf="esVoluntario"
                 (click)="confirmarInscripcion()"
                 [disabled]="loading || yaInscrito || necesitaUniversitario"
                 [title]="yaInscrito ? 'Ya estás inscrita en este proyecto' : (necesitaUniversitario ? 'Completa tu registro de Universitario' : '')">
@@ -63,17 +77,19 @@
           }}
         </button>
 
-        <button class="btn contribuir" [routerLink]="['/donar', proyecto?.idproyecto]">
-          Deseo contribuir $ </button>
+        <!-- Deseo contribuir: SOLO donante -->
+        <button class="btn contribuir"
+                *ngIf="esDonante"
+                [routerLink]="['/donar', proyecto?.idproyecto]">
+          Deseo contribuir $
+        </button>
       </div>
 
-      <div class="hint" *ngIf="necesitaUniversitario" style="margin-top:12px">
+      <!-- Hint de universitario solo aplica a voluntario -->
+      <div class="hint" *ngIf="esVoluntario && necesitaUniversitario" style="margin-top:12px">
         Debes registrarte como <strong>Universitario</strong>.
         <a [routerLink]="['/crearperfil']">Completar registro</a>
       </div>
     </div>
   </div>
 </section>
-
-<!-- <div class="estado" *ngIf="loading">Cargando...</div> -->
-<!-- <div class="estado error" *ngIf="error">{{ error }}</div> -->
