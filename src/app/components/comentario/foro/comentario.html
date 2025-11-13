@@ -66,8 +66,8 @@
 
           <p class="comentario-text">{{ c.comentario }}</p>
 
-          <div class="item-actions fuente-nats">
-            <button class="btn danger" (click)="eliminarComentario(c.idcomentario)">Eliminar</button>
+          <div class="item-actions fuente-nats" >
+            <button class="btn danger" *ngIf="puedeEliminarComentario(c)"(click)="eliminarComentario(c.idcomentario)">Eliminar</button>
           </div>
         </li>
       </ul>

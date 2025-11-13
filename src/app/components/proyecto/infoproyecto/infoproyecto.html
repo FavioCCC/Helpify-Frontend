@@ -65,7 +65,7 @@
 
       <div class="acciones-derecha">
         <!-- Si NO está autenticado: mostrar los 3 botones solicitados -->
-        <div *ngIf="!isAuthenticated">
+        <div *ngIf="!isAuthenticated" class="acciones-no-logueado"  >
           <button class="btn inscribirme"
                   (click)="confirmarInscripcion()">
             Deseo inscribirme✍️️

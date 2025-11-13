@@ -144,11 +144,11 @@
       aria-labelledby="reciboTitle"
       (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <h3 id="reciboTitle">Comprobante de donación:</h3>
+        <h3 id="reciboTitle">Comprobante de pago:</h3>
         <button class="btn-close" type="button" (click)="closeReceipt()">Cerrar</button>
       </div>
       <div class="modal-body">
-        <p><strong>Donante:</strong> {{ receipt.donante }}</p>
+        <p><strong>Nombre de la tarjeta:</strong> {{ receipt.donante }}</p>
         <p><strong>Proyecto:</strong> {{ receipt.proyecto }}</p>
         <p><strong>Monto:</strong> S/ {{ receipt.monto | number:'1.2-2' }}</p>
         <p><strong>Método de pago:</strong> {{ receipt.metodo }}</p>
