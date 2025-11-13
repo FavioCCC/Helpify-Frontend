@@ -207,13 +207,24 @@ export class InfoProyecto implements OnInit {
       this.mensajeExito = '';
     }
 
+  // Retorna si hay un usuario autenticado
+  get isAuthenticated(): boolean {
+    return this.auth.isLoggedIn();
+  }
+
+  // Getters seguros: si no hay sesión, siempre devuelven false
   get esAdmin(): boolean {
+    if (!this.isAuthenticated) return false;
     return this.auth.isAdmin();
   }
+
   get esVoluntario(): boolean {
+    if (!this.isAuthenticated) return false;
     return this.auth.userHasRole('VOLUNTARIO');
   }
+
   get esDonante(): boolean {
+    if (!this.isAuthenticated) return false;
     return this.auth.userHasRole('DONANTE');
   }
-  }
+}
