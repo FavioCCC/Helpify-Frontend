@@ -59,15 +59,19 @@ export class App {
   toggleEdit(): void {
     this.isEditing = this.isEditing === 'true' ? 'false' : 'true';
   }
-
+// Retorna si hay un usuario autenticado
+  get isAuthenticated(): boolean {
+    return this.auth.isLoggedIn();
+  }
   get esAdmin(): boolean {
-    return this.auth.isAdmin();
+    // asegurar que si no hay sesión devuelva false
+    return this.isAuthenticated && this.auth.isAdmin();
   }
   get esVoluntario(): boolean {
-    return this.auth.userHasRole('VOLUNTARIO');
+    return this.isAuthenticated && this.auth.userHasRole('VOLUNTARIO');
   }
   get esDonante(): boolean {
-    return this.auth.userHasRole('DONANTE');
+    return this.isAuthenticated && this.auth.userHasRole('DONANTE');
   }
 
 }

@@ -16,8 +16,8 @@
 
 <section class="proyecto-card" *ngIf="proyecto">
 
-  <!-- Wishlist: SOLO voluntario o donante -->
-  <button class="add-btn" (click)="marcarWishlist()" *ngIf="esVoluntario || esDonante">
+  <!-- Wishlist: Mostrar siempre si NO está logueado; si está logueado, sólo para VOLUNTARIO|DONANTE -->
+  <button class="add-btn" (click)="marcarWishlist()" *ngIf="!isAuthenticated || (esVoluntario || esDonante)">
     Añadir ❤️
   </button>
 
@@ -64,25 +64,42 @@
       </ul>
 
       <div class="acciones-derecha">
-        <!-- Deseo inscribirme: SOLO voluntario -->
-        <button class="btn inscribirme"
-                *ngIf="esVoluntario"
-                (click)="confirmarInscripcion()"
-                [disabled]="loading || yaInscrito || necesitaUniversitario"
-                [title]="yaInscrito ? 'Ya estás inscrita en este proyecto' : (necesitaUniversitario ? 'Completa tu registro de Universitario' : '')">
-          {{
-            yaInscrito
-              ? 'Ya estás inscrita'
-              : (necesitaUniversitario ? 'Debes registrarte como Universitario' : 'Deseo inscribirme✍️️')
-          }}
-        </button>
+        <!-- Si NO está autenticado: mostrar los 3 botones solicitados -->
+        <div *ngIf="!isAuthenticated">
+          <button class="btn inscribirme"
+                  (click)="confirmarInscripcion()">
+            Deseo inscribirme✍️️
+          </button>
 
-        <!-- Deseo contribuir: SOLO donante -->
-        <button class="btn contribuir"
-                *ngIf="esDonante"
-                [routerLink]="['/donar', proyecto?.idproyecto]">
-          Deseo contribuir $
-        </button>
+          <button class="btn contribuir"
+                  [routerLink]="['/donar', proyecto?.idproyecto]">
+            Deseo contribuir $
+          </button>
+
+        </div>
+
+        <!-- Si está autenticado: comportamiento por roles como antes -->
+        <ng-container *ngIf="isAuthenticated">
+          <!-- Deseo inscribirme: SOLO voluntario -->
+          <button class="btn inscribirme"
+                  *ngIf="esVoluntario"
+                  (click)="confirmarInscripcion()"
+                  [disabled]="loading || yaInscrito || necesitaUniversitario"
+                  [title]="yaInscrito ? 'Ya estás inscrita en este proyecto' : (necesitaUniversitario ? 'Completa tu registro de Universitario' : '')">
+            {{
+              yaInscrito
+                ? 'Ya estás inscrita'
+                : (necesitaUniversitario ? 'Debes registrarte como Universitario' : 'Deseo inscribirme✍️️')
+            }}
+          </button>
+
+          <!-- Deseo contribuir: SOLO donante -->
+          <button class="btn contribuir"
+                  *ngIf="esDonante"
+                  [routerLink]="['/donar', proyecto?.idproyecto]">
+            Deseo contribuir $
+          </button>
+        </ng-container>
       </div>
 
       <!-- Hint de universitario solo aplica a voluntario -->

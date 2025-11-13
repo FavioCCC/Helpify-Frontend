@@ -22,11 +22,9 @@ export class ComentarioService {
   }
 
   list(): Observable<Comentario[]> {
-    return this.http.get<Comentario[]>(this.urlListar, {
-      withCredentials: true,
-      headers: this.authHeaders()
-    });
+    return this.http.get<Comentario[]>(this.urlListar);
   }
+
 
   create(data: Pick<Comentario, 'comentario' | 'estrella'>): Observable<Comentario> {
     return this.http.post<Comentario>(this.urlComentario, data, {

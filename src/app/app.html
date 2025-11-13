@@ -23,8 +23,8 @@
       </ul>
     </li>
 
-    <!-- COMUNIDAD + REPORTES -->
-    <li class="has-sub" routerLinkActive="active">
+    <!-- COMUNIDAD + REPORTES: ocultar completamente si NO está autenticado -->
+    <li class="has-sub" routerLinkActive="active" *ngIf="isAuthenticated">
       <a>COMUNIDAD</a>
       <ul class="menu-vertical">
         <!-- Ocultar para VOLUNTARIO -->
@@ -38,7 +38,7 @@
       </ul>
     </li>
 
-    <!-- PROYECTOS -->
+    <!-- PROYECTOS: siempre visible, pero algunos sub-ítems solo admin -->
     <li class="has-sub">
       <a href="javascript:void(0)">PROYECTOS</a>
       <ul class="menu-vertical">
@@ -52,10 +52,13 @@
       </ul>
     </li>
 
-    <!-- WISHLIST: ocultar para ADMIN -->
-    <li *ngIf="!esAdmin"><a routerLink="/wishlist">WISHLIST</a></li>
+    <!-- WISHLIST: ocultar si NO está autenticado o si es ADMIN -->
+    <li *ngIf="isAuthenticated && !esAdmin"><a routerLink="/wishlist">WISHLIST</a></li>
 
-    <li><a routerLink="/notificaciones">NOTIFICACIONES</a></li>
+    <!-- NOTIFICACIONES: ocultar si NO está autenticado -->
+    <li *ngIf="isAuthenticated"><a routerLink="/notificaciones">NOTIFICACIONES</a></li>
+
+    <!-- FOROS: siempre visible (según requeriste) -->
     <li><a routerLink="/foros">FOROS</a></li>
   </ul>
 </nav>
