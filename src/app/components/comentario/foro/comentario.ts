@@ -28,11 +28,20 @@ export class ComentarioComponent implements OnInit {
   errorMsg = '';
 
   usuarioActual: any = null;
+  esAdmin = false;
+  esVoluntario = false;
 
   ngOnInit(): void {
     // ⚠️ Permite ver el foro sin login, solo leer
     this.usuarioActual = this.auth.getUsuario();
+    this.resolverRoles();
     this.cargarComentarios();
+  }
+
+  private resolverRoles(): void {
+    this.esAdmin = this.auth.userHasRole('ADMIN');
+    this.esVoluntario = this.auth.userHasRole('VOLUNTARIO');
+    console.log('[Comentario] roles → admin:', this.esAdmin, 'voluntario:', this.esVoluntario);
   }
 
   private cargarComentarios(): void {
@@ -105,4 +114,32 @@ export class ComentarioComponent implements OnInit {
   trackById(_: number, c: Comentario) {
     return c.idcomentario;
   }
+  /**
+   * ✅ Lógica de visibilidad del botón "Eliminar"
+   * - ADMIN: puede eliminar todos
+   * - VOLUNTARIO: solo sus propios comentarios
+   */
+  puedeEliminarComentario(c: Comentario): boolean {
+    if (!this.auth.isLoggedIn()) return false;
+
+    // 1) Admin puede todo
+    if (this.esAdmin) return true;
+
+    // 2) Voluntario solo su comentario
+    if (this.esVoluntario && this.usuarioActual && c.usuario) {
+      const idUserActual =
+        this.usuarioActual.idusuario ??
+        this.usuarioActual.id ?? null;
+
+      const idUserComentario =
+        (c.usuario as any).idusuario ??
+        (c.usuario as any).id ?? null;
+
+      return !!idUserActual && !!idUserComentario && idUserActual === idUserComentario;
+    }
+
+    return false;
+  }
 }
+
+
