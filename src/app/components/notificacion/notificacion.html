@@ -1,0 +1,120 @@
+<!--
+  Contenedor principal (fondo beige/marrón)
+-->
+<div class="notificaciones-container fuente-play">
+
+  <!-- Título centrado y grande -->
+  <h1 class="titulo-notificaciones">NOTIFICACIONES</h1>
+
+  <!-- Cuadro interior (fondo amarillo pálido) -->
+  <div class="notificaciones-cuadro">
+
+    <!--
+      ======================================
+      VISTA 1: LISTA (Contenido principal)
+      ======================================
+    -->
+    <div *ngIf="vista === 'lista'">
+      <!-- Estados: Carga, Error, Vacío -->
+      <div *ngIf="isLoading" class="estado-info">Cargando notificaciones...</div>
+
+      <div *ngIf="!isLoading && errorMsg" class="estado-error">
+        {{ errorMsg }}
+      </div>
+
+      <div *ngIf="!isLoading && notificaciones.length === 0 && !errorMsg" class="estado-info">
+        No tienes notificaciones por el momento.
+      </div>
+
+      <!--
+        NUEVA VISTA DE LISTA PARA ADMIN
+        Muestra todos los campos y solo el botón "Eliminar"
+      -->
+      <div class="notificacion-list" *ngIf="!isLoading && esAdmin && notificaciones.length > 0">
+        <div *ngFor="let notif of notificaciones"
+             class="notificacion-item admin-item"
+             [class.no-leida]="!notif.leido">
+
+          <!-- Detalles completos visibles en la lista -->
+          <div class="notif-info-admin">
+            <p class="admin-mensaje"><span class="notif-icon">📍</span> {{ notif.mensaje }}</p>
+            <div class="admin-detalles">
+              <span><strong>Tipo:</strong> {{ notif.tipo }}</span>
+              <span><strong>Fecha:</strong> {{ notif.fechaEnvio | date:'yyyy-MM-dd' }}</span>
+              <span><strong>Usuario:</strong> {{ notif.usuario?.nombre }} (ID: {{ notif.usuario?.idusuario }})</span>
+              <span><strong>Estado:</strong> {{ notif.leido ? 'Leída' : 'No Leída' }}</span>
+            </div>
+          </div>
+
+          <!-- Botón de Eliminar directo (Estilo rosado) -->
+          <button class="btn btn-eliminar-lista fuente-nats" (click)="onEliminar(notif)">
+            Eliminar
+          </button>
+        </div>
+      </div>
+
+      <!--
+        VISTA DE LISTA PARA USUARIO (Donante/Voluntario)
+        Se mantiene como estaba (Mockup 1)
+      -->
+      <div class="notificacion-list" *ngIf="!isLoading && !esAdmin && notificaciones.length > 0">
+        <div *ngFor="let notif of notificaciones"
+             class="notificacion-item"
+             [class.no-leida]="!notif.leido">
+
+          <div class="notif-info">
+            <span class="notif-icon">📍</span>
+            <span class="notif-mensaje">{{ notif.mensaje }}</span>
+          </div>
+
+          <button class="btn btn-ver-mas fuente-nats" (click)="onVerMas(notif)">
+            Ver más
+          </button>
+        </div>
+      </div>
+    </div>
+  </div> <!-- .notificaciones-cuadro -->
+</div> <!-- .notificaciones-container -->
+
+
+<!--
+  ======================================
+  VISTA 2: MODAL DE DETALLE (Solo para !esAdmin)
+  ======================================
+-->
+<div class="modal-overlay" *ngIf="notificacionSeleccionada">
+
+  <div class="modal-content fuente-play">
+
+    <h4>{{ notificacionSeleccionada?.mensaje }}</h4>
+
+    <div class="detalle-info">
+      <p><strong>Tipo:</strong> {{ notificacionSeleccionada?.tipo }}</p>
+      <p><strong>Fecha:</strong> {{ notificacionSeleccionada?.fechaEnvio | date:'yyyy-MM-dd' }}</p>
+      <p><strong>Usuario:</strong> {{ notificacionSeleccionada?.usuario?.nombre }} (ID: {{ notificacionSeleccionada?.usuario?.idusuario }})</p>
+    </div>
+
+    <div *ngIf="errorMsg" class="estado-error modal-error">
+      {{ errorMsg }}
+    </div>
+
+    <!--
+      ACCIONES DEL MODAL (MODIFICADO)
+      Ahora incluye el botón Eliminar para el usuario
+    -->
+    <div class="modal-actions fuente-nats">
+
+      <!-- BOTÓN AÑADIDO: Eliminar para Usuario -->
+      <button class="btn btn-eliminar"
+              (click)="onEliminar(notificacionSeleccionada!)"
+              [disabled]="isDeleting">
+        {{ isDeleting ? 'Eliminando...' : 'Eliminar' }}
+      </button>
+
+      <button class="btn btn-cancelar" (click)="onCancelar()" [disabled]="isDeleting">
+        Cancelar
+      </button>
+    </div>
+
+  </div> <!-- .modal-content -->
+</div> <!-- .modal-overlay -->

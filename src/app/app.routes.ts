@@ -10,6 +10,7 @@ import {PerfilEditar} from './components/usuario/perfil-editar/perfil-editar';
 import {CrearCuenta} from './components/usuario/crearperfil/crearperfil';
 import {ProyectoDonaciones} from './components/proyecto/proyecto-donaciones/proyecto-donaciones';
 import {ProyectoInscripciones} from './components/proyecto/proyecto-inscripciones/proyecto-inscripciones';
+import {NotificacionesComponent} from './components/notificacion/notificacion';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -32,6 +33,7 @@ export const routes: Routes = [
   { path: 'proyectos-donaciones', component: ProyectoDonaciones },
   {path: 'proyectos-inscripciones', component: ProyectoInscripciones},
   { path: 'foros', component: ComentarioComponent },
+  { path: 'notificaciones', component: NotificacionesComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'login', component: Iniciarsesion },
 
