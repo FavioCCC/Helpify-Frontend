@@ -75,6 +75,16 @@ export class ProyectoService {
   agregarAWishlist(idProyecto: number): Observable<void> {
     return this.http.post<void>(`${this.url}/wishlist/agregar/${idProyecto}`, null, this.authOptions());
   }
+  buscarPorRangoMonto(min?: number, max?: number): Observable<Proyecto[]> {
+    let params = new HttpParams();
+    if (min !== undefined && min !== null) {
+      params = params.set('min', String(min));
+    }
+    if (max !== undefined && max !== null) {
+      params = params.set('max', String(max));
+    }
+    return this.http.get<Proyecto[]>(`${this.url}/proyectos/filtrar-monto`, { ...this.authOptions(), params });
+  }
 
   obtenerWishlist(): Observable<Proyecto[]> {
     return this.http.get<Proyecto[]>(`${this.url}/wishlist`, this.authOptions());

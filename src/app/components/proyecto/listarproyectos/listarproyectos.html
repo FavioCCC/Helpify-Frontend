@@ -6,8 +6,23 @@
     </div>
 
     <div class="filter-field">
-      <label>Monto Objetivo</label>
-      <input type="number" placeholder="Ej. 15000" [(ngModel)]="filtros.monto" name="monto"/>
+      <label>Monto mínimo (S/)</label>
+      <input
+        type="number"
+        placeholder="Ej. 1000"
+        [(ngModel)]="filtros.montoMin"
+        name="montoMin"
+      />
+    </div>
+
+    <div class="filter-field">
+      <label>Monto máximo (S/)</label>
+      <input
+        type="number"
+        placeholder="Ej. 5000"
+        [(ngModel)]="filtros.montoMax"
+        name="montoMax"
+      />
     </div>
 
     <div class="filter-field">
