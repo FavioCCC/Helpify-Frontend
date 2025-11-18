@@ -73,5 +73,20 @@ export class App {
   get esDonante(): boolean {
     return this.isAuthenticated && this.auth.userHasRole('DONANTE');
   }
+  get rolActual(): string {
+    if (!this.isAuthenticated) {
+      return 'INVITADO';
+    }
+    if (this.esAdmin) {
+      return 'ADMIN';
+    }
+    if (this.esDonante) {
+      return 'DONANTE';
+    }
+    if (this.esVoluntario) {
+      return 'VOLUNTARIO';
+    }
+    return 'USUARIO';
+  }
 
 }
