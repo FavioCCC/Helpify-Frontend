@@ -110,7 +110,7 @@ export class CrearCuenta {
         if (rol !== 'VOLUNTARIO') {
           this.cargando = false;
           alert('Cuenta creada exitosamente.');
-          void this.router.navigate(['/login']);
+          void this.router.navigate(['/home']);
           return;
         }
 
@@ -122,7 +122,7 @@ export class CrearCuenta {
               next: () => {
                 this.cargando = false;
                 alert('Cuenta y código de estudiante registrados correctamente.');
-                void this.router.navigate(['/login']);
+                void this.router.navigate(['/home']);
               },
               error: (e) => {
                 this.cargando = false;
