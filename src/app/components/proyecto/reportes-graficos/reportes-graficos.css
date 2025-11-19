@@ -1,176 +1,34 @@
-.reporte-universitarios {
-  padding: 2rem 3rem;
+.reportes-container {
+  padding: 2.5rem 3.5rem;
+  background-color: #ffd8a1;
 }
 
-/* Card completo (título + gráfico + mensajes) */
-.card-barras {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 1.5rem 2rem 2rem;
-  background-color: #ffebc4;
+/* Cards Material con tu estilo */
+.reporte-card {
+  max-width: 1000px;
+  margin: 0 auto 2.5rem auto;
+  background-color: #FFEAAA;
   border: 4px solid #f3b45c;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+
+  /* ⬅⬅ MÁS ESPACIO DENTRO DEL CARD */
+  padding: 2.2rem 3rem 2.5rem;
 }
 
-/* Título DENTRO del card */
-.card-barras .titulo {
+/* Título dentro del card */
+.titulo-card {
+  display: block;
   text-align: center;
   font-family: 'Rubik Mono One', sans-serif;
-  font-size: 2rem;
+  font-size: 1.8rem;
   letter-spacing: 0.25em;
   color: #5b2b06;
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.8rem;
 }
 
-/* Contenedor del gráfico (solo layout) */
-.chart-container {
-  display: flex; /* eje Y + área */
+.chart-wrapper {
+  position: relative;
+  height: 320px;
+  padding: 0.5rem 1rem 0.5rem;
 }
-
-/* Eje Y */
-.y-axis {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 0.5rem 0.75rem 1.5rem 0;
-  font-size: 0.75rem;
-  color: #5b2b06;
-}
-
-/* Área de barras */
-.chart-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Barras */
-.chart-bars {
-  flex: 1;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-around;
-  padding: 0.5rem 1.5rem 1rem;
-  border-left: 2px solid #5b2b06;
-  border-bottom: 2px solid #5b2b06;
-  min-height: 220px;
-}
-
-.bar {
-  width: 40px;
-  background-color: #8b4513;
-  border-radius: 5px 5px 0 0;
-}
-
-/* Etiquetas X */
-.chart-labels {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 0.4rem;
-  padding: 0 1.5rem;
-}
-
-.x-label {
-  max-width: 120px;
-  text-align: center;
-  font-size: 0.75rem;
-  line-height: 1.2;
-  color: #5b2b06;
-}
-
-/* Mensajes */
-.msg-error {
-  color: #a02020;
-  text-align: center;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.msg-vacio {
-  margin-top: 1rem;
-  text-align: left;
-  font-size: 0.9rem;
-  color: #5b2b06;
-}
-
-
-/* ==========================
-   SEGUNDA SECCIÓN: PIE CHART
-   ========================== */
-
-.reporte-porcentaje {
-  margin-top: 3rem;
-
-}
-
-/* Subtítulo */
-.reporte-porcentaje .subtitulo {
-  text-align: center;
-  font-family: 'Rubik Mono One', sans-serif;
-  font-size: 2rem;
-  letter-spacing: 0.2em;
-  color: #5b2b06;
-  margin-bottom: 1.5rem;
-}
-
-/* Tarjeta del pastel */
-.pie-card {
-  max-width: 1080px;
-  margin: 0 auto 2rem auto;
-  padding: 2rem 2rem;
-  background-color: #ffebc4;
-  border: 4px solid #f3b45c;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.pie-frame {
-  width: 420px;
-  height: 260px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #fffaf0;
-}
-
-/* Pastel */
-.pie-chart {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-}
-
-/* Leyenda */
-.pie-legend {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem 2rem;
-}
-
-.pie-legend li {
-  display: flex;
-  align-items: center;
-  font-size: 0.85rem;
-  color: #5b2b06;
-}
-
-.color-box {
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  margin-right: 0.5rem;
-}
-
-.legend-text {
-  white-space: nowrap;
-}
-

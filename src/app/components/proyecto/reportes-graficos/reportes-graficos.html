@@ -1,61 +1,35 @@
-<section class="reporte-universitarios">
-  <div class="card-barras">
-    <h1 class="titulo">REPORTE DE UNIVERSITARIOS POR PROYECTO</h1>
+<section class="reportes-container">
 
-    <div *ngIf="error" class="msg-error">
-      {{ error }}
-    </div>
+  <!-- CARD 1: BARRAS -->
+  <mat-card class="reporte-card">
+    <mat-card-title class="titulo-card">
+      REPORTE DE UNIVERSITARIOS POR PROYECTO
+    </mat-card-title>
 
-    <div class="chart-container" *ngIf="barras.length">
-      <!-- Eje Y -->
-      <div class="y-axis">
-        <span class="y-label" *ngFor="let t of ticksY">
-          {{ t }}
-        </span>
-      </div>
+    <mat-card-content class="chart-wrapper">
+      <canvas
+        baseChart
+        type="bar"
+        [data]="{ labels: barChartLabels, datasets: barChartDatasets }"
+        [options]="barChartOptions">
+      </canvas>
+    </mat-card-content>
+  </mat-card>
 
-      <!-- Área del gráfico -->
-      <div class="chart-area">
-        <div class="chart-bars">
-          <div
-            class="bar"
-            *ngFor="let b of barras"
-            [style.height.%]="b.altura"
-            [attr.title]="b.label + ': ' + b.valor"
-          ></div>
-        </div>
+  <!-- CARD 2: PIE -->
+  <mat-card class="reporte-card">
+    <mat-card-title class="titulo-card">
+      PORCENTAJE DE UNIVERSITARIOS POR PROYECTOS
+    </mat-card-title>
 
-        <div class="chart-labels">
-          <span class="x-label" *ngFor="let b of barras">
-            {{ b.label }}
-          </span>
-        </div>
-      </div>
-    </div>
+    <mat-card-content class="chart-wrapper">
+      <canvas
+        baseChart
+        type="pie"
+        [data]="{ labels: pieChartLabels, datasets: pieChartDatasets }"
+        [options]="pieChartOptions">
+      </canvas>
+    </mat-card-content>
+  </mat-card>
 
-    <p *ngIf="!barras.length && !error" class="msg-vacio">
-      No hay datos para mostrar en este reporte.
-    </p>
-  </div>
-</section>
-
-<!-- SEGUNDA SECCIÓN: PIE CHART -->
-<section class="reporte-porcentaje" *ngIf="segmentosPie.length">
-
-
-  <div class="pie-card">
-    <h2 class="subtitulo">PORCENTAJE DE UNIVERSITARIOS POR PROYECTOS</h2>
-    <div class="pie-frame">
-      <div class="pie-chart" [style.background-image]="pieBackground"></div>
-    </div>
-
-    <ul class="pie-legend">
-      <li *ngFor="let s of segmentosPie">
-        <span class="color-box" [style.background-color]="s.color"></span>
-        <span class="legend-text">
-            {{ s.label }}: {{ s.porcentaje | number: '1.0-0' }}%
-          </span>
-      </li>
-    </ul>
-  </div>
 </section>
