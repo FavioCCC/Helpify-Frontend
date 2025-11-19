@@ -1,123 +1,132 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+
+import { BaseChartDirective } from 'ng2-charts';
+import { Chart, ChartDataset, ChartOptions, ChartType, registerables } from 'chart.js';
+
 import { ProyectoService } from '../../../services/proyectoService';
 import { UniversitariosPorProyecto } from '../../../models/universitarios-por-proyecto';
-import {PorcentajeUniversitarios} from '../../../models/porcentaje-universitarios';
+import { PorcentajeUniversitarios } from '../../../models/porcentaje-universitarios';
+
+// registrar todos los tipos de Chart.js
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-reportes-graficos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatCardModule, BaseChartDirective],
   templateUrl: './reportes-graficos.html',
   styleUrls: ['./reportes-graficos.css'],
 })
 export class ReportesGraficos implements OnInit {
-  barras: { label: string; valor: number; altura: number }[] = [];
-  maxValor = 0;
-  ticksY: number[] = [];
-  error = '';
 
-  segmentosPie: { label: string; porcentaje: number; color: string }[] = [];
-  pieBackground = '';
-  errorPie = '';
+  // ====== BARRAS ======
+  barChartType: ChartType = 'bar';
+
+  barChartOptions: ChartOptions<'bar'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: { color: '#5b2b06', font: { size: 11 } },
+        grid: { display: false }
+      },
+      y: {
+        beginAtZero: true,
+        ticks: { stepSize: 1, color: '#5b2b06' }
+      }
+    },
+    plugins: {
+      legend: { display: false }
+    }
+  };
+
+  barChartLabels: string[] = [];
+  barChartDatasets: ChartDataset<'bar'>[] = [
+    {
+      label: 'Universitarios',
+      data: [],
+      backgroundColor: '#8b4513'
+    }
+  ];
+
+  // ====== PIE ======
+  pieChartType: ChartType = 'pie';
+
+  pieChartOptions: ChartOptions<'pie'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          color: '#5b2b06',
+          font: { size: 12 },
+          padding: 20        // más espacio en la leyenda
+        }
+      },
+      tooltip: {
+        callbacks: {
+          // Muestra "Nombre: xx%"
+          label: (context) => {
+            const label = context.label ?? '';
+            const value = context.parsed as number; // para pie es número
+            const num = isNaN(value) ? 0 : value;
+            return `${label}: ${num.toFixed(0)}%`;
+          }
+        }
+      }
+    }
+  };
+
+  pieChartLabels: string[] = [];
+  pieChartDatasets: ChartDataset<'pie'>[] = [
+    {
+      data: [],
+      backgroundColor: []  // se llena dinámicamente
+    }
+  ];
 
   constructor(private proyectoService: ProyectoService) {}
 
   ngOnInit(): void {
-    console.log('[REPORTES] ngOnInit');
-    this.cargarDatos();
-    this.cargarPorcentajes();
+    this.cargarBarras();
+    this.cargarPie();
   }
 
-  private cargarDatos(): void {
+  // ------- BARRAS -------
+  private cargarBarras(): void {
     this.proyectoService.obtenerUniversitariosPorProyecto().subscribe({
       next: (data: UniversitariosPorProyecto[]) => {
-        console.log('[REPORTES] data cruda', data);
+        if (!data || data.length === 0) return;
 
-        if (!data || data.length === 0) {
-          this.barras = [];
-          this.maxValor = 0;
-          this.ticksY = [];
-          return;
-        }
-
-        this.maxValor = Math.max(...data.map(d => d.cantidadUniversitarios));
-
-        // Escalamos a 80% de la altura para dejar aire arriba
-        const factor = this.maxValor ? 80 / this.maxValor : 0;
-
-        this.barras = data.map(d => ({
-          label: d.nombreProyecto,
-          valor: d.cantidadUniversitarios,
-          altura: d.cantidadUniversitarios * factor,
-        }));
-
-        this.ticksY = Array.from(
-          { length: this.maxValor + 1 },
-          (_, i) => this.maxValor - i
-        );
-
-        console.log('[REPORTES] barras', this.barras);
-        console.log('[REPORTES] ticksY', this.ticksY);
-      },
-      error: (e) => {
-        console.error('[REPORTES] error', e);
-        this.error = 'No se pudo cargar el reporte de universitarios.';
-      },
+        this.barChartLabels = data.map(d => d.nombreProyecto);
+        this.barChartDatasets[0].data = data.map(d => d.cantidadUniversitarios);
+      }
     });
   }
-  private cargarPorcentajes(): void {
+
+  // ------- PIE -------
+  private cargarPie(): void {
     this.proyectoService.obtenerPorcentajeUniversitarios().subscribe({
       next: (data: PorcentajeUniversitarios[]) => {
-        if (!data || data.length === 0) {
-          this.segmentosPie = [];
-          this.pieBackground = '';
-          return;
-        }
+        if (!data || data.length === 0) return;
 
-        const total = data.reduce((acc, d) => acc + d.porcentaje, 0);
-        if (!total) {
-          this.segmentosPie = [];
-          this.pieBackground = '';
-          return;
-        }
+        this.pieChartLabels = data.map(d => d.nombreProyecto);
 
-        let acumulado = 0;
-        const paradas: string[] = [];
-        const segs: { label: string; porcentaje: number; color: string }[] = [];
+        const valores = data.map(d => d.porcentaje);
 
+        // colores dinámicos
         const n = data.length;
-
-        data.forEach((d, i) => {
-          // color dinámico según la posición
+        const colors = data.map((_, i) => {
           const hue = (i / n) * 360;
-          const color = `hsl(${hue}, 70%, 55%)`;
-
-          const pctNorm = (d.porcentaje / total) * 100;
-          const inicio = acumulado;
-          const fin = acumulado + pctNorm;
-
-          paradas.push(
-            `${color} ${inicio.toFixed(2)}% ${fin.toFixed(2)}%`
-          );
-
-          segs.push({
-            label: d.nombreProyecto,
-            porcentaje: pctNorm,
-            color,
-          });
-
-          acumulado = fin;
+          return `hsl(${hue}, 70%, 55%)`;
         });
 
-        this.segmentosPie = segs;
-        this.pieBackground = `conic-gradient(${paradas.join(', ')})`;
-      },
-      error: (e) => {
-        this.errorPie = 'No se pudo cargar el porcentaje de universitarios.';
-        console.error('[REPORTES] error pastel', e);
-      },
+        this.pieChartDatasets[0].data = valores;
+        this.pieChartDatasets[0].backgroundColor = colors;
+      }
     });
   }
-
 }
