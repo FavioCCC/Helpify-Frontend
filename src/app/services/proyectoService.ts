@@ -6,6 +6,8 @@ import { Observable, tap } from 'rxjs';
 import { Proyecto } from '../models/proyecto';
 import {IniciarsesionService} from './inicarsesion-service';
 import {Usuario} from '../models/usuario';
+import {UniversitariosPorProyecto} from '../models/universitarios-por-proyecto';
+import {PorcentajeUniversitarios} from '../models/porcentaje-universitarios';
 
 
 @Injectable({ providedIn: 'root' })
@@ -54,6 +56,17 @@ export class ProyectoService {
         next: (r) => console.log('[PROYECTO SERVICE] OK POST /proyecto →', r),
         error: (e) => console.error('[PROYECTO SERVICE] ERROR POST /proyecto →', e)
       }));
+  }
+
+  obtenerUniversitariosPorProyecto() {
+    const url = `${this.url}/universitarios-por-proyecto`;
+    console.log('[PROYECTO SERVICE] GET', url);
+    return this.http.get<UniversitariosPorProyecto[]>(url, this.authOptions());
+  }
+
+  obtenerPorcentajeUniversitarios() {
+    const url = `${this.url}/porcentaje-universitarios`;
+    return this.http.get<PorcentajeUniversitarios[]>(url, this.authOptions());
   }
 
   // Búsquedas
