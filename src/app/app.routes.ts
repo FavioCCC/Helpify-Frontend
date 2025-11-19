@@ -11,6 +11,7 @@ import {CrearCuenta} from './components/usuario/crearperfil/crearperfil';
 import {ProyectoDonaciones} from './components/proyecto/proyecto-donaciones/proyecto-donaciones';
 import {ProyectoInscripciones} from './components/proyecto/proyecto-inscripciones/proyecto-inscripciones';
 import {NotificacionesComponent} from './components/notificacion/notificacion';
+import {ReportesGraficos} from './components/proyecto/reportes-graficos/reportes-graficos';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -31,14 +32,13 @@ export const routes: Routes = [
   },
 
   { path: 'proyectos-donaciones', component: ProyectoDonaciones },
-  {path: 'proyectos-inscripciones', component: ProyectoInscripciones},
+  { path: 'proyectos-inscripciones', component: ProyectoInscripciones },
   { path: 'foros', component: ComentarioComponent },
   { path: 'notificaciones', component: NotificacionesComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'login', component: Iniciarsesion },
-
   { path: 'donar/:idProyecto', component: DonarComponent },
-
   { path: 'crearperfil', component: CrearCuenta },
-  { path: '**', redirectTo: '' }
+  { path: 'reporte-universitarios', component: ReportesGraficos },
+  { path: '**', redirectTo: '' },
 ];
