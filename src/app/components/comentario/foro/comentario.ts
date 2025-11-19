@@ -63,7 +63,7 @@ export class ComentarioComponent implements OnInit {
   }
 
   publicarComentario(): void {
-    // ⛔ Si NO está logueado: redirige a iniciar sesión y no intenta publicar
+    //Si NO está logueado: redirige a iniciar sesión y no intenta publicar
     if (!this.auth.isLoggedIn()) {
       // opcional: guardar intención si quieres (no es necesario para tu flujo)
       // localStorage.setItem('postLoginRedirect', '/home');
