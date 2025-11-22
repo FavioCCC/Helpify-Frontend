@@ -1,0 +1,57 @@
+<section class="insertar-container">
+  <h1 class="titulo">INSERTA UNA NOTIFICACION</h1>
+
+  <form class="tarjeta" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <!-- AUTOCOMPLETE USUARIO -->
+    <mat-form-field class="campo" appearance="fill">
+      <mat-label>Selecciona un usuario para notificar</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="usuario"
+        [matAutocomplete]="autoUsuario" />
+
+      <mat-autocomplete
+        #autoUsuario="matAutocomplete"
+        [displayWith]="displayUsuario">
+        <mat-option *ngFor="let u of (filteredUsuarios$ | async)" [value]="u">
+          {{ u.nombre }} <span *ngIf="u.correo">({{ u.correo }})</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <!-- SELECT TIPO -->
+    <mat-form-field class="campo" appearance="fill">
+      <mat-label>Selecciona el tipo de notificación</mat-label>
+      <mat-select formControlName="tipo">
+        <mat-option *ngFor="let tipo of tiposNotificacion" [value]="tipo">
+          {{ tipo }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- MENSAJE -->
+    <div class="mensaje-contenedor">
+      <label class="mensaje-label">Ingrese el mensaje</label>
+
+      <mat-form-field class="mensaje-field" appearance="fill">
+        <textarea
+          matInput
+          rows="6"
+          placeholder="Mensaje*"
+          formControlName="mensaje">
+        </textarea>
+      </mat-form-field>
+    </div>
+
+    <!-- BOTÓN -->
+    <button
+      mat-raised-button
+      type="submit"
+      class="btn-insertar"
+      [disabled]="form.invalid || enviando">
+      {{ enviando ? 'Enviando...' : 'Insertar' }}
+    </button>
+  </form>
+</section>
