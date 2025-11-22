@@ -55,8 +55,38 @@
     <!-- WISHLIST: ocultar si NO está autenticado o si es ADMIN -->
     <li *ngIf="isAuthenticated && !esAdmin"><a routerLink="/wishlist">WISHLIST</a></li>
 
-    <!-- NOTIFICACIONES: ocultar si NO está autenticado -->
-    <li *ngIf="isAuthenticated"><a routerLink="/notificaciones">NOTIFICACIONES</a></li>
+    <!-- NOTIFICACIONES (rol sensible) -->
+    <li class="has-sub" routerLinkActive="active" *ngIf="isAuthenticated">
+
+      <!-- Donante / Voluntario → acceso directo al listado -->
+      <a *ngIf="!esAdmin" routerLink="/notificaciones">
+        NOTIFICACIONES
+      </a>
+
+      <!-- Admin → menú desplegable -->
+      <ng-container *ngIf="esAdmin">
+        <a href="javascript:void(0)">NOTIFICACIONES</a>
+
+        <ul class="menu-vertical">
+
+          <!-- Listado -->
+          <li>
+            <a routerLink="/notificaciones" class="submenu-link">
+              Listado de notificaciones
+            </a>
+          </li>
+
+          <!-- Insertar nueva notificación -->
+          <li>
+            <a routerLink="/notificaciones/nueva" class="submenu-link">
+              Insertar notificación
+            </a>
+          </li>
+
+        </ul>
+      </ng-container>
+
+    </li>
 
     <!-- FOROS: siempre visible (según requeriste) -->
     <li><a routerLink="/foros">FOROS</a></li>
