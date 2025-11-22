@@ -12,6 +12,7 @@ import {ProyectoDonaciones} from './components/proyecto/proyecto-donaciones/proy
 import {ProyectoInscripciones} from './components/proyecto/proyecto-inscripciones/proyecto-inscripciones';
 import {NotificacionesComponent} from './components/notificacion/notificacion';
 import {ReportesGraficos} from './components/proyecto/reportes-graficos/reportes-graficos';
+import {InsertarNotificacion} from './components/notificacion/insertar-notificacion/insertar-notificacion';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -35,6 +36,7 @@ export const routes: Routes = [
   { path: 'proyectos-inscripciones', component: ProyectoInscripciones },
   { path: 'foros', component: ComentarioComponent },
   { path: 'notificaciones', component: NotificacionesComponent },
+  { path: 'notificaciones/nueva', component: InsertarNotificacion },
   { path: 'perfil', component: PerfilComponent },
   { path: 'login', component: Iniciarsesion },
   { path: 'donar/:idProyecto', component: DonarComponent },
