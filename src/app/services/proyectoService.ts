@@ -80,6 +80,18 @@ export class ProyectoService {
     return this.http.get<Proyecto[]>(`${this.url}/buscar/monto`, { ...this.authOptions(), params });
   }
 
+  buscarPorFechas(inicio: string, fin: string) {
+    const params = {
+      inicio: inicio,
+      fin: fin
+    };
+
+    return this.http.get<Proyecto[]>(
+      `${this.url}/buscar/fechas`,
+      { params }
+    );
+  }
+
   buscarPorAnioMes(anio: number, mes: number): Observable<Proyecto[]> {
     const params = new HttpParams().set('anio', String(anio)).set('mes', String(mes));
     return this.http.get<Proyecto[]>(`${this.url}/buscar/anio-mes`, { ...this.authOptions(), params });
