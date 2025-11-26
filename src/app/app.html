@@ -38,8 +38,8 @@
       </ul>
     </li>
 
-    <!-- PROYECTOS: siempre visible, pero algunos sub-ítems solo admin -->
-    <li class="has-sub">
+    <!-- PROYECTOS-->
+    <li class="has-sub" routerLinkActive="active" *ngIf="isAuthenticated">
       <a href="javascript:void(0)">PROYECTOS</a>
       <ul class="menu-vertical">
         <li><a routerLink="/proyectos">Listado de proyectos</a></li>
@@ -88,8 +88,8 @@
 
     </li>
 
-    <!-- FOROS: siempre visible (según requeriste) -->
-    <li><a routerLink="/foros">FOROS</a></li>
+    <!-- FOROS -->
+    <li><li *ngIf="isAuthenticated"><a routerLink="/foros">FOROS</a></li>
   </ul>
   <div class="rol-info">
     <span class="rol-label">Rol:</span>

@@ -20,8 +20,8 @@ export class ListarProyectos implements OnInit {
     nombre: '' as string,
     montoMin: undefined as number | undefined,
     montoMax: undefined as number | undefined,
-    anio: undefined as number | undefined,
-    mes: undefined as number | undefined,
+    fechaInicio: '' as string,
+    fechaFin: '' as string,
   };
 
   private proyectoService = inject(ProyectoService);
@@ -51,8 +51,8 @@ export class ListarProyectos implements OnInit {
       nombre: '',
       montoMin: undefined,
       montoMax: undefined,
-      anio: undefined,
-      mes: undefined
+      fechaInicio: '',
+      fechaFin: ''
     };
     this.error = '';
     this.cargarTodos();
@@ -65,65 +65,89 @@ export class ListarProyectos implements OnInit {
     const nombre = (this.filtros.nombre ?? '').trim();
     const montoMin = this.asNumber(this.filtros.montoMin);
     const montoMax = this.asNumber(this.filtros.montoMax);
-    const anio = this.asInt(this.filtros.anio);
-    const mes = this.asInt(this.filtros.mes);
-
-    const anioValido = anio !== undefined && anio >= 1900 && anio <= 2100;
-    const mesValido  = mes !== undefined && mes >= 1 && mes <= 12;
+    const fechaInicio = (this.filtros.fechaInicio ?? '').trim();
+    const fechaFin = (this.filtros.fechaFin ?? '').trim();
 
     const tieneNombre = !!nombre;
-    const tieneRango = montoMin !== undefined || montoMax !== undefined;
+    const tieneRangoMonto = montoMin !== undefined || montoMax !== undefined;
+    const tieneRangoFechas = !!fechaInicio && !!fechaFin;
 
     // 0) Si NO hay ningún filtro, recargo todo
-    if (!tieneNombre && !tieneRango && !anioValido && !mesValido) {
+    if (!tieneNombre && !tieneRangoMonto && !tieneRangoFechas) {
       this.cargarTodos();
       return;
     }
 
-    // 1) Si hay año y mes válidos → filtro principal por año/mes y luego aplico nombre + rango en front
-    if (anioValido && mesValido) {
-      this.proyectoService.buscarPorAnioMes(anio!, mes!).subscribe({
+    // 1) Si hay rango de fechas (puede combinar con nombre/montos)
+    if (tieneRangoFechas) {
+      this.proyectoService.buscarPorFechas(fechaInicio, fechaFin).subscribe({
         next: (base) => {
           let arr = base ?? [];
+
           if (!arr.length) {
-            // fallback completamente local
-            return this.filtrarLocalDesdeListado(nombre || undefined, montoMin, montoMax, anio, mes);
+            // fallback completamente local sobre el listado
+            return this.filtrarLocalDesdeListado(
+              nombre || undefined,
+              montoMin,
+              montoMax,
+              fechaInicio,
+              fechaFin
+            );
           }
+
+          // Aplico nombre + rango de montos en front si existen
           arr = this.filtrarNombreRangoFront(arr, nombre, montoMin, montoMax);
           this.finalizar(arr);
         },
-        error: () => this.filtrarLocalDesdeListado(nombre || undefined, montoMin, montoMax, anio, mes),
+        error: () => this.filtrarLocalDesdeListado(
+          nombre || undefined,
+          montoMin,
+          montoMax,
+          fechaInicio,
+          fechaFin
+        ),
         complete: () => { this.loading = false; }
       });
       return;
     }
 
-    // 2) Si hay rango de montos (con o sin nombre, pero sin año/mes válido) → usamos el endpoint nuevo
-    if (tieneRango) {
+    // 2) Si hay rango de montos (con o sin nombre, pero sin fechas)
+    if (tieneRangoMonto) {
       this.proyectoService.buscarPorRangoMonto(montoMin, montoMax).subscribe({
         next: (data) => {
           let arr = data ?? [];
 
-          // Si también hay nombre, filtro adicional
           if (tieneNombre) {
             arr = this.filtrarNombreRangoFront(arr, nombre, undefined, undefined);
           }
 
           if (!arr.length) {
             // fallback local sobre todo el listado
-            return this.filtrarLocalDesdeListado(nombre || undefined, montoMin, montoMax, anioValido ? anio : undefined, mesValido ? mes : undefined);
+            return this.filtrarLocalDesdeListado(
+              nombre || undefined,
+              montoMin,
+              montoMax,
+              undefined,
+              undefined
+            );
           }
 
           this.finalizar(arr);
         },
-        error: () => this.filtrarLocalDesdeListado(nombre || undefined, montoMin, montoMax, anioValido ? anio : undefined, mesValido ? mes : undefined),
+        error: () => this.filtrarLocalDesdeListado(
+          nombre || undefined,
+          montoMin,
+          montoMax,
+          undefined,
+          undefined
+        ),
         complete: () => { this.loading = false; }
       });
       return;
     }
 
-    // 3) Solo nombre (sin rango y sin año/mes)
-    if (tieneNombre && !tieneRango && !anioValido && !mesValido) {
+    // 3) Solo nombre (sin rango de montos ni fechas)
+    if (tieneNombre && !tieneRangoMonto && !tieneRangoFechas) {
       this.proyectoService.buscarPorNombre(nombre).subscribe({
         next: (data) => {
           if (data && data.length) return this.finalizar(data);
@@ -140,8 +164,8 @@ export class ListarProyectos implements OnInit {
       nombre || undefined,
       montoMin,
       montoMax,
-      anioValido ? anio : undefined,
-      mesValido ? mes : undefined
+      fechaInicio || undefined,
+      fechaFin || undefined
     );
   }
 
@@ -160,21 +184,24 @@ export class ListarProyectos implements OnInit {
     nombre?: string,
     montoMin?: number,
     montoMax?: number,
-    anio?: number,
-    mes?: number
+    fechaInicio?: string,
+    fechaFin?: string
   ): void {
     this.proyectoService.list().subscribe({
       next: (all) => {
         let arr = all ?? [];
 
-        // Filtro por año/mes (fechainicio)
-        if (anio !== undefined || mes !== undefined) {
+        // Filtro por rango de fechas (fechainicio)
+        if (fechaInicio || fechaFin) {
+          const dIni = fechaInicio ? this.parseDate(fechaInicio) : null;
+          const dFin = fechaFin ? this.parseDate(fechaFin) : null;
+
           arr = arr.filter((p: any) => {
             const d = this.parseDate(p && p.fechainicio);
             if (!d) return false;
-            const okY = anio === undefined || d.getFullYear() === anio;
-            const okM = mes === undefined || (d.getMonth() + 1) === mes;
-            return okY && okM;
+            if (dIni && d < dIni) return false;
+            if (dFin && d > dFin) return false;
+            return true;
           });
         }
 
@@ -242,11 +269,5 @@ export class ListarProyectos implements OnInit {
     if (v === null || v === undefined || v === '') return undefined;
     const n = Number(v);
     return Number.isFinite(n) ? n : undefined;
-  }
-
-  private asInt(v: any): number | undefined {
-    if (v === null || v === undefined || v === '') return undefined;
-    const n = parseInt(v, 10);
-    return Number.isInteger(n) ? n : undefined;
   }
 }

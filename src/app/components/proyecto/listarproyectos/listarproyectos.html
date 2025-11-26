@@ -2,7 +2,12 @@
   <section class="filter-bar">
     <div class="filter-field">
       <label>Nombre</label>
-      <input type="text" placeholder="Buscar por nombre" [(ngModel)]="filtros.nombre" name="nombre"/>
+      <input
+        type="text"
+        placeholder="Buscar por nombre"
+        [(ngModel)]="filtros.nombre"
+        name="nombre"
+      />
     </div>
 
     <div class="filter-field">
@@ -24,22 +29,46 @@
         name="montoMax"
       />
     </div>
+  </section>
 
+  <section class="filter-bar">
     <div class="filter-field">
-      <label>Año</label>
-      <input type="number" placeholder="Ej. 2025" [(ngModel)]="filtros.anio" name="anio"/>
+      <label>Fecha inicio</label>
+      <input
+        type="date"
+        [(ngModel)]="filtros.fechaInicio"
+        name="fechaInicio"
+      />
     </div>
 
     <div class="filter-field">
-      <label>Mes</label>
-      <input type="number" placeholder="Ej. 03" [(ngModel)]="filtros.mes" name="mes" min="1" max="12"/>
+      <label>Fecha fin</label>
+      <input
+        type="date"
+        [(ngModel)]="filtros.fechaFin"
+        name="fechaFin"
+      />
     </div>
   </section>
 
   <div class="filter-actions">
-    <button class="btn btn-buscar" type="button" (click)="buscar()" [disabled]="loading">Buscar</button>
+    <button
+      class="btn btn-buscar"
+      type="button"
+      (click)="buscar()"
+      [disabled]="loading"
+    >
+      Buscar
+    </button>
 
-    <button class="btn btn-limpiar" type="button" (click)="limpiar()" [disabled]="loading">Limpiar</button>
+    <button
+      class="btn btn-limpiar"
+      type="button"
+      (click)="limpiar()"
+      [disabled]="loading"
+    >
+      Limpiar
+    </button>
   </div>
 
   <div class="estado" *ngIf="loading">Buscando…</div>
@@ -52,7 +81,9 @@
         <h3 class="project-title">{{ p.nombreproyecto }}</h3>
         <p class="project-desc">“{{ p.descripcion }}”</p>
       </div>
-      <a class="btn-ver" [routerLink]="['/proyectos', p.idproyecto]">Ver más</a>
+      <a class="btn-ver" [routerLink]="['/proyectos', p.idproyecto]">
+        Ver más
+      </a>
     </article>
   </section>
 </section>
