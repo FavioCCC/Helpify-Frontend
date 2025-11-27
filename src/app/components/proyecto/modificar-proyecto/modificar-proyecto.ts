@@ -10,7 +10,7 @@ import {Usuario} from '../../../models/usuario';
 @Component({
   selector: 'app-modificar-proyecto', // opcional: antes era 'app-info-proyecto'
   standalone: true,
-  imports: [CommonModule, RouterLink, DatePipe, ReactiveFormsModule],
+  imports: [CommonModule, RouterLink, ReactiveFormsModule],
   templateUrl: './modificar-proyecto.html',
   styleUrls: ['./modificar-proyecto.css']
 })

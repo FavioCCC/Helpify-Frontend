@@ -1,0 +1,27 @@
+<div class="chat-container fuente-play">
+  <h2 class="titulo-chat">Asistente Virtual Helpify</h2>
+  <!-- Zona de mensajes -->
+  <div class="messages">
+    <div *ngFor="let m of mensajes" class="mensaje" [ngClass]="m.from">
+      <div class="burbuja">{{ m.text }}</div>
+    </div>
+  </div>
+  <!-- Input y botón -->
+  <div class="input-area">
+    <input
+      class="input-text"
+      type="text"
+      [(ngModel)]="entradaUsuario"
+      (keyup.enter)="enviar()"
+      placeholder="Escribe tu mensaje..."
+    />
+    <button class="btn-enviar" (click)="enviar()" [disabled]="cargando">
+      Enviar
+    </button>
+  </div>
+  <!-- Indicador de carga -->
+  <div *ngIf="cargando" class="loading">
+    Procesando...
+  </div>
+
+</div>
