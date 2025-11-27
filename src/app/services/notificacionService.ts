@@ -29,7 +29,6 @@ export class NotificacionService {
     return headers;
   }
 
-  /** Opciones de solicitud reutilizables */
   private getRequestOptions() {
     return {
       withCredentials: true,
@@ -56,8 +55,6 @@ export class NotificacionService {
 
   marcarComoLeida(id: number): Observable<Notificacion> {
     const url = `${this.urlMarcarLeida}/${id}`;
-    // El backend no espera cuerpo, pero http.put necesita el argumento.
-    // Pasamos 'null' o '{}' como cuerpo.
     return this.http.put<Notificacion>(url, null, this.getRequestOptions());
   }
 

@@ -11,13 +11,11 @@ export interface PagoDTO {
   donacion: PagoDonacionRef;
 }
 
-// Tu back armar RegistroPagoRespuestaDTO { mensaje, pago }
 export interface PagoRespuesta {
   mensaje: string;
   pago: {
     numerotarjeta?: string;
     status?: string;
-    // agrega otros campos si tu back devuelve más
   };
 }
 

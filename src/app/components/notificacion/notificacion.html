@@ -55,7 +55,6 @@
 
       <!--
         VISTA DE LISTA PARA USUARIO (Donante/Voluntario)
-        Se mantiene como estaba (Mockup 1)
       -->
       <div class="notificacion-list" *ngIf="!isLoading && !esAdmin && notificaciones.length > 0">
         <div *ngFor="let notif of notificaciones"
@@ -73,8 +72,8 @@
         </div>
       </div>
     </div>
-  </div> <!-- .notificaciones-cuadro -->
-</div> <!-- .notificaciones-container -->
+  </div>
+</div>
 
 
 <!--
@@ -100,7 +99,6 @@
 
     <!--
       ACCIONES DEL MODAL (MODIFICADO)
-      Ahora incluye el botón Eliminar para el usuario
     -->
     <div class="modal-actions fuente-nats">
 
@@ -116,5 +114,5 @@
       </button>
     </div>
 
-  </div> <!-- .modal-content -->
-</div> <!-- .modal-overlay -->
+  </div>
+</div>

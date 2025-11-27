@@ -112,11 +112,6 @@ export class NotificacionesComponent implements OnInit {
   }
 
   // --- Acciones del Modal (Admin y Usuario) ---
-
-  /**
-   * Esta función ahora es llamada tanto por el Admin (desde la lista)
-   * como por el Usuario (desde el modal).
-   */
   onEliminar(notif: Notificacion): void {
     if (!notif) return;
 

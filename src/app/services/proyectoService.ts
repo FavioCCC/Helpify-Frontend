@@ -92,11 +92,6 @@ export class ProyectoService {
     );
   }
 
-  buscarPorAnioMes(anio: number, mes: number): Observable<Proyecto[]> {
-    const params = new HttpParams().set('anio', String(anio)).set('mes', String(mes));
-    return this.http.get<Proyecto[]>(`${this.url}/buscar/anio-mes`, { ...this.authOptions(), params });
-  }
-
   agregarAWishlist(idProyecto: number): Observable<void> {
     return this.http.post<void>(`${this.url}/wishlist/agregar/${idProyecto}`, null, this.authOptions());
   }
@@ -130,8 +125,6 @@ export class ProyectoService {
   eliminarProyecto(idProyecto: number): Observable<void> {
     const token = this.auth.getToken() || '';
 
-    // CORRECCIÓN CLAVE: Se añade responseType: 'text' para evitar el error de parsing.
-    // Usamos 'text' as 'json' para satisfacer el tipado de TypeScript.
     return this.http.delete<void>(`${this.url}/proyecto/${idProyecto}`, {
       headers: { Authorization: token },
       withCredentials: true,
