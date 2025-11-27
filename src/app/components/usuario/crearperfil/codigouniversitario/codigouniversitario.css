@@ -3,8 +3,8 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 420px;                 /* ancho similar al mock */
-  padding: 14px 16px 18px;      /* respiración interior */
+  width: 420px;
+  padding: 14px 16px 18px;
 }
 
 /* Título */
@@ -20,7 +20,7 @@
 
 /* Relleno crema como el form principal */
 :host ::ng-deep .mdc-text-field--filled {
-  background: #FFEAAA;     /* crema */
+  background: #FFEAAA;
 }
 
 /* Input y label en marrón */

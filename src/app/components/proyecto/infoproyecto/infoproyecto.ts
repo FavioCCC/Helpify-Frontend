@@ -124,10 +124,8 @@ export class InfoProyecto implements OnInit {
   private parseBackendError(e: any): string | null {
     if (!e) return null;
 
-    // Angular HttpErrorResponse suele tener e.error con el body
     const payload = e.error ?? e;
 
-    // si payload es string, intentar parsear JSON
     if (typeof payload === 'string' && payload.trim()) {
       try {
         const parsed = JSON.parse(payload);
@@ -137,7 +135,6 @@ export class InfoProyecto implements OnInit {
       }
     }
 
-    // si payload es objeto, chequear propiedades comunes
     if (typeof payload === 'object' && payload !== null) {
       if (payload.message) return payload.message;
       if (payload.mensaje) return payload.mensaje;

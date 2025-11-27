@@ -23,7 +23,6 @@ interface Mensaje {
 })
 export class ChatbotComponent implements OnInit {
 
-  // 👇 Usando inject(), como en tu proyecto
   private chatbotService = inject(ChatbotService);
   private auth = inject(IniciarsesionService);
 

@@ -47,7 +47,7 @@ export class DonarComponent implements OnInit {
     estado: 'OK'
   };
 
-  // errores de validación mostrados en tu HTML
+  // errores de validación
   errors: any = {
     monto: '',
     titular: '',
@@ -88,7 +88,7 @@ export class DonarComponent implements OnInit {
     return ok ? null : { mmAa: true };
   };
 
-  // Convierte 'MM/AA' → 'YYYY-MM-01' (asumiendo 20xx)
+  // Convierte 'MM/AA' → 'YYYY-MM-01'
   private vencToISO(venc: string): string {
     if (!venc || venc.length !== 5) return '';
     const mm = venc.slice(0, 2);
@@ -98,7 +98,7 @@ export class DonarComponent implements OnInit {
     return `${yyyy}-${mm}-01`;
   }
 
-  // ===== Eventos que usa tu HTML =====
+  // ===== Eventos  =====
 
   volver(): void {
     history.back();

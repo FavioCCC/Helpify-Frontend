@@ -49,7 +49,7 @@ export class ListarWishlistComponent implements OnInit {
     this.proyectos = this.proyectos.filter(p => p.idproyecto !== idProyecto);
 
     this.proyectoService.eliminarDeWishlist(idProyecto).subscribe({
-      next: () => this.cargarWishlist(), // ← recarga desde el server
+      next: () => this.cargarWishlist(),
       error: (e) => {
         // Revertir si falla
         this.proyectos = copia;
