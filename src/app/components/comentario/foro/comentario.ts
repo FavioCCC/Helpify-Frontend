@@ -114,11 +114,7 @@ export class ComentarioComponent implements OnInit {
   trackById(_: number, c: Comentario) {
     return c.idcomentario;
   }
-  /**
-   * ✅ Lógica de visibilidad del botón "Eliminar"
-   * - ADMIN: puede eliminar todos
-   * - VOLUNTARIO: solo sus propios comentarios
-   */
+
   puedeEliminarComentario(c: Comentario): boolean {
     if (!this.auth.isLoggedIn()) return false;
 
