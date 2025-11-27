@@ -102,6 +102,20 @@
   <router-outlet></router-outlet>
 </main>
 
+<!-- CONTENIDO -->
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- BOTÓN + CHAT -->
+<button class="chat-toggle" (click)="toggleChat()">
+  💬
+</button>
+
+<div class="chat-floating" *ngIf="showChat">
+  <app-chatbot></app-chatbot>
+</div>
+
 <!-- FOOTER -->
 <footer class="custom-footer">
   <div class="footer-content">
