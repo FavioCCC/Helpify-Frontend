@@ -1,19 +1,26 @@
+/* --- 1. Importaciones de fuentes (limpiadas) --- */
+@import url('https://fonts.googleapis.com/css2?family=Play&family=Rubik+Mono+One&display=swap');
 
-.fuente-play { font-family: Arial, sans-serif; }
-.fuente-nats { font-family: 'Times New Roman', serif; }
+/* (Eliminamos las clases .fuente-play y .fuente-nats que no se usaban) */
 
 .notificaciones-container {
+  /* --- 2. Fuente base para todo el contenido --- */
+  font-family: 'Play', sans-serif;
+
   width: 100%;
   padding: 2rem 0;
-  background-color: #f7f3e8;
+  background-color: #FAC99B;
   min-height: 80vh;
 }
 
 .titulo-notificaciones {
+  /* --- 3. Fuente específica para el título --- */
+  font-family: 'Rubik Mono One', monospace;
+
   text-align: center;
   font-size: 2.5rem;
-  font-weight: bold;
-  color: #5d4037;
+  font-weight: bold; /* 'Rubik Mono One' suele ser bold por defecto, pero lo mantenemos */
+  color: #6D4118;
   margin-bottom: 2rem;
   text-transform: uppercase;
 }
@@ -23,8 +30,8 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px 40px;
-  background-color: #fffacd;
-  border: 1px solid #d4c28f;
+  background-color: #FFEAAA;
+  border: 1px solid #6D4118;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -87,12 +94,20 @@
 }
 
 .btn-ver-mas {
-  background-color: #f5c0b9;
+  background-color: #e6a094;
   color: #333;
   margin-left: 20px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 .btn-ver-mas:hover {
   background-color: #e6a094;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
 
@@ -133,9 +148,17 @@
   color: #333;
   margin-left: 20px;
   flex-shrink: 0; /* Evita que el botón se encoja */
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 .btn-eliminar-lista:hover {
   background-color: #e6a094;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
 
@@ -199,31 +222,49 @@
 
 /* Botones genéricos */
 .btn {
-  padding: 8px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  /* Nota: Los botones heredarán la fuente 'Play' del .notificaciones-container,
+    así que no es estrictamente necesario añadirla aquí, pero
+    puedes hacerlo para estar 100% seguro.
+
+    font-family: 'Play', sans-serif;
+  */
+
   font-weight: bold;
-  transition: background-color 0.3s;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+
 }
 .btn:disabled {
   opacity: 0.6;
-  cursor: not-allowed;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
 /* Botones de acción del modal (rosados) */
 .btn-eliminar {
-  background-color: #f5c0b9;
+  background-color: #e6a094;
   color: #333;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 .btn-eliminar:hover {
   background-color: #e6a094;
 }
 
 .btn-cancelar {
-  background-color: #d8d8d8;
+  background-color: #e6a094;
   color: #333;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 .btn-cancelar:hover {
-  background-color: #c9c9c9;
+  background-color: #e6a094;
 }
