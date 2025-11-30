@@ -6,6 +6,8 @@ import { Observable, tap } from 'rxjs';
 import { Proyecto } from '../models/proyecto';
 import {IniciarsesionService} from './inicarsesion-service';
 import {Usuario} from '../models/usuario';
+import {UniversitariosPorProyecto} from '../models/universitarios-por-proyecto';
+import {PorcentajeUniversitarios} from '../models/porcentaje-universitarios';
 
 
 @Injectable({ providedIn: 'root' })
@@ -56,6 +58,17 @@ export class ProyectoService {
       }));
   }
 
+  obtenerUniversitariosPorProyecto() {
+    const url = `${this.url}/universitarios-por-proyecto`;
+    console.log('[PROYECTO SERVICE] GET', url);
+    return this.http.get<UniversitariosPorProyecto[]>(url, this.authOptions());
+  }
+
+  obtenerPorcentajeUniversitarios() {
+    const url = `${this.url}/porcentaje-universitarios`;
+    return this.http.get<PorcentajeUniversitarios[]>(url, this.authOptions());
+  }
+
   // Búsquedas
   buscarPorNombre(nombre: string): Observable<Proyecto[]> {
     const params = new HttpParams().set('nombre', nombre);
@@ -67,9 +80,16 @@ export class ProyectoService {
     return this.http.get<Proyecto[]>(`${this.url}/buscar/monto`, { ...this.authOptions(), params });
   }
 
-  buscarPorAnioMes(anio: number, mes: number): Observable<Proyecto[]> {
-    const params = new HttpParams().set('anio', String(anio)).set('mes', String(mes));
-    return this.http.get<Proyecto[]>(`${this.url}/buscar/anio-mes`, { ...this.authOptions(), params });
+  buscarPorFechas(inicio: string, fin: string) {
+    const params = {
+      inicio: inicio,
+      fin: fin
+    };
+
+    return this.http.get<Proyecto[]>(
+      `${this.url}/buscar/fechas`,
+      { params }
+    );
   }
 
   agregarAWishlist(idProyecto: number): Observable<void> {
@@ -105,8 +125,6 @@ export class ProyectoService {
   eliminarProyecto(idProyecto: number): Observable<void> {
     const token = this.auth.getToken() || '';
 
-    // CORRECCIÓN CLAVE: Se añade responseType: 'text' para evitar el error de parsing.
-    // Usamos 'text' as 'json' para satisfacer el tipado de TypeScript.
     return this.http.delete<void>(`${this.url}/proyecto/${idProyecto}`, {
       headers: { Authorization: token },
       withCredentials: true,

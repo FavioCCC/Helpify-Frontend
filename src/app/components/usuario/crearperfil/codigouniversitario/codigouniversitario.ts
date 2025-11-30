@@ -17,7 +17,6 @@ export class CodigouniversitarioComponent {
   private dialogRef = inject(MatDialogRef<CodigouniversitarioComponent>);
   private fb = inject(FormBuilder);
 
-  // Ajusta la validación si tu formato es distinto (ej: /^U\d{7}$/)
   form = this.fb.group({
     codigo: this.fb.control('', {
       validators: [Validators.required, Validators.minLength(5)]

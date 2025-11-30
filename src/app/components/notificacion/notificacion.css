@@ -1,10 +1,10 @@
 /* --- 1. Importaciones de fuentes (limpiadas) --- */
 @import url('https://fonts.googleapis.com/css2?family=Play&family=Rubik+Mono+One&display=swap');
-
-/* (Eliminamos las clases .fuente-play y .fuente-nats que no se usaban) */
+/* ---------------------------------
+   ESTILOS GENERALES
+   --------------------------------- */
 
 .notificaciones-container {
-  /* --- 2. Fuente base para todo el contenido --- */
   font-family: 'Play', sans-serif;
 
   width: 100%;
@@ -14,12 +14,11 @@
 }
 
 .titulo-notificaciones {
-  /* --- 3. Fuente específica para el título --- */
   font-family: 'Rubik Mono One', monospace;
 
   text-align: center;
   font-size: 2.5rem;
-  font-weight: bold; /* 'Rubik Mono One' suele ser bold por defecto, pero lo mantenemos */
+  font-weight: bold; /* 'Rubik Mono One'*/
   color: #6D4118;
   margin-bottom: 2rem;
   text-transform: uppercase;
@@ -135,7 +134,7 @@
   gap: 5px 15px; /* Espacio vertical y horizontal */
   font-size: 0.9rem;
   color: #555;
-  font-weight: normal; /* Sobreescribir el bold de .no-leida */
+  font-weight: normal;
 }
 .admin-detalles span {
   background-color: #f4f4f4;
@@ -222,13 +221,6 @@
 
 /* Botones genéricos */
 .btn {
-  /* Nota: Los botones heredarán la fuente 'Play' del .notificaciones-container,
-    así que no es estrictamente necesario añadirla aquí, pero
-    puedes hacerlo para estar 100% seguro.
-
-    font-family: 'Play', sans-serif;
-  */
-
   font-weight: bold;
   padding: 10px 20px;
   border-radius: 8px;

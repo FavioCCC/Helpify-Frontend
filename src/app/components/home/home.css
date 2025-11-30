@@ -1,4 +1,3 @@
-/* El componente Home pinta el contenido principal */
 :host {
   display: block;
   background: var(--fondo-anaranjado);
@@ -7,7 +6,7 @@
   line-height: 1.6;
 }
 
-/* Línea decorativa bajo navbar (si la usas dentro del Home) */
+/* Línea decorativa bajo navbar */
 .barra-delgada { height: 12px; background: var(--amarillo); width: 100%; }
 
 /* =========================

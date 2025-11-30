@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { IniciarsesionService } from './services/inicarsesion-service';
+import { ChatbotComponent } from './components/chatbot/chatbot';
 
 @Component({
   selector: 'app-root',

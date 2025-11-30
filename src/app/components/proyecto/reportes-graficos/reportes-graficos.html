@@ -1,0 +1,35 @@
+<section class="reportes-container">
+
+  <!-- CARD 1: BARRAS -->
+  <mat-card class="reporte-card">
+    <mat-card-title class="titulo-card">
+      REPORTE DE UNIVERSITARIOS POR PROYECTO
+    </mat-card-title>
+
+    <mat-card-content class="chart-wrapper">
+      <canvas
+        baseChart
+        type="bar"
+        [data]="{ labels: barChartLabels, datasets: barChartDatasets }"
+        [options]="barChartOptions">
+      </canvas>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- CARD 2: PIE -->
+  <mat-card class="reporte-card">
+    <mat-card-title class="titulo-card">
+      PORCENTAJE DE UNIVERSITARIOS POR PROYECTOS
+    </mat-card-title>
+
+    <mat-card-content class="chart-wrapper">
+      <canvas
+        baseChart
+        type="pie"
+        [data]="{ labels: pieChartLabels, datasets: pieChartDatasets }"
+        [options]="pieChartOptions">
+      </canvas>
+    </mat-card-content>
+  </mat-card>
+
+</section>

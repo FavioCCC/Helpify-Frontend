@@ -10,7 +10,7 @@ import {Usuario} from '../../../models/usuario';
 @Component({
   selector: 'app-modificar-proyecto', // opcional: antes era 'app-info-proyecto'
   standalone: true,
-  imports: [CommonModule, RouterLink, DatePipe, ReactiveFormsModule],
+  imports: [CommonModule, RouterLink, ReactiveFormsModule],
   templateUrl: './modificar-proyecto.html',
   styleUrls: ['./modificar-proyecto.css']
 })
@@ -22,12 +22,12 @@ export class ModificarProyecto implements OnInit {
 
   // Control de estado de imagen
   imagenModificada = false;       // true si el usuario eligió una nueva imagen
-  private fileToken = 0;          // para invalidar lecturas previas del FileReader
-  private fileReader?: FileReader; // por si queremos abortar
+  private fileToken = 0;
+  private fileReader?: FileReader;
 
   //IMAGEN
-  previewUrl: string | null = null;        // Miniatura y modal
-  mostrarPreview = false;                   // Estado del modal
+  previewUrl: string | null = null;
+  mostrarPreview = false;
   private objectUrlTemporal: string | null = null; // Para revocar URL
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 

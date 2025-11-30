@@ -38,8 +38,8 @@
       </ul>
     </li>
 
-    <!-- PROYECTOS: siempre visible, pero algunos sub-ítems solo admin -->
-    <li class="has-sub">
+    <!-- PROYECTOS-->
+    <li class="has-sub" routerLinkActive="active" *ngIf="isAuthenticated">
       <a href="javascript:void(0)">PROYECTOS</a>
       <ul class="menu-vertical">
         <li><a routerLink="/proyectos">Listado de proyectos</a></li>
@@ -48,18 +48,48 @@
         <li *ngIf="esAdmin"><a routerLink="/proyectos/nuevo">Agregar un proyecto</a></li>
 
         <!-- Reportes estadísticos: solo Admin -->
-        <li *ngIf="esAdmin"><a routerLink="/reportes/estadisticos">Reportes estadísticos</a></li>
+        <li *ngIf="esAdmin"><a routerLink="/reporte-universitarios">Reportes estadísticos</a></li>
       </ul>
     </li>
 
     <!-- WISHLIST: ocultar si NO está autenticado o si es ADMIN -->
     <li *ngIf="isAuthenticated && !esAdmin"><a routerLink="/wishlist">WISHLIST</a></li>
 
-    <!-- NOTIFICACIONES: ocultar si NO está autenticado -->
-    <li *ngIf="isAuthenticated"><a routerLink="/notificaciones">NOTIFICACIONES</a></li>
+    <!-- NOTIFICACIONES (rol sensible) -->
+    <li class="has-sub" routerLinkActive="active" *ngIf="isAuthenticated">
 
-    <!-- FOROS: siempre visible (según requeriste) -->
-    <li><a routerLink="/foros">FOROS</a></li>
+      <!-- Donante / Voluntario → acceso directo al listado -->
+      <a *ngIf="!esAdmin" routerLink="/notificaciones">
+        NOTIFICACIONES
+      </a>
+
+      <!-- Admin → menú desplegable -->
+      <ng-container *ngIf="esAdmin">
+        <a href="javascript:void(0)">NOTIFICACIONES</a>
+
+        <ul class="menu-vertical">
+
+          <!-- Listado -->
+          <li>
+            <a routerLink="/notificaciones" class="submenu-link">
+              Listado de notificaciones
+            </a>
+          </li>
+
+          <!-- Insertar nueva notificación -->
+          <li>
+            <a routerLink="/notificaciones/nueva" class="submenu-link">
+              Insertar notificación
+            </a>
+          </li>
+
+        </ul>
+      </ng-container>
+
+    </li>
+
+    <!-- FOROS -->
+    <li><li *ngIf="isAuthenticated"><a routerLink="/foros">FOROS</a></li>
   </ul>
   <div class="rol-info">
     <span class="rol-label">Rol:</span>
@@ -72,6 +102,20 @@
   <router-outlet></router-outlet>
 </main>
 
+<!-- CONTENIDO -->
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- BOTÓN + CHAT -->
+<button class="chat-toggle" (click)="toggleChat()">
+  💬
+</button>
+
+<div class="chat-floating" *ngIf="showChat">
+  <app-chatbot></app-chatbot>
+</div>
+
 <!-- FOOTER -->
 <footer class="custom-footer">
   <div class="footer-content">
@@ -83,16 +127,16 @@
       </div>
 
       <nav class="col-center" aria-label="Enlaces legales">
-        <a routerLink="/reclamaciones" class="footer-link">LIBRO DE RECLAMACIONES</a>
-        <a routerLink="/terminos" class="footer-link">TÉRMINOS Y CONDICIONES</a>
+        <a href="https://cdn.www.gob.pe/uploads/document/file/3510113/Anexo%20I%20DS%20N%20101-2022-PCM_.pdf.pdf?v=1660688658" target="_blank" class="footer-link">LIBRO DE RECLAMACIONES</a>
+        <a href="https://proa.pe/terminos-ong" target="_blank" class="footer-link">TÉRMINOS Y CONDICIONES</a>
       </nav>
 
       <div class="col-right">
         <span class="social-title">ENCUÉNTRANOS EN</span>
         <div class="social-icons">
-          <a href="#" aria-label="TikTok"><img src="assets/imagenes/TikTok.png" alt="" /></a>
-          <a href="#" aria-label="Facebook"><img src="assets/imagenes/Facebook.png" alt="" /></a>
-          <a href="#" aria-label="Instagram"><img src="assets/imagenes/Instagram.png" alt="" /></a>
+          <a href="https://www.tiktok.com" aria-label="TikTok" target="_blank"><img src="assets/imagenes/TikTok.png" alt="" /></a>
+          <a href="https://www.facebook.com" aria-label="Facebook" target="_blank"><img src="assets/imagenes/Facebook.png" alt="" /></a>
+          <a href="https://www.instagram.com" aria-label="Instagram" target="_blank"><img src="assets/imagenes/Instagram.png" alt="" /></a>
         </div>
       </div>
     </div>

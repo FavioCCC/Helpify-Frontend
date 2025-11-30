@@ -1,0 +1,164 @@
+:root {
+  --marron: #6D4118;
+  --rosado: #FFC2BD;
+  --anaranjado: #FAC99B;
+  --amarillo: #FFEAAA;
+  --blanco: #FFFFFF;
+}
+
+/* Fondo general de la vista */
+.insertar-container {
+  min-height: calc(100vh - 160px); /* dejando espacio para navbar+footer */
+  background: linear-gradient(to bottom, #f7c89c, #fdddb4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px 60px;
+  box-sizing: border-box;
+}
+
+/* Título */
+.titulo {
+  font-family: 'Rubik Mono One', system-ui, sans-serif;
+  font-size: 2.4rem;
+  text-align: center;
+  letter-spacing: 0.15em;
+  color: var(--marron);
+  margin-bottom: 30px;
+}
+
+/* Tarjeta central */
+.tarjeta {
+  width: 100%;
+  max-width: 1100px;
+  background: #fde8a6;
+  border: 1px solid #c58c3b;
+  padding: 40px 50px 35px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Campos de Material */
+.campo {
+  width: 100%;
+  max-width: 560px;
+  align-self: center;
+  background: var(--blanco);
+  border-radius: 12px;
+}
+
+.mensaje-contenedor {
+  width: 100%;
+}
+
+.mensaje-label {
+  display: block;
+  font-size: 1rem;
+  color: var(--marron);
+  margin-bottom: 8px;
+  margin-left: 60px;
+}
+
+.mensaje-field {
+  width: calc(100% - 120px);
+  margin: 0 auto;
+  background: var(--blanco);
+  border-radius: 12px;
+}
+
+/* Botón Insertar */
+.btn-insertar {
+  align-self: center;
+  margin-top: 10px;
+  padding: 10px 40px;
+  border-radius: 999px;
+  background-color: var(--rosado);
+  color: var(--marron);
+  font-weight: 600;
+  text-transform: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.btn-insertar:hover {
+  filter: brightness(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tarjeta {
+    padding: 25px 20px;
+  }
+
+  .mensaje-label {
+    margin-left: 20px;
+  }
+
+  .mensaje-field {
+    width: calc(100% - 40px);
+  }
+
+  .titulo {
+    font-size: 1.8rem;
+    letter-spacing: 0.08em;
+  }
+}
+
+.mat-mdc-autocomplete-panel {
+  background-color: #FFEAAA !important;  /* Amarillo de tu paleta */
+  opacity: 1 !important;
+  border: 1px solid #6D4118 !important;  /* Marrón */
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.3) !important;
+}
+
+/* Fondo del panel select */
+.mat-mdc-select-panel {
+  background-color: #FFEAAA !important;
+  opacity: 1 !important;
+  border: 1px solid #6D4118 !important;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.3) !important;
+}
+
+/* Fondo de las opciones */
+.mat-mdc-option {
+  background-color: #FFEAAA !important;
+  color: #6D4118 !important;
+  font-weight: 500;
+}
+
+/* Hover */
+.mat-mdc-option:hover {
+  background-color: #FAD78A !important; /* un poquito más oscuro */
+}
+
+/* Cuando la opción está seleccionada */
+.mat-mdc-option.mdc-list-item--selected {
+  background-color: #FAD78A !important;
+  color: #6D4118 !important;
+}
+
+/* Opción activa (cuando navegas con teclado) */
+.mat-mdc-option.mdc-list-item--activated {
+  background-color: #F7C46A !important;
+  color: #6D4118 !important;
+}
+
+/* Scroll del panel */
+.mat-mdc-autocomplete-panel::-webkit-scrollbar,
+.mat-mdc-select-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mat-mdc-autocomplete-panel::-webkit-scrollbar-thumb,
+.mat-mdc-select-panel::-webkit-scrollbar-thumb {
+  background: #6D4118;
+  border-radius: 4px;
+}
+
+.mat-mdc-autocomplete-panel::-webkit-scrollbar-track,
+.mat-mdc-select-panel::-webkit-scrollbar-track {
+  background: #FAD78A;
+}
