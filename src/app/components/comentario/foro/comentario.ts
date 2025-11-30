@@ -118,28 +118,34 @@ export class ComentarioComponent implements OnInit {
    * ✅ Lógica de visibilidad del botón "Eliminar"
    * - ADMIN: puede eliminar todos
    * - VOLUNTARIO: solo sus propios comentarios
+   *
+   *
    */
   puedeEliminarComentario(c: Comentario): boolean {
     if (!this.auth.isLoggedIn()) return false;
 
-    // 1) Admin puede todo
-    if (this.esAdmin) return true;
+    const usuario = this.auth.getUsuario();
 
-    // 2) Voluntario solo su comentario
-    if (this.esVoluntario && this.usuarioActual && c.usuario) {
-      const idUserActual =
-        this.usuarioActual.idusuario ??
-        this.usuarioActual.id ?? null;
-
-      const idUserComentario =
-        (c.usuario as any).idusuario ??
-        (c.usuario as any).id ?? null;
-
-      return !!idUserActual && !!idUserComentario && idUserActual === idUserComentario;
+    // 1) Si es ADMIN, puede eliminar CUALQUIER comentario
+    if (this.auth.userHasRole('ADMIN') || this.auth.userHasRole('ROLE_ADMIN')) {
+      return true; // ✅ Admin puede todo, sin más condiciones
     }
+
+    // 2) Usuario normal solo puede eliminar su propio comentario
+    if (usuario && c.usuario) {
+      const idUserActual = usuario.idusuario ?? usuario.id;
+      const idUserComentario = c.usuario.idusuario ?? c.usuario.idusuario;
+      return idUserActual === idUserComentario;
+
+    }
+
 
     return false;
   }
+
+
+
+
 }
 
 
