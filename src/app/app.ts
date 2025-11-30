@@ -7,7 +7,7 @@ import { ChatbotComponent } from './components/chatbot/chatbot';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, NgIf, RouterLinkActive, ChatbotComponent],
+  imports: [RouterOutlet, RouterLink, NgIf, RouterLinkActive],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
@@ -19,14 +19,6 @@ export class App {
 
   menuOpened = false;
   isEditing: 'true' | 'false' = 'false';
-
-  // 👇 NUEVO: estado del chat
-  showChat: boolean = false;
-
-  // 👇 NUEVO: abrir / cerrar
-  toggleChat(): void {
-    this.showChat = !this.showChat;
-  }
 
   // ====== Menú ======
   toggleMenu(): void { this.menuOpened = !this.menuOpened; }
@@ -68,12 +60,12 @@ export class App {
   toggleEdit(): void {
     this.isEditing = this.isEditing === 'true' ? 'false' : 'true';
   }
-
-  // Retorna si hay un usuario autenticado
+// Retorna si hay un usuario autenticado
   get isAuthenticated(): boolean {
     return this.auth.isLoggedIn();
   }
   get esAdmin(): boolean {
+    // asegurar que si no hay sesión devuelva false
     return this.isAuthenticated && this.auth.isAdmin();
   }
   get esVoluntario(): boolean {
@@ -83,14 +75,19 @@ export class App {
     return this.isAuthenticated && this.auth.userHasRole('DONANTE');
   }
   get rolActual(): string {
-    if (!this.isAuthenticated)
+    if (!this.isAuthenticated) {
       return 'INVITADO';
-    if (this.esAdmin)
+    }
+    if (this.esAdmin) {
       return 'ADMIN';
-    if (this.esDonante)
+    }
+    if (this.esDonante) {
       return 'DONANTE';
-    if (this.esVoluntario)
+    }
+    if (this.esVoluntario) {
       return 'VOLUNTARIO';
+    }
     return 'USUARIO';
   }
+
 }
