@@ -10,15 +10,26 @@ function readToken(): string | null {
 
 function shouldSkipAuth(req: HttpRequest<any>): boolean {
   if (req.method === 'OPTIONS') return true;
-  return req.url.includes('/autenticar');
+  // TODAS las URLs públicas que NO necesitan token
+  const publicUrls = [
+    '/api/autenticar',
+    '/api/usuario',        // <-- registro
+    '/api/proyectos',
+    '/api/proyectos/',
+    '/api/buscar',
+    '/api/chatbot'
+  ];
+
+  return publicUrls.some(url => req.url.includes(url));
 }
+
 
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   if (shouldSkipAuth(req)) return next(req);
 
   const bearer = readToken();
 
-  // No duplicar si ya hay Authorization
+  // Si no hay token o ya viene Authorization, no hacemos nada
   if (!bearer || req.headers.has('Authorization')) {
     return next(req);
   }
