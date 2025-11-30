@@ -7,7 +7,7 @@ import { ChatbotComponent } from './components/chatbot/chatbot';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, NgIf, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, NgIf, RouterLinkActive, ChatbotComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
@@ -19,6 +19,11 @@ export class App {
 
   menuOpened = false;
   isEditing: 'true' | 'false' = 'false';
+
+  showChat: boolean = false;
+   toggleChat(): void {
+    this.showChat = !this.showChat;
+  }
 
   // ====== Menú ======
   toggleMenu(): void { this.menuOpened = !this.menuOpened; }
