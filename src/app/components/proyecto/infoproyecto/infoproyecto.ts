@@ -9,8 +9,8 @@ import {IniciarsesionService} from '../../../services/inicarsesion-service';
   selector: 'app-info-proyecto',
   standalone: true,
   imports: [CommonModule, RouterLink, DatePipe],
-  templateUrl: './infoProyecto.html',
-  styleUrls: ['./infoProyecto.css']
+  templateUrl: './infoproyecto.html',
+  styleUrls: ['./infoproyecto.css']
 })
 export class InfoProyecto implements OnInit {
   private route = inject(ActivatedRoute);
